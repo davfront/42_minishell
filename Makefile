@@ -73,7 +73,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(FT) $(HEADER)
 
 $(NAME):			$(OBJS) $(FT)
 					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
-					@$(CC) $(CFLAGS) $(OBJS) $(FT_FLAGS) -o $(NAME)
+					@$(CC) $(CFLAGS) $(OBJS) $(FT_FLAGS) -lreadline -o $(NAME)
 					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) is ready!$(EOC)"
 
 .PHONY: libft
