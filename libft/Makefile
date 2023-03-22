@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
+#    By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2023/02/14 13:41:17 by dapereir         ###   ########.fr        #
+#    Updated: 2023/03/22 20:06:26 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ SRCS_FILES			=	char/ft_isalpha.c\
 						lst/ft_lstiter.c\
 						lst/ft_lstmap.c\
 						lst/ft_lst_by_index.c\
+						lst/ft_lstprev.c\
 						\
 						gnl/ft_gnl.c\
 						\

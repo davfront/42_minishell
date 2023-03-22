@@ -52,8 +52,11 @@ SRCS_FILES			=	\
 						env/ms_env_list_add.c\
 						env/ms_env_list_init.c\
 						env/ms_env_list_clear.c\
+						env/ms_env_list_get_by_label.c\
+						env/ms_env_list_delete.c\
 						\
 						builtin/ms_env.c\
+						builtin/ms_unset.c\
 						\
 						main.c\
 
