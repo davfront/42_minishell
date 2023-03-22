@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/21 07:52:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:44:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,19 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+
+typedef struct s_env {
+	char	*label;
+	char	*value;
+}				t_env;
+
+// env
+void	ms_env_delete(void *content);
+void	ms_env_list_add(t_list **env_list, char *label, char *value);
+void	ms_env_list_init(t_list **env_list, char **envp);
+void	ms_env_list_clear(t_list **env_list);
+
+// builtin
+void	ms_env(t_list *env_list);
 
 #endif

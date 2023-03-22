@@ -6,23 +6,40 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/21 07:56:06 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:55:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	char	**cmd_args;
+	t_list	*env_list;
 
+	(void)argc;
+	(void)argv;
+	env_list = NULL;
+	ms_env_list_init(&env_list, envp);
 	while (1)
 	{
 		line = readline("\033[1;36mminishell> \033[0m");
 		add_history(line);
-		printf("line = %s\n", line);
+		cmd_args = ft_split(line, ' ');
+		// todo: protect malloc
+		if (ft_streq(cmd_args[0], "env"))
+			ms_env(env_list);
+		else if (ft_streq(cmd_args[0], "exit"))
+		{
+			ms_env_list_clear(&env_list);
+			exit(EXIT_SUCCESS);
+		}
+		else
+			printf("line = %s\n", line);
+		ft_free_split(cmd_args);
 		free(line);
 	}
 	free(line);
-	return (0);
+	return (EXIT_SUCCESS);
 }

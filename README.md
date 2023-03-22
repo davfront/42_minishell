@@ -36,7 +36,7 @@ foreground pipeline.
 	- [ ] pwd with no options
 	- [ ] export with no options
 	- [ ] unset with no options
-	- [ ] env with no options or arguments
+	- [x] env with no options or arguments
 	- [ ] exit with no options
 
 **The readline() function can cause memory leaks. You don’t have to fix them.**

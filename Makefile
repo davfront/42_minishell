@@ -48,6 +48,13 @@ SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
+						env/ms_env_delete.c\
+						env/ms_env_list_add.c\
+						env/ms_env_list_init.c\
+						env/ms_env_list_clear.c\
+						\
+						builtin/ms_env.c\
+						\
 						main.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
