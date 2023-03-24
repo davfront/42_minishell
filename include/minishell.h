@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/22 12:15:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/24 11:22:56 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include <sys/ioctl.h>
 
 // builtin
+void	ms_pwd(void);
 void	ms_echo(char **args);
 
 #endif
