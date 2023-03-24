@@ -51,6 +51,8 @@ SRCS_FILES			=	\
 						builtin/ms_pwd.c\
 						builtin/ms_echo.c\
 						\
+						parsing/ms_parsing.c\
+						\
 						main.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

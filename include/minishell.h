@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 11:22:56 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:09:49 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,38 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
+typedef enum    e_type
+{
+    NONE = -1,
+    CMD = 0,
+    OPTION,
+    ARG,
+    PIPE,
+    GREATER,
+    G_GREATER,
+    LESS,
+    L_LESS
+}   t_type;
+
+typedef struct s_cmd
+{
+    int                 status;
+    char                **cmd;
+    struct s_cmd       *next;
+}   t_cmd;
+
+typedef struct s_item
+{
+    char                *value;
+    t_type              type;
+    struct s_item      *next;
+}   t_item;
+
 // builtin
 void	ms_pwd(void);
 void	ms_echo(char **args);
+
+// parsing
+void    parser(char *line);
 
 #endif
