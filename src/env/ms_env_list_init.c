@@ -14,23 +14,15 @@
 
 void	ms_env_list_init(t_list **env_list, char **envp)
 {
-	char	*substr;
-	char	*label;
-	char	*value;
+	t_env	*env;
 
 	if (!envp)
 		return ;
 	while (*envp)
 	{
-		substr = ft_strchr(*envp, '=');
-		if (substr && substr > *envp)
-		{
-			value = substr + 1;
-			label = ft_strndup(*envp, substr - *envp);
-			// todo: protect malloc
-			ms_env_list_add(env_list, label, value);
-			ft_free((void **)(&label));
-		}
+		env = ms_env_from_char(*envp);
+		// todo: protect malloc
+		ms_env_list_add(env_list, env);
 		envp++;
 	}
 }

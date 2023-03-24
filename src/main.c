@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 13:23:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:43:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		// todo: protect malloc
 		if (ft_streq(cmd_args[0], "env"))
 			ms_env(env_list);
+		else if (ft_streq(cmd_args[0], "export"))
+			ms_export(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "unset"))
 			ms_unset(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "exit"))
@@ -37,8 +39,8 @@ int	main(int argc, char **argv, char **envp)
 			ms_env_list_clear(&env_list);
 			exit(EXIT_SUCCESS);
 		}
-		else
-			printf("line = %s\n", line);
+		else if (cmd_args[0])
+			printf("%s: command not found\n", cmd_args[0]);
 		ft_free_split(cmd_args);
 		free(line);
 	}

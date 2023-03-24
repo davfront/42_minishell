@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_delete.c                                    :+:      :+:    :+:   */
+/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 13:48:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:35:51 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_delete(void *content)
+void	ms_env_list_unset(t_list **env_list, char *label)
 {
-	t_env	*env;
+	t_list	*node;
 
-	env = (t_env *)content;
-	if (!env)
+	if (!env_list || !label || !*label)
 		return ;
-	ft_free((void **)&(env->label));
-	ft_free((void **)&(env->value));
-	ft_free((void **)&env);
+	node = ms_env_list_get_by_label(*env_list, label);
+	if (node)
+		ms_env_list_delete(env_list, node);
 }

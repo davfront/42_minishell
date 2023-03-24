@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_delete.c                                    :+:      :+:    :+:   */
+/*   ms_env_is_valid_identifier.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 13:48:39 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 21:09:40 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/24 15:43:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_delete(void *content)
+int	ms_env_is_valid_identifier(char *name)
 {
-	t_env	*env;
+	size_t	i;
 
-	env = (t_env *)content;
-	if (!env)
-		return ;
-	ft_free((void **)&(env->label));
-	ft_free((void **)&(env->value));
-	ft_free((void **)&env);
+	if (!name || ! *name)
+		return (0);
+	i = 0;
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+		i++;
+	}
+	if (ft_isdigit(*name))
+		return (0);
+	return (1);
 }

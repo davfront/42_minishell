@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_delete.c                                    :+:      :+:    :+:   */
+/*   ms_env_from_char.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 13:48:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:23:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_delete(void *content)
+t_env	*ms_env_from_char(char *s)
 {
 	t_env	*env;
+	char	*substr;
 
-	env = (t_env *)content;
-	if (!env)
-		return ;
-	ft_free((void **)&(env->label));
-	ft_free((void **)&(env->value));
-	ft_free((void **)&env);
+	if (!s)
+		return (NULL);
+	env = malloc(sizeof(t_env));
+	env->label = NULL;
+	env->value = NULL;
+	substr = ft_strchr(s, '=');
+	if (substr)
+	{
+		env->label = ft_strndup(s, substr - s);
+		// todo: protect malloc
+		env->value = ft_strdup(substr + 1);
+		// todo: protect malloc
+	}
+	else
+		env->label = ft_strdup(s);
+		// todo: protect malloc
+	return (env);
 }
