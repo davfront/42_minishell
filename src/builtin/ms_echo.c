@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 11:22:35 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 11:53:53 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/22 12:23:31 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	ms_echo(char **args)
 {
-	char	*line;
-	char	**cmd_args;
+	size_t	i;
+	int		omit_new_line;
 
-	while (1)
+	if (!args)
+		return ;
+	omit_new_line = (ft_streq(args[0], "-n"));
+	i = omit_new_line;
+	while (args[i])
 	{
-		line = readline("\033[1;36mminishell> \033[0m");
-		add_history(line);
-		cmd_args = ft_split(line, ' ');
-		// todo: protect malloc
-		if (ft_streq(cmd_args[0], "pwd"))
-			ms_pwd();
-		else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
-			ms_echo(cmd_args + 1);
-		else
-			printf("line = %s\n", line);
-		ft_free_split(cmd_args);
-		free(line);
+		if (i > (size_t)omit_new_line)
+			printf(" ");
+		printf("%s", args[i]);
+		i++;
 	}
-	free(line);
-	return (0);
+	if (!omit_new_line)
+		printf("\n");
 }

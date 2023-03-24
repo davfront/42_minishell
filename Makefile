@@ -49,6 +49,7 @@ OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
 						builtin/ms_pwd.c\
+						builtin/ms_echo.c\
 						\
 						main.c\
 
