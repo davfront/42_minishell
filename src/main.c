@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 10:56:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:59:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
 			ms_echo(cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "env"))
-			ms_env(env_list);
+			ms_env(&env_list);
 		else if (ft_streq(cmd_args[0], "export"))
 			ms_export(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "unset"))
