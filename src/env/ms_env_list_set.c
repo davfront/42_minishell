@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 10:48:42 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:57:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	ms_env_list_set(t_list **env_list, char *label, char *value)
 	{
 		env = ms_env_new(label, value);
 		// todo: protect malloc
-		ms_env_list_add(env_list, label, value);
+		ms_env_list_add(env_list, env);
 	}
 }
