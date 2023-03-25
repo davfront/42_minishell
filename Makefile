@@ -61,6 +61,8 @@ SRCS_FILES			=	\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
 						\
+						builtin/ms_pwd.c\
+						builtin/ms_echo.c\
 						builtin/ms_env.c\
 						builtin/ms_unset.c\
 						builtin/ms_export.c\

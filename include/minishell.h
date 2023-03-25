@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 10:38:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 10:54:54 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ms_env_list_set(t_list **env_list, char *label, char *value);
 void	ms_env_list_unset(t_list **env_list, char *label);
 
 // builtin
+void	ms_pwd(void);
+void	ms_echo(char **args);
 void	ms_env(t_list *env_list);
 void	ms_unset(t_list **env_list, char **args);
 void	ms_export(t_list **env_list, char **args);
