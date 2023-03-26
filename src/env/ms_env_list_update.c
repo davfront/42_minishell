@@ -6,21 +6,26 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 14:34:27 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 12:08:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_update(t_list *node, char *value)
+int	ms_env_list_update(t_list *node, char *value)
 {
 	t_env	*env;
+	char	*new_value;
 
 	if (!node)
-		return ;
+		return (FAILURE);
 	env = (t_env *)(node->content);
 	if (!env)
-		return ;
+		return (FAILURE);
 	ft_free((void **)&(env->value));
-	env->value = ft_strdup(value);
+	new_value = ft_strdup(value);
+	if (!new_value)
+		return (FAILURE);
+	env->value = new_value;
+	return (SUCCESS);
 }

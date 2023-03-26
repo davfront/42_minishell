@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 10:48:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:28:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,22 @@ t_env	*ms_env_new(char *label, char *value)
 	if (!ms_env_is_valid_identifier(label))
 		return (NULL);
 	env = malloc(sizeof(t_env));
-	// todo: protect malloc
+	if (!env)
+		return (NULL);
 	env->label = ft_strdup(label);
-	// todo: protect malloc
+	if (!env->label)
+	{
+		ms_env_delete(env);
+		return (NULL);
+	}
 	if (value)
 	{
 		env->value = ft_strdup(value);
-		// todo: protect malloc
+		if (!env->value)
+		{
+			ms_env_delete(env);
+			return (NULL);
+		}
 	}
 	return (env);
 }
