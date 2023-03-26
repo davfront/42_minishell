@@ -12,17 +12,21 @@
 
 #include "minishell.h"
 
-void	ms_env_list_init(t_list **env_list, char **envp)
+int	ms_env_list_init(t_list **env_list, char **envp)
 {
 	t_env	*env;
 
 	if (!envp)
-		return ;
+		return (FAILURE);
 	while (*envp)
 	{
 		env = ms_env_from_char(*envp);
-		// todo: protect malloc
-		ms_env_list_add(env_list, env);
+		if (!env || ms_env_list_add(env_list, env) != SUCCESS)
+		{
+			ms_env_list_clear(env_list);
+			return (FAILURE);
+		}
 		envp++;
 	}
+	return (SUCCESS);
 }

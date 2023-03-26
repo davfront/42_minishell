@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 10:03:48 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:28:50 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	ms_export_print_identifier_error(char *label, char *value)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("export: `", STDERR_FILENO);
 	ft_putstr_fd(label, STDERR_FILENO);
 	ft_putstr_fd("=", STDERR_FILENO);
@@ -64,26 +65,46 @@ static void	ms_export_no_arg(t_list **env_list)
 	}
 }
 
-void	ms_export(t_list **env_list, char **args)
+static int	ms_export_one(t_list **env_list, char *arg)
+{
+	t_env	*env;
+	int		ret;
+
+	if (!env_list || !*arg)
+		return (FAILURE);
+	env = ms_env_from_char(arg);
+	if (!env)
+		return (FAILURE);
+	if (!ms_env_is_valid_identifier(env->label))
+	{
+		ms_export_print_identifier_error(env->label, env->value);
+		ret = FAILURE;
+	}
+	else
+		ret = ms_env_list_set(env_list, env->label, env->value);
+	ms_env_delete(env);
+	return (ret);
+}
+
+int	ms_export(t_list **env_list, char **args)
 {
 	size_t	i;
-	t_env	*env;
+	int		ret;
 
+	if (!env_list)
+		return (FAILURE);
 	if (!args || !*args)
+	{
 		ms_export_no_arg(env_list);
+		return (SUCCESS);
+	}
+	ret = SUCCESS;
 	i = 0;
 	while (args[i])
 	{
-		if (*(args[i]))
-		{
-			env = ms_env_from_char(args[i]);
-			// todo: protect malloc
-			if (ms_env_is_valid_identifier(env->label))
-				ms_env_list_set(env_list, env->label, env->value);
-			else
-				ms_export_print_identifier_error(env->label, env->value);
-			ms_env_delete(env);
-		}
+		if (ms_export_one(env_list, args[i]) != SUCCESS)
+			ret = FAILURE;
 		i++;
 	}
+	return (ret);
 }
