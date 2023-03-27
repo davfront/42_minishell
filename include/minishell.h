@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 12:47:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 18:16:28 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ typedef struct s_env {
 	char	*label;
 	char	*value;
 }				t_env;
+
+// utils
+void	ms_print_quoted(char *s);
 
 // env
 t_env	*ms_env_new(char *label, char *value);

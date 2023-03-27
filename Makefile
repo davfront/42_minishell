@@ -48,6 +48,8 @@ SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
+						utils/ms_print_quoted.c\
+						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
 						env/ms_env_delete.c\
