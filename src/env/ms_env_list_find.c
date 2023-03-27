@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_get_by_label.c                         :+:      :+:    :+:   */
+/*   ms_env_list_find.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 12:19:09 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:20:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*ms_env_list_get_by_label(t_list *env_list, char *label)
+t_list	*ms_env_list_find(t_list *env_list, char *label)
 {
 	t_list	*node;
 	t_env	*env;

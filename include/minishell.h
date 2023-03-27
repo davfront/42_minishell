@@ -51,7 +51,7 @@ void	ms_env_delete(void *content);
 int		ms_env_list_add(t_list **env_list, t_env *env);
 int		ms_env_list_init(t_list **env_list, char **envp);
 void	ms_env_list_clear(t_list **env_list);
-t_list	*ms_env_list_get_by_label(t_list *env_list, char *label);
+t_list	*ms_env_list_find(t_list *env_list, char *label);
 void	ms_env_list_delete(t_list **env_list, t_list *node);
 int		ms_env_is_valid_identifier(char *name);
 int		ms_env_list_update(t_list *node, char *value);
