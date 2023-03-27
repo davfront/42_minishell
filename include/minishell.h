@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 12:47:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:32:42 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+
+# ifndef PATH_MAX
+#  define PATH_MAX			1024
+# endif
 
 # define SUCCESS			0
 # define FAILURE			1
