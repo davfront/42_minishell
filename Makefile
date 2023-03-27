@@ -48,16 +48,19 @@ SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
+						utils/ms_strs_len.c\
+						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
 						env/ms_env_delete.c\
 						env/ms_env_list_add.c\
 						env/ms_env_list_init.c\
 						env/ms_env_list_clear.c\
-						env/ms_env_list_get_by_label.c\
+						env/ms_env_list_find.c\
 						env/ms_env_list_delete.c\
 						env/ms_env_is_valid_identifier.c\
 						env/ms_env_list_update.c\
+						env/ms_env_list_get.c\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
 						\
@@ -66,6 +69,7 @@ SRCS_FILES			=	\
 						builtin/ms_env.c\
 						builtin/ms_unset.c\
 						builtin/ms_export.c\
+						builtin/ms_cd.c\
 						\
 						main.c\
 
