@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 15:09:49 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:36:02 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,34 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-typedef enum    e_type
-{
-    NONE = -1,
-    CMD = 0,
-    OPTION,
-    ARG,
-    PIPE,
-    GREATER,
-    G_GREATER,
-    LESS,
-    L_LESS
-}   t_type;
-
 typedef struct s_cmd
 {
-    int                 status;
     char                **cmd;
-    struct s_cmd       *next;
+    int                 infile;
+    int                 outfile;
+    struct  s_cmd       *next;
 }   t_cmd;
-
-typedef struct s_item
-{
-    char                *value;
-    t_type              type;
-    struct s_item      *next;
-}   t_item;
 
 // builtin
 void	ms_pwd(void);
 void	ms_echo(char **args);
 
 // parsing
-void    parser(char *line);
+int         parser(char *line);
+char        **ft_cmdtrim(char *str, char *set);
+void        del_char(char *str, char c);
+int	        check_char_option(int c);
+int         is_option(char *str);
+void        ms_clean_commands(char **cmds);
+void        check_dollar(char **cmds, int i, int j);
+char        **create_cmd_init(char **array, int count);
+int         count_pipe(char *str);
+//void         command_list_init(char **array, int n_pipe);
+int         count_items_cmd(char **array, int *i);
+//t_cmd       *new_cmd(char **array, int count, int *j);
+void        create_list(char **array, int n_pipe);
+int         ft_index(char **array);
 
+
+void        printarr(char **arr);
 #endif

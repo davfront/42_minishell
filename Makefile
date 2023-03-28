@@ -51,7 +51,13 @@ SRCS_FILES			=	\
 						builtin/ms_pwd.c\
 						builtin/ms_echo.c\
 						\
-						parsing/ms_parsing.c\
+						parsing/ms_parser.c\
+						parsing/ms_parser_utils.c\
+						parsing/ms_clean_commands.c\
+						parsing/ms_get_var_name.c\
+						parsing/ms_trim.c\
+						parsing/ms_list.c\
+						parsing/ms_list_utils.c\
 						\
 						main.c\
 

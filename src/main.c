@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/24 13:29:05 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:02:10 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	main(void)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		parser(line);
-		
-		
 		//cmd_args = ft_split(line, ' ');
 		// todo: protect malloc
 		// if (ft_streq(cmd_args[0], "pwd"))
