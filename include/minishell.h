@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/28 14:36:02 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:26:40 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
+typedef struct s_trim
+{
+    int     i;
+    int     j;
+    int     k;
+    int     quotes;
+    int     len;
+}   t_trim;
 typedef struct s_cmd
 {
     char                **cmd;
@@ -49,8 +57,8 @@ void	ms_pwd(void);
 void	ms_echo(char **args);
 
 // parsing
-int         parser(char *line);
-char        **ft_cmdtrim(char *str, char *set);
+int         ms_parser(char *line);
+char        **ms_cmdtrim(char *str, char *set);
 void        del_char(char *str, char c);
 int	        check_char_option(int c);
 int         is_option(char *str);

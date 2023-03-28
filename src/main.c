@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/28 10:02:10 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:20:13 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,7 @@ int	main(void)
 		line = readline("\033[1;36mminishell> \033[0m");
 		if (ft_strlen(line) > 0)
 			add_history(line);
-		parser(line);
-		//cmd_args = ft_split(line, ' ');
-		// todo: protect malloc
-		// if (ft_streq(cmd_args[0], "pwd"))
-		// 	ms_pwd();
-		// else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
-		// 	ms_echo(cmd_args + 1);
-		// else
-		// 	printf("line = %s\n", line);
-		// ft_free_split(cmd_args);
+		ms_parser(line);
 		free(line);
 	}
 	free(line);
