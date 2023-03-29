@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 22:38:55 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:46:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-#define LLONG_MAX_STR	"9223372036854775807"
+# define LLONG_MAX_STR	"9223372036854775807"
 
 # define SUCCESS			EXIT_SUCCESS
 # define FAILURE			EXIT_FAILURE
 # define MISUSE				2
 
-typedef struct s_trim
+typedef struct s_split
 {
 	int		i;
-	int		j;
-	int		k;
+	int		q_index;
+	int		arr_index;
 	int		quotes;
 	int		len;
-}	t_trim;
+}	t_split;
 
 typedef struct s_cmd
 {
@@ -68,7 +68,7 @@ typedef struct s_data {
 	t_list	*env_list;
 	char	*line;
 	char	**tokens;
-}			t_data;
+}	t_data;
 
 // utils
 size_t		ms_strs_len(char **strs);
@@ -106,7 +106,7 @@ int			ms_is_builtin_cmd(char *cmd);
 int			ms_builtin_cmd(t_data *data, char **cmd_args);
 
 // parsing
-int			ms_parser(char *line);
+char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
 
 #endif

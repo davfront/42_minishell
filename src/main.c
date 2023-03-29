@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:11:08 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:47:56 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data->line = readline("\033[1;36mminishell> \033[0m");
 		add_history(data->line);
-		data->tokens = ft_split(data->line, ' ');
-		// todo: protect malloc
+		data->tokens = ms_parser(data->line);
 		cmd_args = data->tokens;
 		if (ms_is_builtin_cmd(cmd_args[0]))
 			g_exit_code = ms_builtin_cmd(data, cmd_args);
