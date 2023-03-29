@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data->line = readline("\033[1;36mminishell> \033[0m");
 		add_history(data->line);
-		data->tokens = ms_parser(data->line);
+		data->tokens = ms_parser(data->line, envp);
 		cmd_args = data->tokens;
 		if (ms_is_builtin_cmd(cmd_args[0]))
 			g_exit_code = ms_builtin_cmd(data, cmd_args);

@@ -111,7 +111,7 @@ int			ms_builtin_cmd(t_data *data, char **cmd_args);
 
 // parsing
 char	**ms_parser(char *line, char **env);
-void    ms_expand_var(char *str, char **env);
+char	*ms_expand_var(char *str, char **env);
 char    **ms_var_array(char *str, char **var_array, char **env);
 char    **ms_cmdsplit(char *str, char *set);
 int     ms_is_quote(char c);

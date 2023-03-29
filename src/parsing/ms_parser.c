@@ -26,11 +26,11 @@ char	**ms_parser(char *str, char **env)
 {
 	char	**cmds;
 
-	ms_expand_var(str, env);
-	cmds = ms_cmdsplit(str, " ");
+	//ms_expand_var(str, env);
+	cmds = ms_cmdsplit(ms_expand_var(str, env), " ");
 	if (!cmds)
 		exit(EXIT_FAILURE);
-	//printarr(cmds);
+	printarr(cmds);
 	//ft_free_split(cmds);
 	return (cmds);
 }
