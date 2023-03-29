@@ -53,6 +53,8 @@ SRCS_FILES			=	\
 						utils/ms_str_to_llong.c\
 						utils/ms_error.c\
 						utils/ms_exit.c\
+						utils/ms_init.c\
+						utils/ms_reset.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\

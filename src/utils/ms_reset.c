@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_reset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:15:32 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 21:02:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+void	ms_reset(t_data *data)
 {
-	t_list	*node;
-	t_env	*env;
-
-	node = data->env_list;
-	while (node)
-	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			printf("%s=%s\n", env->label, env->value);
-		node = node->next;
-	}
+	if (!data)
+		return ;
+	ms_env_list_clear(&(data->env_list));
+	ft_free((void **)&(data->line));
+	ft_free_split(data->tokens);
 }

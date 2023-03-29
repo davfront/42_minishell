@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:50:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:17:03 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,20 @@ typedef struct s_env {
 	char	*value;
 }	t_env;
 
+typedef struct s_data {
+	t_list	*env_list;
+	char	*line;
+	char	**tokens;
+}			t_data;
+
 // utils
 size_t		ms_strs_len(char **strs);
 int			ms_str_is_llong(char *s);
 long long	ms_str_to_llong(char *str);
 void		ms_error(char *cmd, char *arg, char *msg);
-void		ms_exit(t_list **env_list, int exit_code);
+void		ms_exit(t_data *data, int exit_code);
+void		ms_init(t_data *data, char **envp);
+void		ms_reset(t_data *data);
 
 // env
 t_env		*ms_env_new(char *label, char *value);
@@ -87,13 +95,13 @@ void		ms_env_list_unset(t_list **env_list, char *label);
 //	 builtin
 int			ms_builtin_pwd(void);
 void		ms_builtin_echo(char **args);
-void		ms_builtin_env(t_list **env_list);
-void		ms_unset(t_list **env_list, char **args);
-int			ms_builtin_export(t_list **env_list, char **args);
-int			ms_builtin_cd(t_list **env_list, char **args);
-int			ms_builtin_exit(t_list **env_list, char **args);
+void		ms_builtin_env(t_data *data);
+void		ms_unset(t_data *data, char **args);
+int			ms_builtin_export(t_data *data, char **args);
+int			ms_builtin_cd(t_data *data, char **args);
+int			ms_builtin_exit(t_data *data, char **args);
 int			ms_is_builtin_cmd(char *cmd);
-int			ms_builtin_cmd(t_list **env_list, char **cmd_args);
+int			ms_builtin_cmd(t_data *data, char **cmd_args);
 
 // parsing
 int			ms_parser(char *line);

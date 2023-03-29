@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:26:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:28:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ms_builtin_export_print_identifier_error(char *label, char *value)
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
 
-static t_list	*ms_builtin_export_find_alpha_next(t_list **env_list, \
+static t_list	*ms_builtin_export_find_alpha_next(t_data *data, \
 char *prev_label)
 {
 	t_list	*found;
@@ -32,7 +32,7 @@ char *prev_label)
 
 	found = NULL;
 	found_label = NULL;
-	node = *env_list;
+	node = data->env_list;
 	while (node)
 	{
 		env = (t_env *)(node->content);
@@ -49,12 +49,12 @@ char *prev_label)
 	return (found);
 }
 
-static void	ms_builtin_export_no_arg(t_list **env_list)
+static void	ms_builtin_export_no_arg(t_data *data)
 {
 	t_list	*node;
 	t_env	*env;
 
-	node = ms_builtin_export_find_alpha_next(env_list, NULL);
+	node = ms_builtin_export_find_alpha_next(data, NULL);
 	while (node)
 	{
 		env = (t_env *)(node->content);
@@ -62,16 +62,16 @@ static void	ms_builtin_export_no_arg(t_list **env_list)
 			printf("declare -x %s=%s\n", env->label, env->value);
 		else
 			printf("declare -x %s\n", env->label);
-		node = ms_builtin_export_find_alpha_next(env_list, env->label);
+		node = ms_builtin_export_find_alpha_next(data, env->label);
 	}
 }
 
-static int	ms_builtin_export_one(t_list **env_list, char *arg)
+static int	ms_builtin_export_one(t_data *data, char *arg)
 {
 	t_env	*env;
 	int		ret;
 
-	if (!env_list || !*arg)
+	if (!data || !*arg)
 		return (FAILURE);
 	env = ms_env_from_char(arg);
 	if (!env)
@@ -82,28 +82,28 @@ static int	ms_builtin_export_one(t_list **env_list, char *arg)
 		ret = FAILURE;
 	}
 	else
-		ret = ms_env_list_set(env_list, env->label, env->value);
+		ret = ms_env_list_set(&(data->env_list), env->label, env->value);
 	ms_env_delete(env);
 	return (ret);
 }
 
-int	ms_builtin_export(t_list **env_list, char **args)
+int	ms_builtin_export(t_data *data, char **args)
 {
 	size_t	i;
 	int		ret;
 
-	if (!env_list)
+	if (!data)
 		return (FAILURE);
 	if (!args || !*args)
 	{
-		ms_builtin_export_no_arg(env_list);
+		ms_builtin_export_no_arg(data);
 		return (SUCCESS);
 	}
 	ret = SUCCESS;
 	i = 0;
 	while (args[i])
 	{
-		if (ms_builtin_export_one(env_list, args[i]) != SUCCESS)
+		if (ms_builtin_export_one(data, args[i]) != SUCCESS)
 			ret = FAILURE;
 		i++;
 	}
