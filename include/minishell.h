@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/28 17:26:40 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:55:11 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_trim
     int     quotes;
     int     len;
 }   t_trim;
+
 typedef struct s_cmd
 {
     char                **cmd;
