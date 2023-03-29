@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 12:39:27 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:58:46 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		else if (ft_streq(cmd_args[0], "cd"))
 			exit_code = ms_cd(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "exit"))
-		{
-			ms_env_list_clear(&env_list);
-			exit(EXIT_SUCCESS);
-		}
+			ms_builtin_exit(&env_list, cmd_args + 1);
 		else if (cmd_args[0])
 			printf("%s: command not found\n", cmd_args[0]);
 		if (exit_code != SUCCESS)

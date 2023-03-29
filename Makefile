@@ -49,6 +49,10 @@ OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
 						utils/ms_strs_len.c\
+						utils/ms_str_is_llong.c\
+						utils/ms_str_to_llong.c\
+						utils/ms_error.c\
+						utils/ms_exit.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -70,6 +74,7 @@ SRCS_FILES			=	\
 						builtin/ms_unset.c\
 						builtin/ms_export.c\
 						builtin/ms_cd.c\
+						builtin/ms_builtin_exit.c\
 						\
 						main.c\
 
