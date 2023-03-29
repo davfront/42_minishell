@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/28 17:55:11 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:04:56 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ void	ms_echo(char **args);
 
 // parsing
 int         ms_parser(char *line);
-char        **ms_cmdtrim(char *str, char *set);
-void        del_char(char *str, char c);
-int	        check_char_option(int c);
-int         is_option(char *str);
-void        ms_clean_commands(char **cmds);
-void        check_dollar(char **cmds, int i, int j);
-char        **create_cmd_init(char **array, int count);
-int         count_pipe(char *str);
-//void         command_list_init(char **array, int n_pipe);
-int         count_items_cmd(char **array, int *i);
-//t_cmd       *new_cmd(char **array, int count, int *j);
-void        create_list(char **array, int n_pipe);
-int         ft_index(char **array);
+char        **ms_cmdsplit(char *str, char *set);
 
-
-void        printarr(char **arr);
 #endif

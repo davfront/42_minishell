@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/03/29 10:33:59 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:04:31 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ms_parser(char *str)
 {
 	char	**cmds;
 
-	cmds = ms_cmdtrim(str, " ");
+	cmds = ms_cmdsplit(str, " ");
 	if (!cmds)
 		return (-1);
 	ft_free_split(cmds);

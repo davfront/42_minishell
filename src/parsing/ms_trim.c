@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:24:13 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/03/29 10:46:04 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:06:05 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ms_count_rows(char *str, char *set);
 static char	**ms_str(char **arr, char *str, char *set, t_trim *trim);
 static void	ms_init_struct_trim(char *str, t_trim *trim);
 
-char	**ms_cmdtrim(char *str, char *set)
+char	**ms_cmdsplit(char *str, char *set)
 {
 	t_trim	trim;
 	char	**array;
