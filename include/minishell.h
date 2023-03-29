@@ -85,11 +85,14 @@ int		ms_export(t_list **env_list, char **args);
 
 // parsing
 char	**ms_parser(char *line, char **env);
-char    *ms_expand_var(char *str, char **env);
+void    ms_expand_var(char *str, char **env);
+char    **ms_var_array(char *str, char **var_array, char **env);
 char    **ms_cmdsplit(char *str, char *set);
 int     ms_is_quote(char c);
 void    ms_free_and_exit(char *str);
 int     ms_content_len(int index, char *str);
 int     ms_count_var(char *str);
+
+void printarr(char **cmd);
 
 #endif

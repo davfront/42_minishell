@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void printarr(char **cmd)
+void printarr(char **cmd)
 {
     for (int i = 0; cmd[i]; i++)
     {
@@ -30,7 +30,7 @@ char	**ms_parser(char *str, char **env)
 	cmds = ms_cmdsplit(str, " ");
 	if (!cmds)
 		exit(EXIT_FAILURE);
-	printarr(cmds);
+	//printarr(cmds);
 	//ft_free_split(cmds);
 	return (cmds);
 }
