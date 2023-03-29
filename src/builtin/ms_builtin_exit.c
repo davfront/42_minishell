@@ -6,11 +6,13 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:28:38 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:18:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code;
 
 int	ms_builtin_exit(t_list **env_list, char **args)
 {
@@ -23,8 +25,7 @@ int	ms_builtin_exit(t_list **env_list, char **args)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	args_len = ms_strs_len(args);
 	if (args_len == 0)
-		ms_exit(env_list, SUCCESS);
-		// todo: use the last exit_code
+		ms_exit(env_list, g_exit_code);
 	else if (!ms_str_is_llong(args[0]))
 	{
 		ms_error("exit", args[0], "numeric argument required");
