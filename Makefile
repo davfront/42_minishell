@@ -68,7 +68,7 @@ SRCS_FILES			=	\
 						builtin/ms_export.c\
 						\
 						parsing/ms_parser.c\
-						parsing/ms_trim.c\
+						parsing/ms_cmdsplit.c\
 						\
 						main.c\
 
