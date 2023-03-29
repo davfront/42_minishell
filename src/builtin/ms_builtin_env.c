@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env.c                                           :+:      :+:    :+:   */
+/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 13:03:57 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:15:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env(t_list **env_list)
+void	ms_builtin_env(t_data *data)
 {
 	t_list	*node;
 	t_env	*env;
 
-	node = *env_list;
+	node = data->env_list;
 	while (node)
 	{
 		env = (t_env *)(node->content);

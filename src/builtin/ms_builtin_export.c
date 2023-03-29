@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_export.c                                        :+:      :+:    :+:   */
+/*   ms_builtin_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 14:28:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/01 10:02:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ms_export_print_identifier_error(char *label, char *value)
+static void	ms_builtin_export_print_identifier_error(char *label, char *value)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("export: `", STDERR_FILENO);
@@ -22,7 +22,8 @@ static void	ms_export_print_identifier_error(char *label, char *value)
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
 
-static t_list	*ms_export_find_alpha_next(t_list **env_list, char *prev_label)
+static t_list	*ms_builtin_export_find_alpha_next(t_data *data, \
+char *prev_label)
 {
 	t_list	*found;
 	char	*found_label;
@@ -31,7 +32,7 @@ static t_list	*ms_export_find_alpha_next(t_list **env_list, char *prev_label)
 
 	found = NULL;
 	found_label = NULL;
-	node = *env_list;
+	node = data->env_list;
 	while (node)
 	{
 		env = (t_env *)(node->content);
@@ -48,61 +49,65 @@ static t_list	*ms_export_find_alpha_next(t_list **env_list, char *prev_label)
 	return (found);
 }
 
-static void	ms_export_no_arg(t_list **env_list)
+static void	ms_builtin_export_no_arg(t_data *data)
 {
 	t_list	*node;
 	t_env	*env;
 
-	node = ms_export_find_alpha_next(env_list, NULL);
+	node = ms_builtin_export_find_alpha_next(data, NULL);
 	while (node)
 	{
 		env = (t_env *)(node->content);
+		ft_putstr("declare -x ");
+		ft_putstr(env->label);
 		if (env->value)
-			printf("declare -x %s=%s\n", env->label, env->value);
-		else
-			printf("declare -x %s\n", env->label);
-		node = ms_export_find_alpha_next(env_list, env->label);
+		{
+			ft_putstr("=");
+			ms_print_quoted(env->value);
+		}
+		ft_putstr("\n");
+		node = ms_builtin_export_find_alpha_next(data, env->label);
 	}
 }
 
-static int	ms_export_one(t_list **env_list, char *arg)
+static int	ms_builtin_export_one(t_data *data, char *arg)
 {
 	t_env	*env;
 	int		ret;
 
-	if (!env_list || !*arg)
+	if (!data || !*arg)
 		return (FAILURE);
 	env = ms_env_from_char(arg);
 	if (!env)
 		return (FAILURE);
 	if (!ms_env_is_valid_identifier(env->label))
 	{
-		ms_export_print_identifier_error(env->label, env->value);
+		ms_builtin_export_print_identifier_error(env->label, env->value);
 		ret = FAILURE;
 	}
 	else
-		ret = ms_env_list_set(env_list, env->label, env->value);
+		ret = ms_env_list_set(&(data->env_list), env->label, env->value);
 	ms_env_delete(env);
 	return (ret);
 }
 
-int	ms_export(t_list **env_list, char **args)
+int	ms_builtin_export(t_data *data, char **args)
 {
 	size_t	i;
 	int		ret;
 
-	if (!env_list)
+	if (!data)
 		return (FAILURE);
 	if (!args || !*args)
 	{
-		ms_export_no_arg(env_list);
+		ms_builtin_export_no_arg(data);
 		return (SUCCESS);
 	}
 	ret = SUCCESS;
 	i = 0;
 	while (args[i])
 	{
-		if (ms_export_one(env_list, args[i]) != SUCCESS)
+		if (ms_builtin_export_one(data, args[i]) != SUCCESS)
 			ret = FAILURE;
 		i++;
 	}

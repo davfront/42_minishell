@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 17:59:02 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/01 10:00:40 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
+# define LLONG_MAX_STR	"9223372036854775807"
+
+# define SUCCESS			EXIT_SUCCESS
+# define FAILURE			EXIT_FAILURE
+# define MISUSE				2
+
 typedef struct s_split
 {
     int     i;
@@ -48,40 +54,60 @@ typedef struct s_split
 
 typedef struct s_cmd
 {
-    char                **cmd;
-    int                 infile;
-    int                 outfile;
-    struct  s_cmd       *next;
-}   t_cmd;
-
-# define SUCCESS			0
-# define FAILURE			1
+	char				**cmd;
+	int					infile;
+	int					outfile;
+	struct s_cmd		*next;
+}	t_cmd;
 
 typedef struct s_env {
 	char	*label;
 	char	*value;
-}				t_env;
+}	t_env;
+
+typedef struct s_data {
+	t_list	*env_list;
+	char	*line;
+	char	**tokens;
+}	t_data;
+
+// utils
+size_t		ms_strs_len(char **strs);
+int			ms_str_is_llong(char *s);
+long long	ms_str_to_llong(char *str);
+void		ms_error(char *cmd, char *arg, char *msg);
+void		ms_exit(t_data *data, int exit_code);
+void		ms_init(t_data *data, char **envp);
+void		ms_reset(t_data *data);
+
+// utils
+void	ms_print_quoted(char *s);
 
 // env
-t_env	*ms_env_new(char *label, char *value);
-t_env	*ms_env_from_char(char *s);
-void	ms_env_delete(void *content);
-int		ms_env_list_add(t_list **env_list, t_env *env);
-int		ms_env_list_init(t_list **env_list, char **envp);
-void	ms_env_list_clear(t_list **env_list);
-t_list	*ms_env_list_get_by_label(t_list *env_list, char *label);
-void	ms_env_list_delete(t_list **env_list, t_list *node);
-int		ms_env_is_valid_identifier(char *name);
-int		ms_env_list_update(t_list *node, char *value);
-int		ms_env_list_set(t_list **env_list, char *label, char *value);
-void	ms_env_list_unset(t_list **env_list, char *label);
+t_env		*ms_env_new(char *label, char *value);
+t_env		*ms_env_from_char(char *s);
+void		ms_env_delete(void *content);
+int			ms_env_list_add(t_list **env_list, t_env *env);
+int			ms_env_list_init(t_list **env_list, char **envp);
+void		ms_env_list_clear(t_list **env_list);
+t_list		*ms_env_list_find(t_list *env_list, char *label);
+void		ms_env_list_delete(t_list **env_list, t_list *node);
+int			ms_env_is_valid_identifier(char *name);
+int			ms_env_list_update(t_list *node, char *value);
+char		*ms_env_list_get(t_list **env_list, char *label);
+int			ms_env_list_set(t_list **env_list, char *label, char *value);
+void		ms_env_list_unset(t_list **env_list, char *label);
 
-// builtin
-void	ms_pwd(void);
-void	ms_echo(char **args);
-void	ms_env(t_list **env_list);
-void	ms_unset(t_list **env_list, char **args);
-int		ms_export(t_list **env_list, char **args);
+//	 builtin
+int			ms_builtin_pwd(void);
+void		ms_builtin_echo(char **args);
+void		ms_builtin_env(t_data *data);
+void		ms_unset(t_data *data, char **args);
+int			ms_builtin_export(t_data *data, char **args);
+int			ms_builtin_cd(t_data *data, char **args);
+int			ms_builtin_exit(t_data *data, char **args);
+int			ms_is_builtin_cmd(char *cmd);
+int			ms_builtin_cmd(t_data *data, char **cmd_args);
 
 // parsing
 char	**ms_parser(char *line, char **env);

@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_update.c                               :+:      :+:    :+:   */
+/*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 16:53:19 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 17:46:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_update(t_list *node, char *value)
+void	ms_error(char *cmd, char *arg, char *msg)
 {
-	t_env	*env;
-	char	*new_value;
-
-	if (!node)
-		return (FAILURE);
-	env = (t_env *)(node->content);
-	if (!env)
-		return (FAILURE);
-	ft_free((void **)&(env->value));
-	new_value = NULL;
-	if (value)
+	if (cmd || arg || msg)
+		ft_putstr_fd("minishell", STDERR_FILENO);
+	if (cmd)
 	{
-		new_value = ft_strdup(value);
-		if (!new_value)
-			return (FAILURE);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
 	}
-	env->value = new_value;
-	return (SUCCESS);
+	if (arg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(arg, STDERR_FILENO);
+	}
+	if (msg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
 }

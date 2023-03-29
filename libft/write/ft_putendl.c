@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 02:33:04 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 11:22:55 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:57:50 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putendl(char *s)
 {
-	ft_putendl_fd(s, 1);
+	ft_putendl_fd(s, STDOUT_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 14:28:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:31:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_env	*ms_env_new(char *label, char *value)
 	if (!env)
 		return (NULL);
 	env->label = ft_strdup(label);
+	env->value = NULL;
 	if (!env->label)
 	{
 		ms_env_delete(env);
