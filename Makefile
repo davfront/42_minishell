@@ -71,6 +71,9 @@ SRCS_FILES			=	\
 						builtin/ms_export.c\
 						builtin/ms_cd.c\
 						\
+						parsing/ms_parser.c\
+						parsing/ms_trim.c\
+						\
 						main.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
 /*   Updated: 2023/03/27 14:39:56 by dapereir         ###   ########.fr       */
@@ -35,6 +35,23 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+
+typedef struct s_trim
+{
+    int     i;
+    int     j;
+    int     k;
+    int     quotes;
+    int     len;
+}   t_trim;
+
+typedef struct s_cmd
+{
+    char                **cmd;
+    int                 infile;
+    int                 outfile;
+    struct  s_cmd       *next;
+}   t_cmd;
 
 # define SUCCESS			0
 # define FAILURE			1
@@ -69,5 +86,9 @@ void	ms_env(t_list **env_list);
 void	ms_unset(t_list **env_list, char **args);
 int		ms_export(t_list **env_list, char **args);
 int		ms_cd(t_list **env_list, char **args);
+
+// parsing
+int         ms_parser(char *line);
+char        **ms_cmdsplit(char *str, char *set);
 
 #endif
