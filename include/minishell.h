@@ -83,7 +83,7 @@ void	ms_unset(t_list **env_list, char **args);
 int		ms_export(t_list **env_list, char **args);
 
 // parsing
-int     ms_parser(char *line);
+char	**ms_parser(char *line);
 char    **ms_cmdsplit(char *str, char *set);
 
 #endif

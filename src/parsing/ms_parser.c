@@ -12,13 +12,12 @@
 
 #include "minishell.h"
 
-int	ms_parser(char *str)
+char	**ms_parser(char *str)
 {
 	char	**cmds;
 
 	cmds = ms_cmdsplit(str, " ");
 	if (!cmds)
-		return (-1);
-	ft_free_split(cmds);
-	return (0);
+		exit(EXIT_FAILURE);
+	return (cmds);
 }
