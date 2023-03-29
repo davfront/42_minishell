@@ -36,14 +36,14 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-typedef struct s_trim
+typedef struct s_split
 {
     int     i;
-    int     j;
-    int     k;
+    int     q_index;
+    int     arr_index;
     int     quotes;
     int     len;
-}   t_trim;
+}   t_split;
 
 typedef struct s_cmd
 {
@@ -83,7 +83,7 @@ void	ms_unset(t_list **env_list, char **args);
 int		ms_export(t_list **env_list, char **args);
 
 // parsing
-int         ms_parser(char *line);
-char        **ms_cmdsplit(char *str, char *set);
+int     ms_parser(char *line);
+char    **ms_cmdsplit(char *str, char *set);
 
 #endif
