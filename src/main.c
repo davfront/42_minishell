@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:05:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:14:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ int	main(int argc, char **argv, char **envp)
 		cmd_args = ft_split(line, ' ');
 		// todo: protect malloc
 		if (ft_streq(cmd_args[0], "pwd"))
-			ms_pwd();
+			ms_builtin_pwd();
 		else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
-			ms_echo(cmd_args + 1);
+			ms_builtin_echo(cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "env"))
-			ms_env(&env_list);
+			ms_builtin_env(&env_list);
 		else if (ft_streq(cmd_args[0], "export"))
-			exit_code = ms_export(&env_list, cmd_args + 1);
+			exit_code = ms_builtin_export(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "unset"))
 			ms_unset(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "cd"))
-			exit_code = ms_cd(&env_list, cmd_args + 1);
+			exit_code = ms_builtin_cd(&env_list, cmd_args + 1);
 		else if (ft_streq(cmd_args[0], "exit"))
 			ms_builtin_exit(&env_list, cmd_args + 1);
 		else if (cmd_args[0])

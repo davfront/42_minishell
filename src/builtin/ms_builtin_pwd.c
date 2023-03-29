@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 11:31:08 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 18:24:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_unset(t_list **env_list, char **args)
+int	ms_builtin_pwd(void)
 {
-	if (!env_list || !*env_list || !args || !*args)
-		return ;
-	while (*args)
+	char	cwd[PATH_MAX];
+
+	if (!getcwd(cwd, sizeof(cwd)))
 	{
-		ms_env_list_unset(env_list, *args);
-		args++;
+		perror("getcwd failed");
+		return (FAILURE);
 	}
+	printf("%s\n", cwd);
+	return (SUCCESS);
 }

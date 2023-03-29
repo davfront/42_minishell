@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_cd.c                                            :+:      :+:    :+:   */
+/*   ms_builtin_cd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 12:04:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 16:04:13 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:23:40 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_chdir(t_list **env_list, char *dir)
+static int	ms_chdir(t_list **env_list, char *dir)
 {
 	int		ret;
 	char	*oldpwd;
@@ -36,7 +36,7 @@ int	ms_chdir(t_list **env_list, char *dir)
 	return (SUCCESS);
 }
 
-int	ms_cd_home(t_list **env_list)
+static int	ms_builtin_cd_home(t_list **env_list)
 {
 	char	*dir;
 
@@ -51,7 +51,7 @@ int	ms_cd_home(t_list **env_list)
 	return (ms_chdir(env_list, dir));
 }
 
-int	ms_cd_from_home(t_list **env_list, char *dir)
+static int	ms_builtin_cd_from_home(t_list **env_list, char *dir)
 {
 	char	*home;
 	char	*new_dir;
@@ -68,7 +68,7 @@ int	ms_cd_from_home(t_list **env_list, char *dir)
 	return (ret);
 }
 
-int	ms_cd_oldpwd(t_list **env_list)
+static int	ms_builtin_cd_oldpwd(t_list **env_list)
 {
 	char	*dir;
 
@@ -82,10 +82,10 @@ int	ms_cd_oldpwd(t_list **env_list)
 	}
 	if (ms_chdir(env_list, dir) != SUCCESS)
 		return (FAILURE);
-	return (ms_pwd());
+	return (ms_builtin_pwd());
 }
 
-int	ms_cd(t_list **env_list, char **args)
+int	ms_builtin_cd(t_list **env_list, char **args)
 {
 	size_t	args_len;
 	char	*dir;
@@ -100,10 +100,10 @@ int	ms_cd(t_list **env_list, char **args)
 	}
 	dir = args[0];
 	if (!dir || ft_streq(dir, "~") || ft_strncmp(dir, "--", 2) == 0)
-		return (ms_cd_home(env_list));
+		return (ms_builtin_cd_home(env_list));
 	if (ft_strncmp(dir, "~/", 2) == 0)
-		return (ms_cd_from_home(env_list, dir));
+		return (ms_builtin_cd_from_home(env_list, dir));
 	else if (ft_streq(dir, "-"))
-		return (ms_cd_oldpwd(env_list));
+		return (ms_builtin_cd_oldpwd(env_list));
 	return (ms_chdir(env_list, dir));
 }

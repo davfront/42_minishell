@@ -68,12 +68,12 @@ SRCS_FILES			=	\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
 						\
-						builtin/ms_pwd.c\
-						builtin/ms_echo.c\
-						builtin/ms_env.c\
-						builtin/ms_unset.c\
-						builtin/ms_export.c\
-						builtin/ms_cd.c\
+						builtin/ms_builtin_pwd.c\
+						builtin/ms_builtin_echo.c\
+						builtin/ms_builtin_env.c\
+						builtin/ms_builtin_unset.c\
+						builtin/ms_builtin_export.c\
+						builtin/ms_builtin_cd.c\
 						builtin/ms_builtin_exit.c\
 						\
 						parsing/ms_parser.c\
