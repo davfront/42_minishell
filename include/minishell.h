@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:17:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:38:55 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
+
+#define LLONG_MAX_STR	"9223372036854775807"
 
 # define SUCCESS			EXIT_SUCCESS
 # define FAILURE			EXIT_FAILURE
