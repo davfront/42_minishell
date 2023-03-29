@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 11:04:56 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/25 12:47:36 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,34 @@ typedef struct s_cmd
     struct  s_cmd       *next;
 }   t_cmd;
 
+# define SUCCESS			0
+# define FAILURE			1
+
+typedef struct s_env {
+	char	*label;
+	char	*value;
+}				t_env;
+
+// env
+t_env	*ms_env_new(char *label, char *value);
+t_env	*ms_env_from_char(char *s);
+void	ms_env_delete(void *content);
+int		ms_env_list_add(t_list **env_list, t_env *env);
+int		ms_env_list_init(t_list **env_list, char **envp);
+void	ms_env_list_clear(t_list **env_list);
+t_list	*ms_env_list_get_by_label(t_list *env_list, char *label);
+void	ms_env_list_delete(t_list **env_list, t_list *node);
+int		ms_env_is_valid_identifier(char *name);
+int		ms_env_list_update(t_list *node, char *value);
+int		ms_env_list_set(t_list **env_list, char *label, char *value);
+void	ms_env_list_unset(t_list **env_list, char *label);
+
 // builtin
 void	ms_pwd(void);
 void	ms_echo(char **args);
+void	ms_env(t_list **env_list);
+void	ms_unset(t_list **env_list, char **args);
+int		ms_export(t_list **env_list, char **args);
 
 // parsing
 int         ms_parser(char *line);
