@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:22:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:50:36 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		ms_unset(t_list **env_list, char **args);
 int			ms_builtin_export(t_list **env_list, char **args);
 int			ms_builtin_cd(t_list **env_list, char **args);
 int			ms_builtin_exit(t_list **env_list, char **args);
+int			ms_is_builtin_cmd(char *cmd);
+int			ms_builtin_cmd(t_list **env_list, char **cmd_args);
 
 // parsing
 int			ms_parser(char *line);

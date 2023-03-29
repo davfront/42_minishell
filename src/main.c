@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:14:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:51:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		cmd_args = ft_split(line, ' ');
 		// todo: protect malloc
-		if (ft_streq(cmd_args[0], "pwd"))
-			ms_builtin_pwd();
-		else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
-			ms_builtin_echo(cmd_args + 1);
-		else if (ft_streq(cmd_args[0], "env"))
-			ms_builtin_env(&env_list);
-		else if (ft_streq(cmd_args[0], "export"))
-			exit_code = ms_builtin_export(&env_list, cmd_args + 1);
-		else if (ft_streq(cmd_args[0], "unset"))
-			ms_unset(&env_list, cmd_args + 1);
-		else if (ft_streq(cmd_args[0], "cd"))
-			exit_code = ms_builtin_cd(&env_list, cmd_args + 1);
-		else if (ft_streq(cmd_args[0], "exit"))
-			ms_builtin_exit(&env_list, cmd_args + 1);
+		if (ms_is_builtin_cmd(cmd_args[0]))
+			exit_code = ms_builtin_cmd(&env_list, cmd_args);
 		else if (cmd_args[0])
 			printf("%s: command not found\n", cmd_args[0]);
 		if (exit_code != SUCCESS)
