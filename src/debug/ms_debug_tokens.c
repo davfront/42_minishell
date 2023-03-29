@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_debug_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
+/*   Created: 2023/03/29 23:35:33 by dapereir          #+#    #+#             */
 /*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+void	ms_debug_tokens(t_data *data)
 {
-	t_list	*node;
-	t_env	*env;
+	size_t	i;
 
-	node = data->env_list;
-	while (node)
+	if (!DEBUG)
+		return;
+	ft_printf("\033[2mtokens:");
+	if (!data || !data->tokens)
 	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			ft_printf("%s=%s\n", env->label, env->value);
-		node = node->next;
+		ft_printf("NULL\n\033[0m");
+		return ;
 	}
+	i = 0;
+	while (data->tokens[i])
+	{
+		ft_printf(" [%s]", data->tokens[i]);
+		i++;
+	}
+	ft_printf("\n\033[0m");
 }

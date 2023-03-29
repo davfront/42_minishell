@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:28:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:14:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	ms_builtin_export_no_arg(t_data *data)
 	{
 		env = (t_env *)(node->content);
 		if (env->value)
-			printf("declare -x %s=%s\n", env->label, env->value);
+			ft_printf("declare -x %s=%s\n", env->label, env->value);
 		else
-			printf("declare -x %s\n", env->label);
+			ft_printf("declare -x %s\n", env->label);
 		node = ms_builtin_export_find_alpha_next(data, env->label);
 	}
 }

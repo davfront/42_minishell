@@ -83,6 +83,9 @@ SRCS_FILES			=	\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
 						\
+						debug/ms_debug_tokens.c\
+						debug/ms_debug_exit_code.c\
+						\
 						main.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

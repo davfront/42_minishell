@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:53:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:16:12 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	ms_builtin_echo(char **args)
 	while (args[i])
 	{
 		if (i > 0)
-			printf(" ");
-		printf("%s", args[i]);
+			ft_printf(" ");
+		ft_printf("%s", args[i]);
 		i++;
 	}
 	if (!omit_end_line)
-		printf("\n");
+		ft_printf("\n");
 }

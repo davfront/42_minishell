@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 22:46:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:17:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-# define LLONG_MAX_STR	"9223372036854775807"
+# define DEBUG				1
+
+# define LLONG_MAX_STR		"9223372036854775807"
 
 # define SUCCESS			EXIT_SUCCESS
 # define FAILURE			EXIT_FAILURE
@@ -108,5 +110,9 @@ int			ms_builtin_cmd(t_data *data, char **cmd_args);
 // parsing
 char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
+
+// debug
+void		ms_debug_tokens(t_data *data);
+void		ms_debug_exit_code(int exit_code);
 
 #endif
