@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/28 15:20:13 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:08:38 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("\033[1;36mminishell> \033[0m");
 		add_history(line);
-		cmd_args = ms_parser(line);
+		cmd_args = ms_parser(line, envp);
 		if (!cmd_args)
 			exit(EXIT_FAILURE);
 		if (ft_streq(cmd_args[0], "pwd"))

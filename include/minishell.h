@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 12:47:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:18:54 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ void	ms_unset(t_list **env_list, char **args);
 int		ms_export(t_list **env_list, char **args);
 
 // parsing
-char	**ms_parser(char *line);
+char	**ms_parser(char *line, char **env);
+char    *ms_expand_var(char *str, char **env);
 char    **ms_cmdsplit(char *str, char *set);
+int     ms_is_quote(char c);
+void    ms_free_and_exit(char *str);
+int     ms_content_len(int index, char *str);
+int     ms_count_var(char *str);
 
 #endif
