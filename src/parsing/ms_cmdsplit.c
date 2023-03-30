@@ -13,12 +13,12 @@
 #include "minishell.h"
 
 static int	ms_count_rows(char *str, char *set);
-static char	**ms_str(char **arr, char *str, char *set, t_trim *trim);
-static void	ms_init_struct_trim(char *str, t_trim *trim);
+static char	**ms_str(char **arr, char *str, char *set, t_split *split);
+static void	ms_init_struct_split(char *str, t_split *split);
 
 char	**ms_cmdsplit(char *str, char *set)
 {
-	t_trim	trim;
+	t_split	split;
 	char	**array;
 	int		count;
 
@@ -28,35 +28,37 @@ char	**ms_cmdsplit(char *str, char *set)
 	array = malloc((count + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);
-	array = ms_str(array, str, set, &trim);
+	array = ms_str(array, str, set, &split);
 	if (!array)
 		exit(EXIT_FAILURE);
 	array[count] = '\0';
 	return (array);
 }
 
-static char	**ms_str(char **arr, char *str, char *set, t_trim *trim)
+static char	**ms_str(char **arr, char *str, char *set, t_split *split)
 {
-	ms_init_struct_trim(str, trim);
-	while (str[trim->i] != '\0')
+	ms_init_struct_split(str, split);
+	while (str[split->i] != '\0')
 	{
-		while (ft_strchr(set, str[trim->i]) && str[trim->i] != '\0')
-			trim->i++;
-		trim->j = trim->i;
-		while (str[trim->i] != '\0')
+		while (ft_strchr(set, str[split->i]) && str[split->i] != '\0')
+			split->i++;
+		split->q_index = split->i;
+		while (str[split->i] != '\0')
 		{
-			if ((str[trim->i] == '\"' || str[trim->i] == '\'') && !trim->quotes)
-				trim->quotes = str[trim->i];
-			else if (str[trim->i] == trim->quotes)
-				trim->quotes = 0;
-			else if (ft_strchr(set, str[trim->i]) && !trim->quotes)
+			if ((str[split->i] == '\"' || \
+			str[split->i] == '\'') && !split->quotes)
+				split->quotes = str[split->i];
+			else if (str[split->i] == split->quotes)
+				split->quotes = 0;
+			else if (ft_strchr(set, str[split->i]) && !split->quotes)
 				break ;
-			trim->i++;
+			split->i++;
 		}
-		if (trim->j >= trim->len)
-			arr[trim->k++] = "\0";
+		if (split->q_index >= split->len)
+			arr[split->arr_index++] = "\0";
 		else
-			arr[trim->k++] = ft_substr(str, trim->j, trim->i - trim->j);
+			arr[split->arr_index++] = \
+			ft_substr(str, split->q_index, split->i - split->q_index);
 	}
 	return (arr);
 }
@@ -88,11 +90,11 @@ static int	ms_count_rows(char *str, char *set)
 	return (count);
 }
 
-static void	ms_init_struct_trim(char *str, t_trim *trim)
+static void	ms_init_struct_split(char *str, t_split *split)
 {
-	trim->i = 0;
-	trim->j = 0;
-	trim->k = 0;
-	trim->quotes = 0;
-	trim->len = ft_strlen(str);
+	split->i = 0;
+	split->q_index = 0;
+	split->arr_index = 0;
+	split->quotes = 0;
+	split->len = ft_strlen(str);
 }

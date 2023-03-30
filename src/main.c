@@ -28,8 +28,9 @@ int	main(int argc, char **argv, char **envp)
 		exit_code = 0;
 		line = readline("\033[1;36mminishell> \033[0m");
 		add_history(line);
-		cmd_args = ft_split(line, ' ');
-		// todo: protect malloc
+		cmd_args = ms_parser(line);
+		if (!cmd_args)
+			exit(EXIT_FAILURE);
 		if (ft_streq(cmd_args[0], "pwd"))
 			ms_pwd();
 		else if (cmd_args[0] && ft_streq(cmd_args[0], "echo"))
