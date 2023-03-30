@@ -70,6 +70,7 @@ SRCS_FILES			=	\
 						parsing/ms_parser.c\
 						parsing/ms_parser_utils.c\
 						parsing/ms_cmdsplit.c\
+						parsing/ms_dollar_split.c\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
 						\

@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/03/30 16:46:39 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:48:28 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 static char **ms_get_all_var(char *str, char **var_array, char **env, int size);
 static char	*ms_get_var_name(char *str, int i, int start);
 static char	*ms_get_var_content(char *var_name, char **env);
-
-static void printarr(char **cmd)
-{
-    for (int i = 0; cmd[i]; i++)
-    {
-        if (cmd[i])
-            printf("[%d]=%s\n", i, cmd[i]);
-    }
-    printf("\n");
-}
 
 char    *ms_expand_var(char *str, char **env)
 {
@@ -36,7 +26,7 @@ char    *ms_expand_var(char *str, char **env)
     if (!var_array)
         exit(EXIT_FAILURE);
     ms_get_all_var(str, var_array, env, size);
-    printarr(var_array);
+    //printarr(var_array);
     return (NULL);
 }
 
