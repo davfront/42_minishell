@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_pwd.c                                           :+:      :+:    :+:   */
+/*   ms_env_list_get.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 14:35:12 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/27 12:24:58 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_pwd(void)
+char	*ms_env_list_get(t_list **env_list, char *label)
 {
-	char	cwd[PATH_MAX];
+	t_list	*node;
+	t_env	*env;
 
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		perror("getcwd failed");
-		return (FAILURE);
-	}
-	printf("%s\n", cwd);
-	return (SUCCESS);
+	if (!env_list || !label)
+		return (NULL);
+	node = ms_env_list_find(*env_list, label);
+	if (!node)
+		return (NULL);
+	env = node->content;
+	if (!env)
+		return (NULL);
+	return (env->value);
 }

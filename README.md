@@ -32,7 +32,7 @@ foreground pipeline.
 	- [ ] ctrl-\ does nothing.
 - [ ] Your shell must implement the following builtins:
 	- [x] echo with option -n
-	- [ ] cd with only a relative or absolute path
+	- [x] cd with only a relative or absolute path
 	- [x] pwd with no options
 	- [x] export with no options
 	- [x] unset with no options

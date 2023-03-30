@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_pwd.c                                           :+:      :+:    :+:   */
+/*   ms_env_list_find.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 14:35:12 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/27 12:20:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_pwd(void)
+t_list	*ms_env_list_find(t_list *env_list, char *label)
 {
-	char	cwd[PATH_MAX];
+	t_list	*node;
+	t_env	*env;
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	if (!env_list || !label || !*label)
+		return (NULL);
+	node = env_list;
+	while (node)
 	{
-		perror("getcwd failed");
-		return (FAILURE);
+		env = (t_env *)(node->content);
+		if (env && env->label && ft_streq(env->label, label))
+			return (node);
+		node = node->next;
 	}
-	printf("%s\n", cwd);
-	return (SUCCESS);
+	return (NULL);
 }
