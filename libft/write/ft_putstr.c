@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 02:28:08 by dapereir          #+#    #+#             */
-/*   Updated: 2022/12/22 11:23:43 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:57:58 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putstr(char *s)
 {
-	ft_putstr_fd(s, 1);
+	ft_putstr_fd(s, STDOUT_FILENO);
 }

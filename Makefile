@@ -48,6 +48,7 @@ SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
+						utils/ms_print_quoted.c\
 						utils/ms_strs_len.c\
 						utils/ms_str_is_llong.c\
 						utils/ms_str_to_llong.c\

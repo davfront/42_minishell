@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ms_print_quoted.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 02:37:16 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 17:57:53 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/27 18:16:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_putnbr(int n)
+void	ms_print_quoted(char *s)
 {
-	ft_putnbr_fd(n, STDOUT_FILENO);
+	if (!s)
+		return ;
+	ft_putchar('"');
+	while (*s)
+	{
+		if (*s == '"' || *s == '\\')
+			ft_putchar('\\');
+		ft_putchar(*s);
+		s++;
+	}
+	ft_putchar('"');
 }
