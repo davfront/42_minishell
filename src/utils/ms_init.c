@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_new.c                                       :+:      :+:    :+:   */
+/*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:31:01 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 21:07:05 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ms_env_new(char *label, char *value)
+void	ms_init_default(t_data *data)
 {
-	t_env	*env;
+	if (!data)
+		return ;
+	data->env_list = NULL;
+	data->line = NULL;
+	data->tokens = NULL;
+}
 
-	if (!ms_env_is_valid_identifier(label))
-		return (NULL);
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	env->label = ft_strdup(label);
-	env->value = NULL;
-	if (!env->label)
-	{
-		ms_env_delete(env);
-		return (NULL);
-	}
-	if (value)
-	{
-		env->value = ft_strdup(value);
-		if (!env->value)
-		{
-			ms_env_delete(env);
-			return (NULL);
-		}
-	}
-	return (env);
+void	ms_init(t_data *data, char **envp)
+{
+	if (!data)
+		return ;
+	ms_init_default(data);
+	ms_env_list_init(&(data->env_list), envp);
 }

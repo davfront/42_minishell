@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 12:20:08 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
+/*   Updated: 2023/03/29 11:04:31 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+char	**ms_parser(char *str)
 {
-	t_list	*node;
+	char	**cmds;
 
-	if (!env_list || !label || !*label)
-		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	cmds = ms_cmdsplit(str, " ");
+	if (!cmds)
+		exit(EXIT_FAILURE);
+	return (cmds);
 }

@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_from_char.c                                 :+:      :+:    :+:   */
+/*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:26:41 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 17:46:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ms_env_from_char(char *s)
+void	ms_error(char *cmd, char *arg, char *msg)
 {
-	t_env	*env;
-	char	*substr;
-
-	if (!s)
-		return (NULL);
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	env->label = NULL;
-	env->value = NULL;
-	substr = ft_strchr(s, '=');
-	if (substr)
+	if (cmd || arg || msg)
+		ft_putstr_fd("minishell", STDERR_FILENO);
+	if (cmd)
 	{
-		env->label = ft_strndup(s, substr - s);
-		env->value = ft_strdup(substr + 1);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
 	}
-	else
-		env->label = ft_strdup(s);
-	if (!env->label || (substr && !env->value))
+	if (arg)
 	{
-		ms_env_delete(env);
-		return (NULL);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(arg, STDERR_FILENO);
 	}
-	return (env);
+	if (msg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
 }
