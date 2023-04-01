@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_set.c                                  :+:      :+:    :+:   */
+/*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:29:40 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 17:46:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_set(t_list **env_list, char *label, char *value)
+void	ms_error(char *cmd, char *arg, char *msg)
 {
-	t_list	*node;
-	t_env	*env;
-
-	if (!env_list || !label)
-		return (FAILURE);
-	if (!ms_env_is_valid_identifier(label))
-		return (FAILURE);
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		return (ms_env_list_update(node, value));
-	else
+	if (cmd || arg || msg)
+		ft_putstr_fd("minishell", STDERR_FILENO);
+	if (cmd)
 	{
-		env = ms_env_new(label, value);
-		if (!env)
-			return (FAILURE);
-		return (ms_env_list_add(env_list, env));
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
 	}
+	if (arg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(arg, STDERR_FILENO);
+	}
+	if (msg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
 }

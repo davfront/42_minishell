@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_pwd.c                                           :+:      :+:    :+:   */
+/*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 14:35:12 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 21:17:51 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_pwd(void)
+void	ms_exit(t_data *data, int exit_code)
 {
-	char	cwd[PATH_MAX];
-
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		perror("getcwd failed");
-		return (FAILURE);
-	}
-	printf("%s\n", cwd);
-	return (SUCCESS);
+	ms_reset(data);
+	exit(exit_code);
 }

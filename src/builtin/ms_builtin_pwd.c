@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_set.c                                  :+:      :+:    :+:   */
+/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:29:40 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 18:24:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_set(t_list **env_list, char *label, char *value)
+int	ms_builtin_pwd(void)
 {
-	t_list	*node;
-	t_env	*env;
+	char	cwd[PATH_MAX];
 
-	if (!env_list || !label)
-		return (FAILURE);
-	if (!ms_env_is_valid_identifier(label))
-		return (FAILURE);
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		return (ms_env_list_update(node, value));
-	else
+	if (!getcwd(cwd, sizeof(cwd)))
 	{
-		env = ms_env_new(label, value);
-		if (!env)
-			return (FAILURE);
-		return (ms_env_list_add(env_list, env));
+		perror("getcwd failed");
+		return (FAILURE);
 	}
+	printf("%s\n", cwd);
+	return (SUCCESS);
 }

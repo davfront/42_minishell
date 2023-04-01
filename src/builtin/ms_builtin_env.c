@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 11:31:08 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 21:15:32 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_unset(t_list **env_list, char **args)
+void	ms_builtin_env(t_data *data)
 {
-	if (!env_list || !*env_list || !args || !*args)
-		return ;
-	while (*args)
+	t_list	*node;
+	t_env	*env;
+
+	node = data->env_list;
+	while (node)
 	{
-		ms_env_list_unset(env_list, *args);
-		args++;
+		env = (t_env *)(node->content);
+		if (env->value)
+			printf("%s=%s\n", env->label, env->value);
+		node = node->next;
 	}
 }

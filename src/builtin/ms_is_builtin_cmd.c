@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_set.c                                  :+:      :+:    :+:   */
+/*   ms_is_builtin_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:29:40 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/29 18:31:04 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 18:35:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_set(t_list **env_list, char *label, char *value)
+int	ms_is_builtin_cmd(char *cmd)
 {
-	t_list	*node;
-	t_env	*env;
-
-	if (!env_list || !label)
-		return (FAILURE);
-	if (!ms_env_is_valid_identifier(label))
-		return (FAILURE);
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		return (ms_env_list_update(node, value));
-	else
-	{
-		env = ms_env_new(label, value);
-		if (!env)
-			return (FAILURE);
-		return (ms_env_list_add(env_list, env));
-	}
+	if (ft_streq(cmd, "pwd"))
+		return (1);
+	if (ft_streq(cmd, "echo"))
+		return (1);
+	if (ft_streq(cmd, "env"))
+		return (1);
+	if (ft_streq(cmd, "export"))
+		return (1);
+	if (ft_streq(cmd, "unset"))
+		return (1);
+	if (ft_streq(cmd, "cd"))
+		return (1);
+	if (ft_streq(cmd, "exit"))
+		return (1);
+	return (0);
 }

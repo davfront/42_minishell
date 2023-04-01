@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_set.c                                  :+:      :+:    :+:   */
+/*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:29:40 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/29 21:07:05 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_set(t_list **env_list, char *label, char *value)
+void	ms_init_default(t_data *data)
 {
-	t_list	*node;
-	t_env	*env;
+	if (!data)
+		return ;
+	data->env_list = NULL;
+	data->line = NULL;
+	data->tokens = NULL;
+}
 
-	if (!env_list || !label)
-		return (FAILURE);
-	if (!ms_env_is_valid_identifier(label))
-		return (FAILURE);
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		return (ms_env_list_update(node, value));
-	else
-	{
-		env = ms_env_new(label, value);
-		if (!env)
-			return (FAILURE);
-		return (ms_env_list_add(env_list, env));
-	}
+void	ms_init(t_data *data, char **envp)
+{
+	if (!data)
+		return ;
+	ms_init_default(data);
+	ms_env_list_init(&(data->env_list), envp);
 }
