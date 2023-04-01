@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/25 14:28:42 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/01 09:44:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ int	ms_env_list_set(t_list **env_list, char *label, char *value)
 		return (FAILURE);
 	if (!ms_env_is_valid_identifier(label))
 		return (FAILURE);
-	node = ms_env_list_get_by_label(*env_list, label);
+	node = ms_env_list_find(*env_list, label);
 	if (node)
+	{
+		if (!value)
+			return (SUCCESS);
 		return (ms_env_list_update(node, value));
+	}
 	else
 	{
 		env = ms_env_new(label, value);

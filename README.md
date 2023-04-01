@@ -30,14 +30,14 @@ foreground pipeline.
 	- [ ] ctrl-C displays a new prompt on a new line.
 	- [ ] ctrl-D exits the shell.
 	- [ ] ctrl-\ does nothing.
-- [ ] Your shell must implement the following builtins:
+- [x] Your shell must implement the following builtins:
 	- [x] echo with option -n
-	- [ ] cd with only a relative or absolute path
+	- [x] cd with only a relative or absolute path
 	- [x] pwd with no options
 	- [x] export with no options
 	- [x] unset with no options
 	- [x] env with no options or arguments
-	- [ ] exit with no options
+	- [x] exit with no options
 
 **The readline() function can cause memory leaks. You don’t have to fix them.**
 

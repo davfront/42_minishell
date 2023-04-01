@@ -49,6 +49,13 @@ OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
 						utils/ms_print_quoted.c\
+						utils/ms_strs_len.c\
+						utils/ms_str_is_llong.c\
+						utils/ms_str_to_llong.c\
+						utils/ms_error.c\
+						utils/ms_exit.c\
+						utils/ms_init.c\
+						utils/ms_reset.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -56,18 +63,26 @@ SRCS_FILES			=	\
 						env/ms_env_list_add.c\
 						env/ms_env_list_init.c\
 						env/ms_env_list_clear.c\
-						env/ms_env_list_get_by_label.c\
+						env/ms_env_list_find.c\
 						env/ms_env_list_delete.c\
 						env/ms_env_is_valid_identifier.c\
 						env/ms_env_list_update.c\
+						env/ms_env_list_get.c\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
 						\
-						builtin/ms_pwd.c\
-						builtin/ms_echo.c\
-						builtin/ms_env.c\
-						builtin/ms_unset.c\
-						builtin/ms_export.c\
+						builtin/ms_builtin_pwd.c\
+						builtin/ms_builtin_echo.c\
+						builtin/ms_builtin_env.c\
+						builtin/ms_builtin_unset.c\
+						builtin/ms_builtin_export.c\
+						builtin/ms_builtin_cd.c\
+						builtin/ms_builtin_exit.c\
+						builtin/ms_is_builtin_cmd.c\
+						builtin/ms_builtin_cmd.c\
+						\
+						parsing/ms_parser.c\
+						parsing/ms_cmdsplit.c\
 						\
 						main.c\
 

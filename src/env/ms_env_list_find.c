@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_update.c                               :+:      :+:    :+:   */
+/*   ms_env_list_find.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 16:53:19 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:20:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_update(t_list *node, char *value)
+t_list	*ms_env_list_find(t_list *env_list, char *label)
 {
+	t_list	*node;
 	t_env	*env;
-	char	*new_value;
 
-	if (!node)
-		return (FAILURE);
-	env = (t_env *)(node->content);
-	if (!env)
-		return (FAILURE);
-	ft_free((void **)&(env->value));
-	new_value = NULL;
-	if (value)
+	if (!env_list || !label || !*label)
+		return (NULL);
+	node = env_list;
+	while (node)
 	{
-		new_value = ft_strdup(value);
-		if (!new_value)
-			return (FAILURE);
+		env = (t_env *)(node->content);
+		if (env && env->label && ft_streq(env->label, label))
+			return (node);
+		node = node->next;
 	}
-	env->value = new_value;
-	return (SUCCESS);
+	return (NULL);
 }
