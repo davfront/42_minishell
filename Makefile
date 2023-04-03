@@ -87,6 +87,7 @@ SRCS_FILES			=	\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
 						parsing/ms_var_array.c\
+						parsing/ms_tilde.c\
 						\
 						main.c\
 

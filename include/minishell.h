@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/01 10:00:40 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:54:51 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,17 @@
 # define FAILURE			EXIT_FAILURE
 # define MISUSE				2
 
+extern int	g_exit_code;
+
 typedef struct s_split
 {
-    int     i;
-    int     q_index;
-    int     arr_index;
-    int     quotes;
-    int     dollar;
-    int     len;
-}   t_split;
-
-typedef struct s_cmd
-{
-	char				**cmd;
-	int					infile;
-	int					outfile;
-	struct s_cmd		*next;
-}	t_cmd;
+	int	i;
+	int	q_index;
+	int	arr_index;
+	int	quotes;
+	int	dollar;
+	int	len;
+}	t_split;
 
 typedef struct s_env {
 	char	*label;
@@ -81,7 +75,7 @@ void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
 
 // utils
-void	ms_print_quoted(char *s);
+void		ms_print_quoted(char *s);
 
 // env
 t_env		*ms_env_new(char *label, char *value);
@@ -110,15 +104,19 @@ int			ms_is_builtin_cmd(char *cmd);
 int			ms_builtin_cmd(t_data *data, char **cmd_args);
 
 // parsing
-char	**ms_parser(char *line, char **env);
-char	*ms_expand_var(char *str, char **env);
-char    **ms_var_array(char *str, char **var_array, char **env);
-char    **ms_cmdsplit(char *str, char *set);
-int     ms_is_quote(char c);
-void    ms_free_and_exit(char *str);
-int     ms_content_len(int index, char *str);
-int     ms_count_var(char *str);
+char		**ms_parser(char *line, t_data *data);
+char		*ms_expand_var(char *str, t_list *env);
+char		**ms_var_array(char *str, char **var_array, t_list *env);
+char		**ms_cmdsplit(char *str, char *set);
+int			ms_content_len(int index, char *str);
+int			ms_count_var(char *str);
 
-void printarr(char **cmd);
+// parsing utils
+int			ms_is_quote(char c);
+void		ms_free_and_exit(char *str);
+void		ms_free_array(char **array);
+char		*ms_get_exit_code(int exit_code);
+
+void		printarr(char **cmd);
 
 #endif
