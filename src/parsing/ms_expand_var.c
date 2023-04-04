@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 09:58:58 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 15:14:43 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:37:27 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ static char	*ms_change_line(char *str, char **var_array, int i, int j)
 		exit(EXIT_FAILURE);
 	while (tmp[i])
 	{
-		if (tmp[i] == '$')
+		if (tmp[i] == '$' && !ms_char_print(tmp[i + 1]))
 		{
 			before = ms_get_before_dollar(tmp, i - 1);
 			if (tmp[i + 1] == '?')
 				after = &tmp[i + 2];
-			else if (ft_isalnum(tmp[i + 1]) || tmp[i + 1] == '!')
+			else if (ft_isalnum(tmp[i + 1]))
 				after = ms_get_after_dollar(tmp, i + 1);
+			else if (ms_char_nprint(tmp[i + 1]))
+				after = "";
 			tmp = ms_join(before, after, var_array, j);
 			j++;
 		}

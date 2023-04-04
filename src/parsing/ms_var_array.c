@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 15:39:00 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:56:41 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,39 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && !ms_char_print(str[i + 1]))
 		{
 			if (str[i + 1] == '?')
 				var_array[j] = ms_get_exit_code(g_exit_code);
-			if (ft_isalpha(str[i + 1]))
+			else if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || \
+				ms_char_nprint(str[i + 1]))
 			{
 				tmp = ms_get_var_name(str, i + 1, i + 1);
 				if (ms_get_var_content(tmp, env) != NULL)
 					var_array[j] = ms_get_var_content(tmp, env);
 			}
-			// if (ft_isdigit(str[i + 1]))
-			// 	var_array[j] = "";
 			j++;
 		}
 		i++;
 	}
 	var_array[size] = '\0';
-	return ( var_array);
+	return (var_array);
 }
 
 static char	*ms_get_var_name(char *str, int i, int start)
 {
 	int		end;
-	char	*tmp;
 	char	*var_name;
 
 	end = 0;
-	while (ft_isalpha(str[i]) == 1 || str[i] == '_')
+	while (ft_isalpha(str[i]) == 1 || ms_char_nprint(str[i]))
 	{
 		i++;
 		end++;
 	}
-	tmp = ft_substr(str, start, end);
-	if (!tmp)
-		return (NULL);
-	var_name = ft_strjoin(tmp, "=");
+	var_name = ft_substr(str, start, end);
 	if (!var_name)
-		ms_free_and_exit(tmp);
-	free(tmp);
+		return (NULL);
 	return (var_name);
 }
 
@@ -86,7 +80,6 @@ static char	*ms_get_var_content(char *var_name, t_list *env)
 {
 	t_list	*head;
 	t_env	*tmp;
-	char	*join;
 	char	*var_content;
 
 	head = env;
@@ -98,36 +91,29 @@ static char	*ms_get_var_content(char *var_name, t_list *env)
 		head = head->next;
 	}
 	tmp = (t_env *)head->content;
-	join = ft_strjoin(tmp->label, "=");
-	if (!join)
-		exit(EXIT_FAILURE);
-	if (ft_streq(var_name, join) == 1)
+	if (ft_streq(var_name, tmp->label) == 1)
 	{
 		var_content = ft_strdup(tmp->value);
 		if (!var_content)
 			exit(EXIT_FAILURE);
-		return (free(join), var_content);
+		return (var_content);
 	}
-	return (free(join), var_content);
+	return (var_content);
 }
 
 static char	*ms_content_from_list(char *var_name, t_list *head)
 {
 	t_env	*tmp;
-	char	*join;
 	char	*var_content_tmp;
 
 	tmp = (t_env *)head->content;
-	join = ft_strjoin(tmp->label, "=");
-	if (!join)
-		exit(EXIT_FAILURE);
-	if (ft_streq(var_name, join) == 1)
+	if (ft_streq(var_name, tmp->label) == 1)
 	{
 		var_content_tmp = ft_strdup(tmp->value);
 		if (!var_content_tmp)
 			exit(EXIT_FAILURE);
-		return (free(join), var_content_tmp);
+		return (var_content_tmp);
 	}
 	var_content_tmp = "";
-	return (free(join), var_content_tmp);
+	return (var_content_tmp);
 }

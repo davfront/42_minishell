@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/04 14:54:54 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:41:53 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ char		**ms_cmdsplit(char *str, char *set);
 char		*ms_expand_var(char *str, t_list *env);
 int			ms_content_len(int index, char *str);
 int			ms_count_var(char *str);
-char    	*ms_tilde(char *str, t_list *env);
-int 		ms_char_print(char c);
-int 		ms_dollar_is_valid(char c);
+char		*ms_tilde(char *str, t_list *env);
+int			ms_char_print(char c);
+int			ms_char_nprint(char c);
+int			ms_dollar_is_valid(char c);
 
 // parsing utils
 int			ms_is_quote(char c);

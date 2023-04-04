@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:09:23 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 13:25:28 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:38:49 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*ms_tilde(char *str, t_list *env)
 	while (str[i])
 	{
 		if (str[i] == '~' && str[i - 1] == ' ' && (str[i + 1] == ' ' || \
-					str[i + 1] == '/' || \
-                    str[i + 1] == '\0' || str[i + 1] == ':'))
+			str[i + 1] == '/' || \
+			str[i + 1] == '\0' || str[i + 1] == ':'))
 			str = ms_change_line(str, i, env);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:36:26 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 15:13:51 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:40:23 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ms_count_var(char *str)
 	return (size);
 }
 
-int ms_char_print(char c)
+int	ms_char_print(char c)
 {
 	if (c == '%' || \
 		c == '^' || \
@@ -55,11 +55,39 @@ int ms_char_print(char c)
 	return (0);
 }
 
-int ms_dollar_is_valid(char c)
+int	ms_char_nprint(char c)
 {
-	if (c == '?')
+	if (c == '!' || \
+		c == '@' || \
+		c == '#' || \
+		c == '&' || \
+		c == '*' || \
+		c == '(' || \
+		c == ')' || \
+		c == '-' || \
+		c == '_' || \
+		c == '{' || \
+		c == '}' || \
+		c == '[' || \
+		c == ']' || \
+		c == ':' || \
+		c == ';' || \
+		c == '\"' || \
+		c == ',' || \
+		c == '.' || \
+		c == '|' || \
+		c == '/' || \
+		c == '|' || \
+		c == '\\')
 		return (1);
-	if (ms_char_print(c) == 1)
+	return (0);
+}
+
+int	ms_dollar_is_valid(char c)
+{
+	if (c == '?' || c == '!')
+		return (1);
+	if (ms_char_print(c) == 0)
 		return (1);
 	if (ft_isalpha(c) == 1)
 		return (1);
