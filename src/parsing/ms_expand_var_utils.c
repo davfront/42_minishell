@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:36:26 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/03 10:03:13 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:13:51 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,36 @@ int	ms_count_var(char *str)
 	size = 0;
 	while (str[i])
 	{
-		if ((str[i] == '$' && !ms_is_quote(str[i + 1])) || \
-				(str[i] == '$' && str[i + 1] == '?'))
-			size++;
+		if (str[i] == '$')
+		{
+			if (ms_dollar_is_valid(str[i + 1]))
+				size++;
+		}
 		i++;
 	}
 	return (size);
+}
+
+int ms_char_print(char c)
+{
+	if (c == '%' || \
+		c == '^' || \
+		c == '+' || \
+		c == '=' || \
+		c == '~')
+		return (1);
+	return (0);
+}
+
+int ms_dollar_is_valid(char c)
+{
+	if (c == '?')
+		return (1);
+	if (ms_char_print(c) == 1)
+		return (1);
+	if (ft_isalpha(c) == 1)
+		return (1);
+	if (ms_is_quote(c) == 1)
+		return (1);
+	return (0);
 }

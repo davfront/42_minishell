@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/03 15:54:13 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:39:00 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,24 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] == '?')
+		if (str[i] == '$')
 		{
-			var_array[j] = ms_get_exit_code(g_exit_code);
-			j++;
-		}
-		else if (str[i] == '$' && !ms_is_quote(str[i + 1]))
-		{
-			tmp = ms_get_var_name(str, i + 1, i + 1);
-			if (ms_get_var_content(tmp, env) != NULL)
-				var_array[j] = ms_get_var_content(tmp, env);
+			if (str[i + 1] == '?')
+				var_array[j] = ms_get_exit_code(g_exit_code);
+			if (ft_isalpha(str[i + 1]))
+			{
+				tmp = ms_get_var_name(str, i + 1, i + 1);
+				if (ms_get_var_content(tmp, env) != NULL)
+					var_array[j] = ms_get_var_content(tmp, env);
+			}
+			// if (ft_isdigit(str[i + 1]))
+			// 	var_array[j] = "";
 			j++;
 		}
 		i++;
 	}
 	var_array[size] = '\0';
-	return (var_array);
+	return ( var_array);
 }
 
 static char	*ms_get_var_name(char *str, int i, int start)

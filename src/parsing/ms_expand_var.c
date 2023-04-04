@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 09:58:58 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/03 14:53:14 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:14:43 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ char	*ms_expand_var(char *str, t_list *env)
 	res = ms_change_line(str, var_array, 0, 0);
 	if (!res)
 		exit(EXIT_FAILURE);
+	res = ms_tilde(res, env);
+	if (!res)
+		exit(EXIT_FAILURE);
 	ms_free_array(var_array);
 	return (res);
 }
@@ -49,7 +52,7 @@ static char	*ms_change_line(char *str, char **var_array, int i, int j)
 			before = ms_get_before_dollar(tmp, i - 1);
 			if (tmp[i + 1] == '?')
 				after = &tmp[i + 2];
-			else if (ft_isalpha(tmp[i + 1]))
+			else if (ft_isalnum(tmp[i + 1]) || tmp[i + 1] == '!')
 				after = ms_get_after_dollar(tmp, i + 1);
 			tmp = ms_join(before, after, var_array, j);
 			j++;
@@ -71,7 +74,7 @@ static char	*ms_get_before_dollar(char *tmp, int i)
 
 static char	*ms_get_after_dollar(char *tmp, int i)
 {
-	while (tmp[i] && ft_isalpha(tmp[i]))
+	while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
 		i++;
 	return (&tmp[i]);
 }
