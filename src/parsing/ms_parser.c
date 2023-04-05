@@ -17,9 +17,9 @@ void	printarr(char **cmd)
 	for (int i = 0; cmd[i]; i++)
 	{
 		if (cmd[i])
-			printf("[%d]=%s\n", i, cmd[i]);
+			printf("-[%d]=%s\n", i, cmd[i]);
 	}
-	printf("\n");
+	printf("\n---------------------------\n");
 }
 
 char	**ms_parser(char *str, t_data *data)

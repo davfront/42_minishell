@@ -52,10 +52,8 @@ static char	*ms_change_line(char *str, char **var_array, int i, int j)
 			before = ms_get_before_dollar(tmp, i - 1);
 			if (tmp[i + 1] == '?')
 				after = &tmp[i + 2];
-			else if (ft_isalnum(tmp[i + 1]))
+			else if (ft_isalnum(tmp[i + 1]) || ms_char_nprint(tmp[i + 1]))
 				after = ms_get_after_dollar(tmp, i + 1);
-			else if (ms_char_nprint(tmp[i + 1]))
-				after = "";
 			tmp = ms_join(before, after, var_array, j);
 			j++;
 		}
@@ -76,6 +74,12 @@ static char	*ms_get_before_dollar(char *tmp, int i)
 
 static char	*ms_get_after_dollar(char *tmp, int i)
 {
+	if (ms_char_nprint(tmp[i]))
+	{
+		while (tmp[i] && ms_char_nprint(tmp[i]))
+			i++;
+		return (&tmp[i]);
+	}
 	while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
 		i++;
 	return (&tmp[i]);

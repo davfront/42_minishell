@@ -55,8 +55,8 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 		}
 		i++;
 	}
-	var_array[size] = '\0';
-	return (var_array);
+	free(tmp);
+	return (var_array[size] = '\0', var_array);
 }
 
 static char	*ms_get_var_name(char *str, int i, int start)
@@ -65,7 +65,7 @@ static char	*ms_get_var_name(char *str, int i, int start)
 	char	*var_name;
 
 	end = 0;
-	while (ft_isalpha(str[i]) == 1 || ms_char_nprint(str[i]))
+	while (ft_isalpha(str[i]) == 1)
 	{
 		i++;
 		end++;
