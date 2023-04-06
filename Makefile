@@ -56,6 +56,9 @@ SRCS_FILES			=	\
 						utils/ms_exit.c\
 						utils/ms_init.c\
 						utils/ms_reset.c\
+						utils/ms_join.c\
+						utils/ms_is_quote.c\
+						utils/ms_exit_code_as_str.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -82,11 +85,10 @@ SRCS_FILES			=	\
 						builtin/ms_builtin_cmd.c\
 						\
 						parsing/ms_parser.c\
-						parsing/ms_parser_utils.c\
 						parsing/ms_cmdsplit.c\
+						parsing/ms_get_var_name.c\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
-						parsing/ms_var_array.c\
 						parsing/ms_tilde.c\
 						\
 						main.c\

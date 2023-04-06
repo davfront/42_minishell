@@ -3,90 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tilde.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:09:23 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 17:38:49 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:39:04 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ms_change_line(char *str, int i, t_list *env);
+static char	*ms_change_line(char *str, int i, t_data *data);
 static char	*ms_cut_line(char *str, int i, char *home);
-static char	*ms_get_home(t_list *env);
 
-char	*ms_tilde(char *str, t_list *env)
+char	*ms_tilde(char *str, t_data *data)
 {
 	int		i;
+	char	*copy_str;
 
 	i = 0;
-	while (str[i])
+	copy_str = ft_strdup(str);
+	if (!copy_str)
+		return (NULL);
+	while (copy_str[i])
 	{
-		if (str[i] == '~' && str[i - 1] == ' ' && (str[i + 1] == ' ' || \
-			str[i + 1] == '/' || \
-			str[i + 1] == '\0' || str[i + 1] == ':'))
-			str = ms_change_line(str, i, env);
+		if (copy_str[i] == '~' && (copy_str[i + 1] == ' ' || \
+			copy_str[i + 1] == '/' || \
+			copy_str[i + 1] == '\0' || copy_str[i + 1] == ':'))
+			copy_str = ms_change_line(copy_str, i, data);
 		i++;
 	}
-	return (str);
+	return (copy_str);
 }
 
-static char	*ms_change_line(char *str, int i, t_list *env)
+static char	*ms_change_line(char *str, int i, t_data *data)
 {
 	char	*home;
+	char	*expanded_str;
 
-	home = ms_get_home(env);
+	home = ms_env_list_get(&(data->env_list), "HOME");
 	if (!home)
 		return (NULL);
-	home = ms_cut_line(str, i, home);
-	if (!home)
+	expanded_str = ms_cut_line(str, i, home);
+	if (!expanded_str)
 		return (NULL);
-	return (home);
+	return (expanded_str);
 }
 
 static char	*ms_cut_line(char *str, int i, char *home)
 {
-	char	*tmp;
+	char	*copy_str;
 	char	*before;
 	char	*after;
+	char	*expanded_tilde_str;
 
-	tmp = ft_strdup(str);
-	if (!tmp)
-		exit(EXIT_FAILURE);
-	before = ft_substr(tmp, 0, i);
+	copy_str = ft_strdup(str);
+	if (!copy_str)
+		return (NULL);
+	before = ft_substr(copy_str, 0, i);
 	if (!before)
-		exit(EXIT_FAILURE);
-	after = &tmp[i + 1];
-	home = ft_strjoin(before, home);
-	if (!home)
-		exit(EXIT_FAILURE);
-	home = ft_strjoin(home, after);
-	if (!home)
-		exit(EXIT_FAILURE);
-	free(before);
-	free(tmp);
-	return (home);
-}
-
-static char	*ms_get_home(t_list *env)
-{
-	t_list	*head;
-	t_env	*tmp;
-	char	*home;
-
-	head = env;
-	while (head->next != NULL)
-	{
-		tmp = (t_env *)head->content;
-		if (ft_streq("HOME", tmp->label) == 1)
-		{
-			home = ft_strdup(tmp->value);
-			if (!home)
-				exit(EXIT_FAILURE);
-			return (home);
-		}
-		head = head->next;
-	}
-	return (NULL);
+		return (NULL);
+	after = &copy_str[i + 1];
+	expanded_tilde_str = ms_join(before, home, after);
+	ft_free((void **)&before);
+	ft_free((void **)&copy_str);
+	return (expanded_tilde_str);
 }

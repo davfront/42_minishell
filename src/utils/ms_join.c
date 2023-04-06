@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parser.c                                        :+:      :+:    :+:   */
+/*   ms_join.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
+/*   Created: 2023/04/05 22:29:02 by lboulatr          #+#    #+#             */
 /*   Updated: 2023/04/05 23:22:49 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ms_parser(char *str, t_data *data)
+char    *ms_join(char *str1, char *str2, char *str3)
 {
-	char	*expanded_str;
-	char	*expanded_str2;
-	char	**tokens;
+	char	*tmp1;
+	char	*tmp2;
 
-	expanded_str = ms_expand_var(str, data);
-	if (!expanded_str)
+	if (!str1)
+		str1 = "";
+    if (!str2)
+		str2 = "";
+    if (!str3)
+		str3 = "";
+	tmp1 = ft_strjoin(str1, str2);
+	if (!tmp1)
 		return (NULL);
-	expanded_str2 = ms_tilde(expanded_str, data);
-	tokens = ms_cmdsplit(expanded_str2, " \t");
-	ft_free((void **)&expanded_str);
-	ft_free((void **)&expanded_str2);
-	return (tokens);
+	tmp2 = ft_strjoin(tmp1, str3);
+	if (!tmp2)
+		return (ft_free((void **)&tmp1), NULL);
+	ft_free((void **)&tmp1);
+	return (tmp2);
 }

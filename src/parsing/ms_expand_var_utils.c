@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_var_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 13:36:26 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/11 14:17:40 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:29:10 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ms_content_len(int index, char *str)
-{
-	int		count;
-
-	count = 0;
-	while (str[index])
-	{
-		index++;
-		count++;
-	}
-	return (count);
-}
 
 int	ms_count_var(char *str)
 {
@@ -45,7 +32,7 @@ int	ms_count_var(char *str)
 	return (size);
 }
 
-int	ms_char_print(char c)
+int	ms_is_char_print(char c)
 {
 	if (c == '%' || c == '^' || \
 		c == '+' || c == '=' || \
@@ -56,7 +43,7 @@ int	ms_char_print(char c)
 	return (0);
 }
 
-int	ms_char_nprint(char c)
+int	ms_is_char_nprint(char c)
 {
 	if (c == '!' || c == '@' || c == '#' || c == '&' || \
 		c == '*' || c == '(' || c == ')' || c == '-' || \
@@ -73,7 +60,7 @@ int	ms_dollar_is_valid(char c)
 		return (0);
 	if (c == '?' || c == '!')
 		return (1);
-	if (ms_char_print(c) == 0)
+	if (ms_is_char_print(c) == 0)
 		return (1);
 	if (ft_isalpha(c) == 1)
 		return (1);
@@ -81,3 +68,4 @@ int	ms_dollar_is_valid(char c)
 		return (1);
 	return (0);
 }
+

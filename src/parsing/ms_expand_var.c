@@ -3,106 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 09:58:58 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/11 17:48:45 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/06 02:33:24 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ms_change_line(char *str, char **var_array, int i, int j);
-static char	*ms_get_before_dollar(char *tmp, int i);
-static char	*ms_get_after_dollar(char *tmp, int i);
-static char	*ms_join(char *before, char *after, char *var_array);
+static char *ms_change_line(char *tmp, int *index, t_data *data);
+static char	*ms_get_after_dollar(char *dollar);
 
-char	*ms_expand_var(char *str, t_list *env)
+char	*ms_expand_var(char *str, t_data *data)
 {
-	char	**var_array;
-	char	*res;
-
-	var_array = NULL;
-	var_array = ms_var_array(str, var_array, env);
-	if (!var_array)
+	int		i;
+	char	*copy_str;
+	
+	i = 0;
+	copy_str = ft_strdup(str);
+	if (!copy_str)
 		return (NULL);
-	res = ms_change_line(str, var_array, 0, 0);
-	if (!res)
-		return (NULL);
-	res = ms_tilde(res, env);
-	if (!res)
-		return (NULL);
-	ms_free_array(var_array);
-	return (res);
+	while (copy_str[i])
+	{
+		if (copy_str[i] == '$' && !ms_is_char_print(copy_str[i + 1]))
+		{
+			copy_str = ms_change_line(copy_str, &i, data);
+			if (!copy_str)
+				return (NULL);
+		}
+		else
+			i++;
+	}
+	return (copy_str);
 }
 
-static char	*ms_change_line(char *s, char **var_array, int i, int j)
+static char *ms_change_line(char *tmp, int *index, t_data *data)
 {
 	char	*before;
 	char	*after;
-	char	*str;
-	char	*new_str;
+	char	*var_name;
+	char	*var_content;
+	char	*expanded_str;
+	int		i;
 
-	str = ft_strdup(s);
-	while (str[i])
-	{
-		if (str[i] == '$' && !ms_char_print(str[i + 1]))
-		{
-			before = ms_get_before_dollar(str, i - 1);
-			after = NULL;
-			if (str[i + 1] == '?')
-				after = &str[i + 2];
-			else if (ft_isalnum(str[i + 1]) || ms_char_nprint(str[i + 1]))
-				after = ms_get_after_dollar(str, i + 1);
-			if (after)
-			{
-				new_str = ms_join(before, after, var_array[j]);
-				i += ft_strlen(var_array[j]) - 1;
-				ft_free((void **)&str);
-				str = new_str;
-			}
-			ft_free((void **)&before);
-			j++;
-		}
+	i = *index;
+	before = ft_substr(tmp, 0, i);
+	if (tmp[i + 1] == '?')
+		after = &tmp[i + 2];
+	else if (ft_isalnum(tmp[i + 1]) || ms_is_char_nprint(tmp[i + 1]))
+		after = ms_get_after_dollar(tmp + i + 1);
+	var_name = ms_get_var_name(tmp, i + 1);
+	var_content = ms_env_list_get(&(data->env_list), var_name);
+	expanded_str = ms_join(before, var_content, after);
+	if (var_content)
+		(*index) += ft_strlen(var_content);
+	ft_free((void **)&before);
+	ft_free((void **)&var_name);
+	return (expanded_str);
+}
+
+static char	*ms_get_after_dollar(char *dollar)
+{
+	int		i;
+
+	i = 0;
+	if (dollar[i] == '{')
 		i++;
-	}
-	return (str);
-}
-
-static char	*ms_get_before_dollar(char *tmp, int i)
-{
-	char	*res;
-
-	res = ft_substr(tmp, 0, i + 1);
-	if (!res)
-		return (NULL);
-	return (res);
-}
-
-static char	*ms_get_after_dollar(char *tmp, int i)
-{
-	if (ms_char_nprint(tmp[i]))
+	if (ms_is_char_nprint(dollar[i]))
 	{
-		while (tmp[i] && ms_char_nprint(tmp[i]))
+		while (dollar[i] && ms_is_char_nprint(dollar[i]))
 			i++;
-		return (&tmp[i]);
+		return (&dollar[i]);
 	}
-	while (tmp[i] && (ft_isalnum(tmp[i]) || tmp[i] == '_'))
+	while (dollar[i] && (ft_isalnum(dollar[i]) || dollar[i] == '_'))
 		i++;
-	return (&tmp[i]);
-}
-
-static char	*ms_join(char *before, char *after, char *var_array)
-{
-	char	*tmp1;
-	char	*tmp2;
-
-	tmp1 = ft_strjoin(before, var_array);
-	if (!tmp1)
-		return (NULL);
-	tmp2 = ft_strjoin(tmp1, after);
-	if (!tmp2)
-		return (ft_free((void **)&tmp1), NULL);
-	ft_free((void **)&tmp1);
-	return (tmp2);
+	if (dollar[i] == '}')
+		i++;
+	return (&dollar[i]);
 }

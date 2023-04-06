@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/11 17:49:52 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/05 23:33:14 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void		ms_error(char *cmd, char *arg, char *msg);
 void		ms_exit(t_data *data, int exit_code);
 void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
+char    	*ms_join(char *str1, char *str2, char *str3);
+char		*ms_exit_code_as_str(int exit_code);
+int			ms_is_quote(char c);
 
 // utils
 void		ms_print_quoted(char *s);
@@ -108,20 +111,12 @@ char		**ms_var_array(char *str, char **var_array, t_list *env);
 char		**ms_cmdsplit(char *str, char *set);
 
 // expand
-char		*ms_expand_var(char *str, t_list *env);
-int			ms_content_len(int index, char *str);
+char		*ms_expand_var(char *str, t_data *data);
 int			ms_count_var(char *str);
-char		*ms_tilde(char *str, t_list *env);
-int			ms_char_print(char c);
-int			ms_char_nprint(char c);
+char		*ms_tilde(char *str, t_data *data);
+int			ms_is_char_print(char c);
+int			ms_is_char_nprint(char c);
 int			ms_dollar_is_valid(char c);
-
-// parsing utils
-int			ms_is_quote(char c);
-void		ms_free_and_exit(char *str);
-void		ms_free_array(char **array);
-char		*ms_get_exit_code(int exit_code);
-
-void		printarr(char **cmd);
+char		*ms_get_var_name(char *str, int index);
 
 #endif

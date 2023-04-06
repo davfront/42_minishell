@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parser.c                                        :+:      :+:    :+:   */
+/*   ms_exit_code_as_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/05 23:22:49 by osterger         ###   ########.fr       */
+/*   Created: 2023/04/05 23:32:05 by osterger          #+#    #+#             */
+/*   Updated: 2023/04/05 23:32:37 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ms_parser(char *str, t_data *data)
+char	*ms_exit_code_as_str(int exit_code)
 {
-	char	*expanded_str;
-	char	*expanded_str2;
-	char	**tokens;
+	char	*res;
 
-	expanded_str = ms_expand_var(str, data);
-	if (!expanded_str)
+	res = ft_itoa(exit_code);
+	if (!res)
 		return (NULL);
-	expanded_str2 = ms_tilde(expanded_str, data);
-	tokens = ms_cmdsplit(expanded_str2, " \t");
-	ft_free((void **)&expanded_str);
-	ft_free((void **)&expanded_str2);
-	return (tokens);
+	return (res);
 }

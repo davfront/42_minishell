@@ -16,6 +16,8 @@ void	ft_free_split(char **strs)
 {
 	size_t	i;
 
+	if (!strs)
+		return ;
 	i = 0;
 	while (strs[i])
 	{
