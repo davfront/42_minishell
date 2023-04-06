@@ -27,7 +27,7 @@ char	*ms_get_var_name(char *str, int index)
 			return (var_name);
 		else
 		{
-			ms_error("bash", var_name, "bad substitution");
+			ms_error3("bash", var_name, "bad substitution");
 			return (NULL);
 		}
 	}

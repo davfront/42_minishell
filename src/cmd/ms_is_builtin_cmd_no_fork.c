@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_is_builtin_cmd_no_fork.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:14:57 by dapereir         ###   ########.fr       */
+/*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 16:02:02 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+int	ms_is_builtin_cmd_no_fork(char *cmd)
 {
-	t_list	*node;
-
-	if (!env_list || !label || !*label)
-		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	if (ft_streq(cmd, "export"))
+		return (1);
+	if (ft_streq(cmd, "unset"))
+		return (1);
+	if (ft_streq(cmd, "cd"))
+		return (1);
+	if (ft_streq(cmd, "exit"))
+		return (1);
+	return (0);
 }

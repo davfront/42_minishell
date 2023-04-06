@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/01 10:02:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 22:57:03 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ static void	ms_builtin_export_no_arg(t_data *data)
 	while (node)
 	{
 		env = (t_env *)(node->content);
-		ft_putstr("declare -x ");
-		ft_putstr(env->label);
-		if (env->value)
+		if (env->export)
 		{
-			ft_putstr("=");
-			ms_print_quoted(env->value);
+			ft_putstr("declare -x ");
+			ft_putstr(env->label);
+			if (env->value)
+			{
+				ft_putstr("=");
+				ms_print_quoted(env->value);
+			}
+			ft_putstr("\n");
 		}
-		ft_putstr("\n");
 		node = ms_builtin_export_find_alpha_next(data, env->label);
 	}
 }
@@ -77,7 +80,7 @@ static int	ms_builtin_export_one(t_data *data, char *arg)
 
 	if (!data || !*arg)
 		return (FAILURE);
-	env = ms_env_from_char(arg);
+	env = ms_env_from_char(arg, 1);
 	if (!env)
 		return (FAILURE);
 	if (!ms_env_is_valid_identifier(env->label))
@@ -86,7 +89,8 @@ static int	ms_builtin_export_one(t_data *data, char *arg)
 		ret = FAILURE;
 	}
 	else
-		ret = ms_env_list_set(&(data->env_list), env->label, env->value);
+		ret = ms_env_list_set(&(data->env_list), \
+			env->label, env->value, env->export);
 	ms_env_delete(env);
 	return (ret);
 }

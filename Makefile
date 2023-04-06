@@ -52,13 +52,18 @@ SRCS_FILES			=	\
 						utils/ms_strs_len.c\
 						utils/ms_str_is_llong.c\
 						utils/ms_str_to_llong.c\
-						utils/ms_error.c\
+						utils/ms_str_add.c\
 						utils/ms_exit.c\
+						utils/ms_error.c\
+						utils/ms_perror.c\
 						utils/ms_init.c\
+						utils/ms_reset_cmds.c\
+						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
 						utils/ms_join.c\
 						utils/ms_is_quote.c\
 						utils/ms_exit_code_as_str.c\
+						utils/ms_fd_is_file.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -73,6 +78,7 @@ SRCS_FILES			=	\
 						env/ms_env_list_get.c\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
+						env/ms_env_list_export.c\
 						\
 						builtin/ms_builtin_pwd.c\
 						builtin/ms_builtin_echo.c\
@@ -84,12 +90,40 @@ SRCS_FILES			=	\
 						builtin/ms_is_builtin_cmd.c\
 						builtin/ms_builtin_cmd.c\
 						\
+						prompt/ms_read_prompt.c\
+						\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
 						parsing/ms_get_var_name.c\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
 						parsing/ms_tilde.c\
+						parsing/ms_token_is_sep.c\
+						parsing/ms_check_tokens.c\
+						parsing/ms_parse_line_to_tokens.c\
+						parsing/ms_tokens_merge_io_args.c\
+						parsing/ms_tokens_type_varset.c\
+						parsing/ms_tokens_remove_quotes.c\
+						parsing/ms_parse_tokens_to_cmds.c\
+						\
+						heredoc/ms_heredoc_create_tmp.c\
+						\
+						cmd/ms_is_builtin_cmd_no_fork.c\
+						cmd/ms_is_script_cmd.c\
+						cmd/ms_cmd_init.c\
+						cmd/ms_cmd_get_bin_path.c\
+						cmd/ms_cmd_declare_vars.c\
+						cmd/ms_cmd_open_io_files.c\
+						cmd/ms_cmd_close_io_files.c\
+						\
+						execute/ms_exec_dup2.c\
+						execute/ms_exec_pipe.c\
+						execute/ms_exec_fork_cmd.c\
+						execute/ms_exec_cmds.c\
+						\
+						debug/ms_debug_tokens.c\
+						debug/ms_debug_exit_code.c\
+						debug/ms_debug_cmds.c\
 						\
 						main.c\
 

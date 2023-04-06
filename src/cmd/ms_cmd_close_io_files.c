@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_cmd_close_io_files.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:14:57 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/14 07:51:43 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/14 09:25:37 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+void	ms_cmd_close_io_files(t_cmd *cmd)
 {
-	t_list	*node;
-
-	if (!env_list || !label || !*label)
+	if (!cmd)
 		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	if (ms_fd_is_file(cmd->fd_in))
+		close(cmd->fd_in);
+	if (ms_fd_is_file(cmd->fd_out))
+		close(cmd->fd_out);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_builtin_echo.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:53:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/04 13:29:56 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/06 02:43:50 by osterger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	ms_builtin_echo(char **args)
 	while (args[i])
 	{
 		if (i > 0)
-			printf(" ");
-		printf("%s", args[i]);
+			ft_printf(" ");
+		ft_printf("%s", args[i]);
 		i++;
 	}
 	if (!omit_end_line)
-		printf("\n");
+		ft_printf("\n");
 }

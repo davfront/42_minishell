@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_read_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:14:57 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/07 10:22:06 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/07 12:00:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+char	*ms_read_prompt(void)
 {
-	t_list	*node;
+	char	*line;
 
-	if (!env_list || !label || !*label)
-		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	line = readline(PS1);
+	if (line && *line && *line != ' ')
+		add_history(line);
+	return (line);
 }

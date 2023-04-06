@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_fd_is_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:14:57 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/14 08:53:33 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/14 09:08:24 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+int	ms_fd_is_file(int fd)
 {
-	t_list	*node;
-
-	if (!env_list || !label || !*label)
-		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	if (fd == -1)
+		return (0);
+	if (fd == STDIN_FILENO)
+		return (0);
+	if (fd == STDOUT_FILENO)
+		return (0);
+	if (fd == STDERR_FILENO)
+		return (0);
+	return (1);
 }

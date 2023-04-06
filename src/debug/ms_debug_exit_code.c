@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_unset.c                                :+:      :+:    :+:   */
+/*   ms_debug_exit_code.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:14:57 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/29 23:35:33 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/07 14:40:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_env_list_unset(t_list **env_list, char *label)
+void	ms_debug_exit_code(int exit_code)
 {
-	t_list	*node;
-
-	if (!env_list || !label || !*label)
+	if (!DEBUG)
 		return ;
-	node = ms_env_list_find(*env_list, label);
-	if (node)
-		ms_env_list_delete(env_list, node);
+	ft_printf("\033[2mexit_code: %i\n\033[0m", exit_code);
 }

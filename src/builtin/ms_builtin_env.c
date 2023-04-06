@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:15:32 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 22:31:58 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	ms_builtin_env(t_data *data)
 	while (node)
 	{
 		env = (t_env *)(node->content);
-		if (env->value)
-			printf("%s=%s\n", env->label, env->value);
+		if (env->value && env->export)
+			ft_printf("%s=%s\n", env->label, env->value);
 		node = node->next;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:26:41 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 22:07:28 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ms_env_from_char(char *s)
+t_env	*ms_env_from_char(char *s, int export)
 {
 	t_env	*env;
 	char	*substr;
@@ -24,6 +24,7 @@ t_env	*ms_env_from_char(char *s)
 		return (NULL);
 	env->label = NULL;
 	env->value = NULL;
+	env->export = export;
 	substr = ft_strchr(s, '=');
 	if (substr)
 	{

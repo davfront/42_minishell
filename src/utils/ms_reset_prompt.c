@@ -1,22 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_reset.c                                         :+:      :+:    :+:   */
+/*   ms_reset_prompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:08:46 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:15:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_reset(t_data *data)
+static void	ms_reset_tokens(t_data *data)
+{
+	int	i;
+
+	if (!data)
+		return ;
+	if (data->tokens)
+	{
+		i = 0;
+		while (data->tokens[i].type != END)
+		{
+			ft_free((void **)&(data->tokens[i].str));
+			i++;
+		}
+		ft_free((void **)&(data->tokens));
+	}
+}
+
+static void	ms_reset_heredoc(t_data *data)
 {
 	if (!data)
 		return ;
-	ms_env_list_clear(&(data->env_list));
-	rl_clear_history();
-	ms_reset_prompt(data);
+	data->heredoc_enabled = 0;
+	data->heredoc_delimiter = NULL;
+	if (data->heredoc_fd)
+		close(data->heredoc_fd);
+	data->heredoc_fd = -1;
+	unlink(HEREDOC_TMP);
+}
+
+void	ms_reset_prompt(t_data *data)
+{
+	if (!data)
+		return ;
+	ft_free((void **)&(data->line));
+	ms_reset_tokens(data);
+	ms_reset_cmds(data);
+	ms_reset_heredoc(data);
 }
