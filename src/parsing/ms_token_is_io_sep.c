@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_debug_tokens.c                                  :+:      :+:    :+:   */
+/*   ms_token_is_io_sep.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 23:35:33 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 14:40:51 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/05 15:40:24 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/07 12:16:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_debug_tokens(t_data *data)
+int	ms_token_is_io_sep(char *token)
 {
-	size_t	i;
-
-	if (!DEBUG)
-		return ;
-	ft_printf("\033[2mtokens:");
-	if (!data || !data->tokens)
-	{
-		ft_printf("NULL\n\033[0m");
-		return ;
-	}
-	i = 0;
-	while (data->tokens[i])
-	{
-		ft_printf(" [%s]", data->tokens[i]);
-		i++;
-	}
-	ft_printf("\n\033[0m");
+	if (ft_streq(token, "<"))
+		return (1);
+	if (ft_streq(token, "<<"))
+		return (1);
+	if (ft_streq(token, ">"))
+		return (1);
+	if (ft_streq(token, ">>"))
+		return (1);
+	return (0);
 }

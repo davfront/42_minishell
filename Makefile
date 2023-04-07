@@ -85,9 +85,14 @@ SRCS_FILES			=	\
 						\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
+						parsing/ms_token_is_sep.c\
+						parsing/ms_token_is_io_sep.c\
+						parsing/ms_check_tokens.c\
+						parsing/ms_parse_tokens.c\
 						\
 						debug/ms_debug_tokens.c\
 						debug/ms_debug_exit_code.c\
+						debug/ms_debug_cmds.c\
 						\
 						main.c\
 

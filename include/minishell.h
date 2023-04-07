@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 12:03:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:36:12 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define SUCCESS			EXIT_SUCCESS
 # define FAILURE			EXIT_FAILURE
 # define MISUSE				2
+# define CMD_NOT_FOUND		127
 
 # define PS1				"\033[1;36mminishell>\033[0m "
 # define PS2				"> "
@@ -56,23 +57,21 @@ typedef struct s_split
 	int		len;
 }	t_split;
 
-typedef struct s_cmd
-{
-	char				**cmd;
-	int					infile;
-	int					outfile;
-	struct s_cmd		*next;
-}	t_cmd;
-
 typedef struct s_env {
 	char	*label;
 	char	*value;
 }	t_env;
 
+typedef struct s_cmd {
+	char	**args;
+}	t_cmd;
+
 typedef struct s_data {
 	t_list	*env_list;
 	char	*line;
 	char	**tokens;
+	int		cmd_size;
+	t_cmd	*cmds;
 }	t_data;
 
 // utils
@@ -84,6 +83,7 @@ void		ms_exit(t_data *data, int exit_code);
 void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
 void		ms_reset_prompt(t_data *data);
+void		ms_reset_cmds(t_data *data);
 
 // utils
 void		ms_print_quoted(char *s);
@@ -120,9 +120,14 @@ char		*ms_read_prompt(void);
 // parsing
 char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
+int			ms_token_is_sep(char *token);
+int			ms_token_is_io_sep(char *token);
+int			ms_check_tokens(char **tokens);
+int			ms_parse_tokens(t_data *data);
 
 // debug
 void		ms_debug_tokens(t_data *data);
 void		ms_debug_exit_code(int exit_code);
+void		ms_debug_cmds(t_data *data);
 
 #endif
