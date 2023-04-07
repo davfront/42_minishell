@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/04 17:41:53 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/07 13:58:05 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_split
 	int	q_index;
 	int	arr_index;
 	int	quotes;
-	int	dollar;
 	int	len;
 }	t_split;
 

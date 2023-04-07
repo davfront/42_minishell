@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/04 17:56:41 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/07 13:24:02 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 				tmp = ms_get_var_name(str, i + 1, i + 1);
 				if (ms_get_var_content(tmp, env) != NULL)
 					var_array[j] = ms_get_var_content(tmp, env);
+				free(tmp);
 			}
 			j++;
 		}
 		i++;
 	}
-	free(tmp);
 	return (var_array[size] = '\0', var_array);
 }
 
@@ -65,7 +65,7 @@ static char	*ms_get_var_name(char *str, int i, int start)
 	char	*var_name;
 
 	end = 0;
-	while (ft_isalpha(str[i]) == 1)
+	while (ft_isalpha(str[i]))
 	{
 		i++;
 		end++;

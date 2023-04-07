@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/04 14:55:08 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:58:10 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char **argv, char **envp)
 	while (argc && argv)
 	{
 		data->line = readline("\033[1;36mminishell> \033[0m");
-		add_history(data->line);
+		if (ft_strlen(data->line) > 0)
+			add_history(data->line);
 		data->tokens = ms_parser(data->line, data);
 		cmd_args = data->tokens;
 		if (ms_is_builtin_cmd(cmd_args[0]))
