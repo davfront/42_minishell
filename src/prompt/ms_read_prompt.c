@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_reset.c                                         :+:      :+:    :+:   */
+/*   ms_read_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 11:52:11 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/07 10:22:06 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/07 12:00:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_reset_prompt(t_data *data)
+char	*ms_read_prompt(void)
 {
-	if (!data)
-		return ;
-	ft_free((void **)&(data->line));
-	ft_free_split(data->tokens);
-}
+	char	*line;
 
-void	ms_reset(t_data *data)
-{
-	if (!data)
-		return ;
-	ms_env_list_clear(&(data->env_list));
-	rl_clear_history();
-	ms_reset_prompt(data);
+	line = readline(PS1);
+	if (line && *line && *line != ' ')
+		add_history(line);
+	return (line);
 }

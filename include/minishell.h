@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 09:41:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/07 12:03:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define FAILURE			EXIT_FAILURE
 # define MISUSE				2
 
+# define PS1				"\033[1;36mminishell>\033[0m "
+# define PS2				"> "
+
 typedef struct s_split
 {
 	int		i;
@@ -80,9 +83,10 @@ void		ms_error(char *cmd, char *arg, char *msg);
 void		ms_exit(t_data *data, int exit_code);
 void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
+void		ms_reset_prompt(t_data *data);
 
 // utils
-void	ms_print_quoted(char *s);
+void		ms_print_quoted(char *s);
 
 // env
 t_env		*ms_env_new(char *label, char *value);
@@ -109,6 +113,9 @@ int			ms_builtin_cd(t_data *data, char **args);
 int			ms_builtin_exit(t_data *data, char **args);
 int			ms_is_builtin_cmd(char *cmd);
 int			ms_builtin_cmd(t_data *data, char **cmd_args);
+
+// prompt
+char		*ms_read_prompt(void);
 
 // parsing
 char		**ms_parser(char *line);
