@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_list_update.c                               :+:      :+:    :+:   */
+/*   ms_print_quoted.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 15:34:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/27 16:53:19 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
+/*   Updated: 2023/03/27 18:16:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_env_list_update(t_list *node, char *value)
+void	ms_print_quoted(char *s)
 {
-	t_env	*env;
-	char	*new_value;
-
-	if (!node)
-		return (FAILURE);
-	env = (t_env *)(node->content);
-	if (!env)
-		return (FAILURE);
-	ft_free((void **)&(env->value));
-	new_value = NULL;
-	if (value)
+	if (!s)
+		return ;
+	ft_putchar('"');
+	while (*s)
 	{
-		new_value = ft_strdup(value);
-		if (!new_value)
-			return (FAILURE);
+		if (*s == '"' || *s == '\\')
+			ft_putchar('\\');
+		ft_putchar(*s);
+		s++;
 	}
-	env->value = new_value;
-	return (SUCCESS);
+	ft_putchar('"');
 }

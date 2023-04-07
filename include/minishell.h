@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:17:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/07 09:41:03 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void		ms_error(char *cmd, char *arg, char *msg);
 void		ms_exit(t_data *data, int exit_code);
 void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
+
+// utils
+void	ms_print_quoted(char *s);
 
 // env
 t_env		*ms_env_new(char *label, char *value);
