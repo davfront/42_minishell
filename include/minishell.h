@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 14:36:12 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/09 17:07:43 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@
 # define SUCCESS			EXIT_SUCCESS
 # define FAILURE			EXIT_FAILURE
 # define MISUSE				2
-# define CMD_NOT_FOUND		127
+# define CANT_EXEC			126
+# define NOT_FOUND			127
 
 # define PS1				"\033[1;36mminishell>\033[0m "
 # define PS2				"> "
+
+# define CMD_MAX			64
 
 typedef struct s_split
 {
@@ -64,6 +67,7 @@ typedef struct s_env {
 
 typedef struct s_cmd {
 	char	**args;
+	char	**envp;
 }	t_cmd;
 
 typedef struct s_data {
@@ -72,20 +76,24 @@ typedef struct s_data {
 	char	**tokens;
 	int		cmd_size;
 	t_cmd	*cmds;
+	int		*fd_pipe;
 }	t_data;
 
 // utils
 size_t		ms_strs_len(char **strs);
 int			ms_str_is_llong(char *s);
 long long	ms_str_to_llong(char *str);
-void		ms_error(char *cmd, char *arg, char *msg);
 void		ms_exit(t_data *data, int exit_code);
+void		ms_error(char *msg);
+void		ms_error2(char *msg1, char *msg2);
+void		ms_error3(char *msg1, char *msg2, char *msg3);
+void		ms_error_exit(t_data *data, char *msg, int exit_code);
+void		ms_perror(char *msg);
+void		ms_perror_exit(t_data *data, char *msg, int exit_code);
 void		ms_init(t_data *data, char **envp);
 void		ms_reset(t_data *data);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
-
-// utils
 void		ms_print_quoted(char *s);
 
 // env
@@ -102,6 +110,7 @@ int			ms_env_list_update(t_list *node, char *value);
 char		*ms_env_list_get(t_list **env_list, char *label);
 int			ms_env_list_set(t_list **env_list, char *label, char *value);
 void		ms_env_list_unset(t_list **env_list, char *label);
+char		**ms_env_list_export(t_list *env_list);
 
 //	 builtin
 int			ms_builtin_pwd(void);
@@ -124,6 +133,16 @@ int			ms_token_is_sep(char *token);
 int			ms_token_is_io_sep(char *token);
 int			ms_check_tokens(char **tokens);
 int			ms_parse_tokens(t_data *data);
+
+// cmd
+int			ms_is_builtin_cmd_no_fork(char *cmd);
+int			ms_is_script_cmd(char *cmd);
+
+// execute
+void		ms_exec_dup2(t_data *data, int fd1, int fd2);
+int			ms_exec_pipe(t_data *data);
+int			ms_exec_cmds(t_data *data);
+void		ms_exec_fork_cmd(t_data *data, t_cmd *cmd);
 
 // debug
 void		ms_debug_tokens(t_data *data);

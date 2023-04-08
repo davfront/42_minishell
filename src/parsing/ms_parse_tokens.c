@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:23:15 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 15:23:41 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/09 11:43:05 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ static int	ms_get_cmd_args_size(char **tokens)
 	return (len);
 }
 
-static int	ms_get_cmd_args(t_cmd *cmd, char **tokens)
+static int	ms_init_cmd(t_cmd *cmd, char **tokens)
 {
 	size_t	i;
 	size_t	j;
 
 	if (!cmd || !tokens)
 		return (0);
+	cmd->envp = NULL;
 	cmd->args = ft_calloc(ms_get_cmd_args_size(tokens) + 1, sizeof(char *));
 	if (!cmd->args)
 		return (0);
@@ -91,7 +92,7 @@ static int	ms_get_cmds(t_data *data)
 	data->cmds = ft_calloc(data->cmd_size, sizeof(t_cmd));
 	if (!data->cmds)
 		return (FAILURE);
-	if (!ms_get_cmd_args(data->cmds, data->tokens))
+	if (!ms_init_cmd(data->cmds, data->tokens))
 		return (ms_reset_cmds(data), FAILURE);
 	j = 1;
 	i = 0;
@@ -99,7 +100,7 @@ static int	ms_get_cmds(t_data *data)
 	{
 		if (ft_streq(data->tokens[i], "|"))
 		{
-			if (!ms_get_cmd_args(data->cmds + j, data->tokens + i + 1))
+			if (!ms_init_cmd(data->cmds + j, data->tokens + i + 1))
 				return (ms_reset_cmds(data), FAILURE);
 			j++;
 		}

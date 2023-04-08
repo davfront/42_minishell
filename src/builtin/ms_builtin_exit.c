@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:15:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/09 16:49:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	ms_builtin_exit(t_data *data, char **args)
 		ms_exit(data, g_exit_code);
 	else if (!ms_str_is_llong(args[0]))
 	{
-		ms_error("exit", args[0], "numeric argument required");
+		ms_error3("exit", args[0], "numeric argument required");
 		ms_exit(data, MISUSE);
 	}
 	else if (args_len > 1)
 	{
-		ms_error("exit", NULL, "too many arguments");
+		ms_error2("exit", "too many arguments");
 		return (FAILURE);
 	}
 	llong_exit_code = ms_str_to_llong(args[0]);

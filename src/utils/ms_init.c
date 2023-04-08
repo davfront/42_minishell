@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 14:34:19 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:41:14 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ms_init_default(t_data *data)
 	data->tokens = NULL;
 	data->cmd_size = 0;
 	data->cmds = NULL;
+	data->fd_pipe = NULL;
 }
 
 void	ms_init(t_data *data, char **envp)

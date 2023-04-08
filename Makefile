@@ -52,8 +52,9 @@ SRCS_FILES			=	\
 						utils/ms_strs_len.c\
 						utils/ms_str_is_llong.c\
 						utils/ms_str_to_llong.c\
-						utils/ms_error.c\
 						utils/ms_exit.c\
+						utils/ms_error.c\
+						utils/ms_perror.c\
 						utils/ms_init.c\
 						utils/ms_reset.c\
 						\
@@ -70,6 +71,7 @@ SRCS_FILES			=	\
 						env/ms_env_list_get.c\
 						env/ms_env_list_set.c\
 						env/ms_env_list_unset.c\
+						env/ms_env_list_export.c\
 						\
 						builtin/ms_builtin_pwd.c\
 						builtin/ms_builtin_echo.c\
@@ -89,6 +91,14 @@ SRCS_FILES			=	\
 						parsing/ms_token_is_io_sep.c\
 						parsing/ms_check_tokens.c\
 						parsing/ms_parse_tokens.c\
+						\
+						cmd/ms_is_builtin_cmd_no_fork.c\
+						cmd/ms_is_script_cmd.c\
+						\
+						execute/ms_exec_dup2.c\
+						execute/ms_exec_pipe.c\
+						execute/ms_exec_fork_cmd.c\
+						execute/ms_exec_cmds.c\
 						\
 						debug/ms_debug_tokens.c\
 						debug/ms_debug_exit_code.c\

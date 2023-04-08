@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_is_builtin_cmd.c                                :+:      :+:    :+:   */
+/*   ms_exec_error_exit.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 18:31:04 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 18:11:41 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 17:04:27 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_is_builtin_cmd(char *cmd)
+void	ms_exec_error_exit(t_data *data, char *msg)
 {
-	if (ft_streq(cmd, "pwd"))
-		return (1);
-	if (ft_streq(cmd, "echo"))
-		return (1);
-	if (ft_streq(cmd, "env"))
-		return (1);
-	if (ft_streq(cmd, "export"))
-		return (1);
-	if (ft_streq(cmd, "unset"))
-		return (1);
-	if (ft_streq(cmd, "cd"))
-		return (1);
-	if (ft_streq(cmd, "exit"))
-		return (1);
-	return (0);
+	if (msg && *msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	ms_reset(data);
+	exit(EXIT_FAILURE);
 }

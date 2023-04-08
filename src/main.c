@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 14:56:00 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:36:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	g_exit_code;
 
 static int	ms_prompt(t_data *data)
 {
-	char	**cmd_args;
 	int		ret;
 
 	data->line = ms_read_prompt();
@@ -32,15 +31,7 @@ static int	ms_prompt(t_data *data)
 	ms_debug_cmds(data);
 	if (ret != SUCCESS)
 		return (ret);
-	cmd_args = data->tokens;
-	if (ms_is_builtin_cmd(cmd_args[0]))
-		return (ms_builtin_cmd(data, cmd_args));
-	else if (cmd_args[0])
-	{
-		ft_printf("%s: command not found\n", cmd_args[0]);
-		return (CMD_NOT_FOUND);
-	}
-	return (SUCCESS);
+	return (ms_exec_cmds(data));
 }
 
 int	main(int argc, char **argv, char **envp)

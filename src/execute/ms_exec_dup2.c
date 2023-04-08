@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_is_builtin_cmd.c                                :+:      :+:    :+:   */
+/*   ms_exec_dup2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 18:31:04 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 18:11:41 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/02 15:43:00 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 17:10:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_is_builtin_cmd(char *cmd)
+void	ms_exec_dup2(t_data *data, int fd1, int fd2)
 {
-	if (ft_streq(cmd, "pwd"))
-		return (1);
-	if (ft_streq(cmd, "echo"))
-		return (1);
-	if (ft_streq(cmd, "env"))
-		return (1);
-	if (ft_streq(cmd, "export"))
-		return (1);
-	if (ft_streq(cmd, "unset"))
-		return (1);
-	if (ft_streq(cmd, "cd"))
-		return (1);
-	if (ft_streq(cmd, "exit"))
-		return (1);
-	return (0);
+	if (dup2(fd1, fd2) == -1)
+		ms_error_exit(data, "dup2 failed", FAILURE);
+	close(fd1);
 }

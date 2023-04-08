@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_is_builtin_cmd.c                                :+:      :+:    :+:   */
+/*   ms_perror.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 18:31:04 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 18:11:41 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 17:08:30 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ms_is_builtin_cmd(char *cmd)
+void	ms_perror(char *msg)
 {
-	if (ft_streq(cmd, "pwd"))
-		return (1);
-	if (ft_streq(cmd, "echo"))
-		return (1);
-	if (ft_streq(cmd, "env"))
-		return (1);
-	if (ft_streq(cmd, "export"))
-		return (1);
-	if (ft_streq(cmd, "unset"))
-		return (1);
-	if (ft_streq(cmd, "cd"))
-		return (1);
-	if (ft_streq(cmd, "exit"))
-		return (1);
-	return (0);
+	ms_error2(msg, strerror(errno));
+}
+
+void	ms_perror_exit(t_data *data, char *msg, int exit_code)
+{
+	ms_error2(msg, strerror(errno));
+	ms_exit(data, exit_code);
 }
