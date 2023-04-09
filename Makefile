@@ -94,6 +94,7 @@ SRCS_FILES			=	\
 						\
 						cmd/ms_is_builtin_cmd_no_fork.c\
 						cmd/ms_is_script_cmd.c\
+						cmd/ms_cmd_get_bin_path.c\
 						\
 						execute/ms_exec_dup2.c\
 						execute/ms_exec_pipe.c\

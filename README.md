@@ -5,7 +5,7 @@
 ### Your shell should:
 - [x] Display a prompt when waiting for a new command.
 - [x] Have a working history.
-- [ ] Search and launch the right executable (based on the PATH variable or using a
+- [x] Search and launch the right executable (based on the PATH variable or using a
 relative or an absolute path).
 - [ ] Not use more than one global variable. Think about it. You will have to explain
 its purpose.

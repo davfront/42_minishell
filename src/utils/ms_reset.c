@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 15:37:37 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:10:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ static void	ms_reset_pipes(t_data *data)
 	}
 }
 
+static void	ms_reset_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	if (cmd->args)
+		ft_free((void **)&(cmd->args));
+	if (cmd->envp)
+		ft_free_split(cmd->envp);
+	ft_free((void **)&(cmd->exe_path));
+}
+
 void	ms_reset_cmds(t_data *data)
 {
 	int	i;
@@ -42,10 +53,7 @@ void	ms_reset_cmds(t_data *data)
 		i = 0;
 		while (i < data->cmd_size)
 		{
-			if (data->cmds[i].args)
-				ft_free((void **)&(data->cmds[i].args));
-			if (data->cmds[i].envp)
-				ft_free_split(data->cmds[i].envp);
+			ms_reset_cmd(data->cmds + i);
 			i++;
 		}
 		ft_free((void **)&(data->cmds));

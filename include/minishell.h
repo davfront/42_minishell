@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 17:07:43 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:09:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_env {
 typedef struct s_cmd {
 	char	**args;
 	char	**envp;
+	char	*exe_path;
 }	t_cmd;
 
 typedef struct s_data {
@@ -137,6 +138,7 @@ int			ms_parse_tokens(t_data *data);
 // cmd
 int			ms_is_builtin_cmd_no_fork(char *cmd);
 int			ms_is_script_cmd(char *cmd);
+char		*ms_cmd_get_bin_path(t_data *data, char *cmd);
 
 // execute
 void		ms_exec_dup2(t_data *data, int fd1, int fd2);
