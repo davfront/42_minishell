@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 09:58:58 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/07 10:16:22 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:00:25 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*ms_change_line(char *str, char **var_array, int i, int j);
 static char	*ms_get_before_dollar(char *tmp, int i);
 static char	*ms_get_after_dollar(char *tmp, int i);
-static char	*ms_join(char *before, char *after, char **var_array, int j);
+static char	*ms_join(char *before, char *after, char *var_array);
 
 char	*ms_expand_var(char *str, t_list *env)
 {
@@ -25,41 +25,48 @@ char	*ms_expand_var(char *str, t_list *env)
 	var_array = NULL;
 	var_array = ms_var_array(str, var_array, env);
 	if (!var_array)
-		exit (EXIT_FAILURE);
+		return (NULL);
 	res = ms_change_line(str, var_array, 0, 0);
 	if (!res)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	res = ms_tilde(res, env);
 	if (!res)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	ms_free_array(var_array);
 	return (res);
 }
 
-static char	*ms_change_line(char *str, char **var_array, int i, int j)
+static char	*ms_change_line(char *s, char **var_array, int i, int j)
 {
-	char	*tmp;
 	char	*before;
 	char	*after;
+	char	*str;
+	char	*new_str;
 
-	tmp = ft_strdup(str);
-	if (!tmp)
-		exit(EXIT_FAILURE);
-	while (tmp[i])
+	str = ft_strdup(s);
+	while (str[i])
 	{
-		if (tmp[i] == '$' && !ms_char_print(tmp[i + 1]))
+		if (str[i] == '$' && !ms_char_print(str[i + 1]))
 		{
-			before = ms_get_before_dollar(tmp, i - 1);
-			if (tmp[i + 1] == '?')
-				after = &tmp[i + 2];
-			else if (ft_isalnum(tmp[i + 1]) || ms_char_nprint(tmp[i + 1]))
-				after = ms_get_after_dollar(tmp, i + 1);
-			tmp = ms_join(before, after, var_array, j);
+			before = ms_get_before_dollar(str, i - 1);
+			after = NULL;
+			if (str[i + 1] == '?')
+				after = &str[i + 2];
+			else if (ft_isalnum(str[i + 1]) || ms_char_nprint(str[i + 1]))
+				after = ms_get_after_dollar(str, i + 1);
+			if (after)
+			{
+				new_str = ms_join(before, after, var_array[j]);
+				i += ft_strlen(var_array[j]) - 1;
+				ft_free((void **)&str);
+				str = new_str;
+			}
+			ft_free((void **)&before);
 			j++;
 		}
 		i++;
 	}
-	return (tmp);
+	return (str);
 }
 
 static char	*ms_get_before_dollar(char *tmp, int i)
@@ -68,7 +75,7 @@ static char	*ms_get_before_dollar(char *tmp, int i)
 
 	res = ft_substr(tmp, 0, i + 1);
 	if (!res)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	return (res);
 }
 
@@ -85,19 +92,17 @@ static char	*ms_get_after_dollar(char *tmp, int i)
 	return (&tmp[i]);
 }
 
-static char	*ms_join(char *before, char *after, char **var_array, int j)
+static char	*ms_join(char *before, char *after, char *var_array)
 {
-	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 
-	tmp = ft_strdup(before);
-	if (!tmp)
-		exit(EXIT_FAILURE);
-	tmp = ft_strjoin(tmp, var_array[j]);
-	if (!tmp)
-		exit(EXIT_FAILURE);
-	tmp = ft_strjoin(tmp, after);
-	if (!tmp)
-		exit(EXIT_FAILURE);
-	free(before);
-	return (tmp);
+	tmp1 = ft_strjoin(before, var_array);
+	if (!tmp1)
+		return (NULL);
+	tmp2 = ft_strjoin(tmp1, after);
+	if (!tmp2)
+		return (ft_free((void **)&tmp1), NULL);
+	ft_free((void **)&tmp1);
+	return (tmp2);
 }
