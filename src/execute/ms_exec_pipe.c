@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 18:12:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:05:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,36 @@ static void	ms_exec_child_process(t_data *data, int cmd_id)
 	ms_exec_fork_cmd(data, data->cmds + cmd_id);
 }
 
+static int	ms_exec_wait_children(t_data *data, pid_t cpid[CMD_MAX], \
+	int status[CMD_MAX])
+{
+	int		i;
+
+	i = 0;
+	while (i < data->cmd_size)
+	{
+		waitpid(cpid[i], status + i, 0);
+		i++;
+	}
+	if (WIFEXITED(status[data->cmd_size - 1]))
+		return (WEXITSTATUS(status[data->cmd_size - 1]));
+	return (SUCCESS);
+}
+
 int	ms_exec_pipe(t_data *data)
 {
 	pid_t	cpid[CMD_MAX];
 	int		i;
 	int		status[CMD_MAX];
-	t_cmd	cmd;
 
 	ms_exec_set_all_fd_pipes(data);
 	i = 0;
 	while (i < data->cmd_size)
 	{
-		cmd = data->cmds[i];
-		if (cmd.args && cmd.args[0])
+		if (data->cmds[i].args && data->cmds[i].args[0])
 		{
-			if (ms_is_builtin_cmd_no_fork(cmd.args[0]))
-				status[i] = ms_builtin_cmd(data, cmd.args);
+			if (ms_is_builtin_cmd_no_fork(data->cmds[i].args[0]))
+				status[i] = ms_builtin_cmd(data, data->cmds[i].args);
 			else
 			{
 				cpid[i] = fork();
@@ -77,13 +91,5 @@ int	ms_exec_pipe(t_data *data)
 		i++;
 	}
 	ms_exec_close_all_fd_pipes(data);
-	i = 0;
-	while (i < data->cmd_size)
-	{
-		waitpid(cpid[i], status + i, 0);
-		i++;
-	}
-	if (WIFEXITED(status[data->cmd_size - 1]))
-		return (WEXITSTATUS(status[data->cmd_size - 1]));
-	return (SUCCESS);
+	return (ms_exec_wait_children(data, cpid, status));
 }
