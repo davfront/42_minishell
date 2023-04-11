@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/07 16:36:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/11 13:20:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	main(int argc, char **argv, char **envp)
 	g_exit_code = EXIT_SUCCESS;
 	data = &data_value;
 	ms_init(data, envp);
-	while (argc && argv)
+	ms_env_list_set(&(data->env_list), "_", argv[argc - 1]);
+	while (1)
 	{
 		g_exit_code = ms_prompt(data);
 		ms_reset_prompt(data);
