@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/11 15:00:29 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:33:53 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 static char	**ms_get_all_var(char *str, char **var_array, \
 		t_list *env, int size);
-static char	*ms_get_var_name(char *str, int i, int start);
+static char	*ms_get_var_name(char *str, int index);
 static char	*ms_get_var_content(char *var_name, t_list *env);
 static char	*ms_content_from_list(char *var_name, t_list *head);
+
+static char	*ms_get_var_content2(t_list *env, char *var_name);
 
 char	**ms_var_array(char *str, char **var_array, t_list *env)
 {
@@ -48,8 +50,9 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 			else if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) || \
 				ms_char_nprint(str[i + 1]))
 			{
-				tmp = ms_get_var_name(str, i + 1, i + 1);
-				var_content = ms_get_var_content(tmp, env);
+				tmp = ms_get_var_name(str, i + 1);
+				var_content = ms_get_var_content(env, tmp);
+				var_content = ms_get_var_content2(tmp, env);
 				if (var_content != NULL)
 					var_array[j] = var_content;
 				free(tmp);
@@ -61,21 +64,28 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 	return (var_array[size] = '\0', var_array);
 }
 
-static char	*ms_get_var_name(char *str, int i, int start)
+static char	*ms_get_var_name(char *str, int index)
 {
+	int		start;
 	int		end;
 	char	*var_name;
 
+	start = index;
 	end = 0;
-	while (ft_isalpha(str[i]))
+	while (ft_isalpha(str[index]) || str[index] == '_')
 	{
-		i++;
+		index++;
 		end++;
 	}
 	var_name = ft_substr(str, start, end);
 	if (!var_name)
 		return (NULL);
 	return (var_name);
+}
+
+static char	*ms_get_var_content2(t_list *env, char *var_name)
+{
+	return (ms_env_list_get(&env, var_name));
 }
 
 static char	*ms_get_var_content(char *var_name, t_list *env)
