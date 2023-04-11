@@ -6,7 +6,7 @@
 /*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:05:36 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/11 17:33:53 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:51:12 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static char	*ms_get_var_name(char *str, int index);
 static char	*ms_get_var_content(char *var_name, t_list *env);
 static char	*ms_content_from_list(char *var_name, t_list *head);
 
-static char	*ms_get_var_content2(t_list *env, char *var_name);
 
 char	**ms_var_array(char *str, char **var_array, t_list *env)
 {
@@ -51,8 +50,7 @@ static char	**ms_get_all_var(char *str, char **var_array, t_list *env, int size)
 				ms_char_nprint(str[i + 1]))
 			{
 				tmp = ms_get_var_name(str, i + 1);
-				var_content = ms_get_var_content(env, tmp);
-				var_content = ms_get_var_content2(tmp, env);
+				var_content = ms_get_var_content(tmp, env);
 				if (var_content != NULL)
 					var_array[j] = var_content;
 				free(tmp);
@@ -81,11 +79,6 @@ static char	*ms_get_var_name(char *str, int index)
 	if (!var_name)
 		return (NULL);
 	return (var_name);
-}
-
-static char	*ms_get_var_content2(t_list *env, char *var_name)
-{
-	return (ms_env_list_get(&env, var_name));
 }
 
 static char	*ms_get_var_content(char *var_name, t_list *env)
