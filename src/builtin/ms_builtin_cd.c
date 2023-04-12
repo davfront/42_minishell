@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 12:04:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:20:28 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 03:55:53 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,6 @@ static int	ms_builtin_cd_home(t_data *data)
 	return (ms_chdir(data, dir));
 }
 
-static int	ms_builtin_cd_from_home(t_data *data, char *dir)
-{
-	char	*home;
-	char	*new_dir;
-	int		ret;
-
-	if (!data || !dir || ft_strncmp(dir, "~/", 2) != 0)
-		return (FAILURE);
-	home = ms_env_list_get(&(data->env_list), "HOME");
-	if (!home)
-		new_dir = ft_strdup(dir + 1);
-	new_dir = ft_strjoin(home, dir + 1);
-	ret = ms_chdir(data, new_dir);
-	ft_free((void **)&new_dir);
-	return (ret);
-}
-
 static int	ms_builtin_cd_oldpwd(t_data *data)
 {
 	char	*dir;
@@ -99,10 +82,8 @@ int	ms_builtin_cd(t_data *data, char **args)
 		return (FAILURE);
 	}
 	dir = args[0];
-	if (!dir || ft_streq(dir, "~") || ft_strncmp(dir, "--", 2) == 0)
+	if (!dir || ft_strncmp(dir, "--", 2) == 0)
 		return (ms_builtin_cd_home(data));
-	if (ft_strncmp(dir, "~/", 2) == 0)
-		return (ms_builtin_cd_from_home(data, dir));
 	else if (ft_streq(dir, "-"))
 		return (ms_builtin_cd_oldpwd(data));
 	return (ms_chdir(data, dir));

@@ -91,6 +91,11 @@ SRCS_FILES			=	\
 						\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
+						parsing/ms_replace_keyword.c\
+						parsing/ms_expand_exit_code.c\
+						parsing/ms_expand_vars.c\
+						parsing/ms_expand_tilde.c\
+						parsing/ms_expand.c\
 						parsing/ms_token_is_sep.c\
 						parsing/ms_check_tokens.c\
 						parsing/ms_parse_line_to_tokens.c\
