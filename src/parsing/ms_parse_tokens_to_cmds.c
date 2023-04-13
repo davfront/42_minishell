@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:23:15 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:07:24 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 21:16:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	ms_init_cmd(t_cmd *cmd, t_tok *tokens)
 
 	if (!cmd || !tokens)
 		return (0);
+	cmd->tokens = tokens;
 	cmd->envp = NULL;
 	cmd->exe_path = NULL;
 	cmd->args = ft_calloc(ms_get_cmd_args_size(tokens) + 1, sizeof(char *));

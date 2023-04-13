@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:02:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 22:56:08 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_split
 typedef struct s_env {
 	char	*label;
 	char	*value;
+	int		export;
 }	t_env;
 
 typedef enum e_type {
@@ -83,6 +84,7 @@ typedef struct s_tok {
 }	t_tok;
 
 typedef struct s_cmd {
+	t_tok	*tokens;
 	char	**args;
 	char	**envp;
 	char	*exe_path;
@@ -115,8 +117,8 @@ void		ms_reset_cmds(t_data *data);
 void		ms_print_quoted(char *s);
 
 // env
-t_env		*ms_env_new(char *label, char *value);
-t_env		*ms_env_from_char(char *s);
+t_env		*ms_env_new(char *label, char *value, int export);
+t_env		*ms_env_from_char(char *s, int export);
 void		ms_env_delete(void *content);
 int			ms_env_list_add(t_list **env_list, t_env *env);
 int			ms_env_list_init(t_list **env_list, char **envp);
@@ -124,9 +126,10 @@ void		ms_env_list_clear(t_list **env_list);
 t_list		*ms_env_list_find(t_list *env_list, char *label);
 void		ms_env_list_delete(t_list **env_list, t_list *node);
 int			ms_env_is_valid_identifier(char *name);
-int			ms_env_list_update(t_list *node, char *value);
+int			ms_env_list_update(t_list *node, char *value, int export);
 char		*ms_env_list_get(t_list **env_list, char *label);
-int			ms_env_list_set(t_list **env_list, char *label, char *value);
+int			ms_env_list_set(t_list **env_list, char *label, char *value, \
+				int export);
 void		ms_env_list_unset(t_list **env_list, char *label);
 char		**ms_env_list_export(t_list *env_list);
 
@@ -160,6 +163,7 @@ int			ms_parse_tokens_to_cmds(t_data *data);
 int			ms_is_builtin_cmd_no_fork(char *cmd);
 int			ms_is_script_cmd(char *cmd);
 char		*ms_cmd_get_bin_path(t_data *data, char *cmd);
+int			ms_cmd_declare_vars(t_data *data, t_cmd *cmd);
 
 // execute
 void		ms_exec_dup2(t_data *data, int fd1, int fd2);

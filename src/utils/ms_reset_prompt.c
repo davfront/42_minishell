@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:08:53 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 21:18:46 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	ms_reset_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
+	cmd->tokens = NULL;
 	if (cmd->args)
 		ft_free((void **)&(cmd->args));
 	if (cmd->envp)

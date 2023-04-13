@@ -34,11 +34,11 @@ void	ms_exec_fork_cmd(t_data *data, t_cmd *cmd)
 {
 	if (!cmd)
 		ms_exit(data, FAILURE);
+	if (ms_is_builtin_cmd(cmd->args[0]))
+		ms_exit(data, ms_builtin_cmd(data, cmd->args));
 	cmd->envp = ms_env_list_export(data->env_list);
 	if (!cmd->envp)
 		ms_exit(data, FAILURE);
-	if (ms_is_builtin_cmd(cmd->args[0]))
-		ms_exit(data, ms_builtin_cmd(data, cmd->args));
 	if (ms_is_script_cmd(cmd->args[0]))
 		ms_exec_script_cmd(data, cmd);
 	cmd->exe_path = ms_cmd_get_bin_path(data, cmd->args[0]);
