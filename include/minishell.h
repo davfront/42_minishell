@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 18:09:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 21:02:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ typedef struct s_env {
 	char	*value;
 }	t_env;
 
+typedef enum e_type {
+	UNDEFINED = 0,
+	PIPE,
+	HEREDOC,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_OUT_APP,
+	WORD,
+	VARSET,
+	END,
+}	t_type;
+
+typedef struct s_tok {
+	t_type	type;
+	char	*str;
+}	t_tok;
+
 typedef struct s_cmd {
 	char	**args;
 	char	**envp;
@@ -74,7 +91,7 @@ typedef struct s_cmd {
 typedef struct s_data {
 	t_list	*env_list;
 	char	*line;
-	char	**tokens;
+	t_tok	*tokens;
 	int		cmd_size;
 	t_cmd	*cmds;
 	int		*fd_pipe;
@@ -130,10 +147,14 @@ char		*ms_read_prompt(void);
 // parsing
 char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
-int			ms_token_is_sep(char *token);
-int			ms_token_is_io_sep(char *token);
-int			ms_check_tokens(char **tokens);
-int			ms_parse_tokens(t_data *data);
+int			ms_token_is_cmd_sep(t_tok token);
+int			ms_token_is_io_sep(t_tok token);
+int			ms_token_is_sep(t_tok token);
+int			ms_check_tokens(t_tok *tokens);
+int			ms_parse_line_to_tokens(t_data *data);
+void		ms_tokens_merge_io_args(t_tok *tokens);
+void		ms_tokens_type_varset(t_tok *tokens);
+int			ms_parse_tokens_to_cmds(t_data *data);
 
 // cmd
 int			ms_is_builtin_cmd_no_fork(char *cmd);

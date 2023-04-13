@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/11 13:20:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:06:27 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,17 @@ int	g_exit_code;
 
 static int	ms_prompt(t_data *data)
 {
-	int		ret;
+	int	ret;
 
 	data->line = ms_read_prompt();
 	if (!data->line)
 		return (SUCCESS);
-	data->tokens = ms_parser(data->line);
-	ms_debug_tokens(data);
-	if (!data->tokens)
-		return (FAILURE);
-	if (!data->tokens[0])
+	ret = ms_parse_line_to_tokens(data);
+	if (ret != SUCCESS)
+		return (ret);
+	if (data->tokens[0].type == END)
 		return (SUCCESS);
-	ret = ms_parse_tokens(data);
-	ms_debug_cmds(data);
+	ret = ms_parse_tokens_to_cmds(data);
 	if (ret != SUCCESS)
 		return (ret);
 	return (ms_exec_cmds(data));
