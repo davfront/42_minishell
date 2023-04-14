@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:21:32 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 06:13:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data_value;
 	t_data	*data;
 
-	g_exit_code = EXIT_SUCCESS;
+	g_exit_code = SUCCESS;
 	data = &data_value;
-	ms_init(data, envp);
-	ms_env_list_set(&(data->env_list), "_", argv[argc - 1], 1);
+	if (ms_init(data, argc, argv, envp) != SUCCESS)
+		ms_error_exit(data, "initialization failed", FAILURE);
 	while (1)
 	{
 		g_exit_code = ms_prompt(data);

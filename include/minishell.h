@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:56:08 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 06:14:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		ms_error3(char *msg1, char *msg2, char *msg3);
 void		ms_error_exit(t_data *data, char *msg, int exit_code);
 void		ms_perror(char *msg);
 void		ms_perror_exit(t_data *data, char *msg, int exit_code);
-void		ms_init(t_data *data, char **envp);
+int			ms_init(t_data *data, int argc, char **argv, char **envp);
 void		ms_reset(t_data *data);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
