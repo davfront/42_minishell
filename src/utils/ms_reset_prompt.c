@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:18:46 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:27:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	ms_reset_cmd(t_cmd *cmd)
 	if (cmd->envp)
 		ft_free_split(cmd->envp);
 	ft_free((void **)&(cmd->exe_path));
+	ms_cmd_close_io_files(cmd);
 }
 
 void	ms_reset_cmds(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 23:40:00 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:26:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,22 @@ static void	ms_exec_close_all_fd_pipes(t_data *data)
 
 static void	ms_exec_child_process(t_data *data, int cmd_id)
 {
-	if (cmd_id != 0)
+	t_cmd	*cmd;
+
+	cmd = data->cmds + cmd_id;
+	if (ms_cmd_open_io_files(cmd) != SUCCESS)
+		ms_exit(data, FAILURE);
+	if (ms_fd_is_file(cmd->fd_in))
+		ms_exec_dup2(data, cmd->fd_in, STDIN_FILENO);
+	else if (cmd_id != 0)
 		ms_exec_dup2(data, data->fd_pipe[2 * (cmd_id - 1)], STDIN_FILENO);
-	if (cmd_id != data->cmd_size - 1)
+	if (ms_fd_is_file(cmd->fd_out))
+		ms_exec_dup2(data, cmd->fd_out, STDOUT_FILENO);
+	else if (cmd_id != data->cmd_size - 1)
 		ms_exec_dup2(data, data->fd_pipe[2 * cmd_id + 1], STDOUT_FILENO);
 	ms_exec_close_all_fd_pipes(data);
-	ms_exec_fork_cmd(data, data->cmds + cmd_id);
+	ms_cmd_close_io_files(cmd);
+	ms_exec_fork_cmd(data, cmd);
 }
 
 static int	ms_exec_wait_children(t_data *data, pid_t cpid[CMD_MAX], \

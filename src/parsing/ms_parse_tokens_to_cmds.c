@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:23:15 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:16:45 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 08:30:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,55 +32,6 @@ static int	ms_get_cmd_size(t_data *data)
 	return (data->cmd_size);
 }
 
-static int	ms_get_cmd_args_size(t_tok *tokens)
-{
-	size_t	i;
-	size_t	len;
-
-	if (!tokens)
-		return (0);
-	i = 0;
-	len = 0;
-	while (!ms_token_is_cmd_sep(tokens[i]))
-	{
-		if (ms_token_is_io_sep(tokens[i]) \
-			&& !ms_token_is_cmd_sep(tokens[i + 1]))
-			i++;
-		else
-			len++;
-		i++;
-	}
-	return (len);
-}
-
-static int	ms_init_cmd(t_cmd *cmd, t_tok *tokens)
-{
-	size_t	i;
-	size_t	j;
-
-	if (!cmd || !tokens)
-		return (0);
-	cmd->tokens = tokens;
-	cmd->envp = NULL;
-	cmd->exe_path = NULL;
-	cmd->args = ft_calloc(ms_get_cmd_args_size(tokens) + 1, sizeof(char *));
-	if (!cmd->args)
-		return (0);
-	i = 0;
-	j = 0;
-	while (!ms_token_is_cmd_sep(tokens[i]))
-	{
-		if (tokens[i].type == WORD)
-		{
-			cmd->args[j] = tokens[i].str;
-			j++;
-		}
-		i++;
-	}
-	cmd->args[j] = NULL;
-	return (1);
-}
-
 static int	ms_get_cmds(t_data *data)
 {
 	int		i;
@@ -91,7 +42,7 @@ static int	ms_get_cmds(t_data *data)
 	data->cmds = ft_calloc(data->cmd_size, sizeof(t_cmd));
 	if (!data->cmds)
 		return (FAILURE);
-	if (!ms_init_cmd(data->cmds, data->tokens))
+	if (!ms_cmd_init(data->cmds, data->tokens))
 		return (ms_reset_cmds(data), FAILURE);
 	j = 1;
 	i = 0;
@@ -99,7 +50,7 @@ static int	ms_get_cmds(t_data *data)
 	{
 		if (data->tokens[i].type == PIPE)
 		{
-			if (!ms_init_cmd(data->cmds + j, data->tokens + i + 1))
+			if (!ms_cmd_init(data->cmds + j, data->tokens + i + 1))
 				return (ms_reset_cmds(data), FAILURE);
 			j++;
 		}
