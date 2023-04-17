@@ -52,6 +52,7 @@ SRCS_FILES			=	\
 						utils/ms_strs_len.c\
 						utils/ms_str_is_llong.c\
 						utils/ms_str_to_llong.c\
+						utils/ms_str_add.c\
 						utils/ms_exit.c\
 						utils/ms_error.c\
 						utils/ms_perror.c\

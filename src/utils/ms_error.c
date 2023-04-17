@@ -6,46 +6,66 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 17:08:18 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:56:08 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ms_print_error_arg(char *arg)
+static void	ms_str_add_error_arg(char **s, char *arg)
 {
+	if (!s)
+		return ;
 	if (arg)
 	{
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd(arg, STDERR_FILENO);
+		ms_str_add(s, ": ");
+		ms_str_add(s, arg);
 	}
 }
 
 void	ms_error(char *msg)
 {
-	if (msg)
-		ft_putstr_fd("minishell", STDERR_FILENO);
-	ms_print_error_arg(msg);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	char	*s;
+
+	if (!msg)
+		return ;
+	s = ft_strdup("minishell: ");
+	ms_str_add(&s, msg);
+	ms_str_add(&s, "\n");
+	if (s)
+		ft_putstr_fd(s, STDERR_FILENO);
+	ft_free((void **)&s);
 }
 
 void	ms_error2(char *msg1, char *msg2)
 {
-	if (msg1 || msg2)
-		ft_putstr_fd("minishell", STDERR_FILENO);
-	ms_print_error_arg(msg1);
-	ms_print_error_arg(msg2);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	char	*s;
+
+	if (!msg1 && !msg2)
+		return ;
+	s = ft_strdup("minishell");
+	ms_str_add_error_arg(&s, msg1);
+	ms_str_add_error_arg(&s, msg2);
+	ms_str_add(&s, "\n");
+	if (s)
+		ft_putstr_fd(s, STDERR_FILENO);
+	ft_free((void **)&s);
 }
 
 void	ms_error3(char *msg1, char *msg2, char *msg3)
 {
-	if (msg1 || msg2 || msg3)
-		ft_putstr_fd("minishell", STDERR_FILENO);
-	ms_print_error_arg(msg1);
-	ms_print_error_arg(msg2);
-	ms_print_error_arg(msg3);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	char	*s;
+
+	if (!msg1 && !msg2 && !msg3)
+		return ;
+	s = ft_strdup("minishell");
+	ms_str_add_error_arg(&s, msg1);
+	ms_str_add_error_arg(&s, msg2);
+	ms_str_add_error_arg(&s, msg3);
+	ms_str_add(&s, "\n");
+	if (s)
+		ft_putstr_fd(s, STDERR_FILENO);
+	ft_free((void **)&s);
 }
 
 void	ms_error_exit(t_data *data, char *msg, int exit_code)

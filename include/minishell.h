@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 05:05:15 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:34:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_data {
 size_t		ms_strs_len(char **strs);
 int			ms_str_is_llong(char *s);
 long long	ms_str_to_llong(char *str);
+void		ms_str_add(char **s, char *s2);
 void		ms_exit(t_data *data, int exit_code);
 void		ms_error(char *msg);
 void		ms_error2(char *msg1, char *msg2);
