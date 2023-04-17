@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 09:25:05 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:05:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define PS2				"> "
 
 # define CMD_MAX			64
+
+# define HEREDOC_TMP		"heredoc.tmp"
 
 typedef struct s_split
 {
@@ -99,6 +101,9 @@ typedef struct s_data {
 	int		cmd_size;
 	t_cmd	*cmds;
 	int		*fd_pipe;
+	int		heredoc_enabled;
+	char	*heredoc_delimiter;
+	int		heredoc_fd;
 }	t_data;
 
 // utils
@@ -162,6 +167,9 @@ void		ms_tokens_merge_io_args(t_tok *tokens);
 void		ms_tokens_type_varset(t_tok *tokens);
 void		ms_tokens_remove_quotes(t_tok *tokens);
 int			ms_parse_tokens_to_cmds(t_data *data);
+
+// heredoc
+int			ms_heredoc_create_tmp(t_data *data);
 
 // cmd
 int			ms_is_builtin_cmd_no_fork(char *cmd);

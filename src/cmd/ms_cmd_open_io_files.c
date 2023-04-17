@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 07:51:43 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 08:57:41 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:18:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	ms_cmd_open_io_files(t_cmd *cmd)
 	{
 		if (cmd->tokens[i].type == REDIR_IN)
 			ret = ms_cmd_open_file_in(cmd, cmd->tokens[i].str);
+		if (cmd->tokens[i].type == HEREDOC)
+			ret = ms_cmd_open_file_in(cmd, HEREDOC_TMP);
 		else if (cmd->tokens[i].type == REDIR_OUT)
 			ret = ms_cmd_open_file_out(cmd, cmd->tokens[i].str, 0);
 		else if (cmd->tokens[i].type == REDIR_OUT_APP)

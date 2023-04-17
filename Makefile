@@ -56,6 +56,7 @@ SRCS_FILES			=	\
 						utils/ms_error.c\
 						utils/ms_perror.c\
 						utils/ms_init.c\
+						utils/ms_reset_cmds.c\
 						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
 						utils/ms_fd_is_file.c\
@@ -96,6 +97,8 @@ SRCS_FILES			=	\
 						parsing/ms_tokens_type_varset.c\
 						parsing/ms_tokens_remove_quotes.c\
 						parsing/ms_parse_tokens_to_cmds.c\
+						\
+						heredoc/ms_heredoc_create_tmp.c\
 						\
 						cmd/ms_is_builtin_cmd_no_fork.c\
 						cmd/ms_is_script_cmd.c\

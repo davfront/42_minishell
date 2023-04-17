@@ -1,53 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_reset_prompt.c                                  :+:      :+:    :+:   */
+/*   ms_reset_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 05:15:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:14:57 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ms_reset_tokens(t_data *data)
+static void	ms_reset_pipes(t_data *data)
 {
 	int	i;
 
 	if (!data)
 		return ;
-	if (data->tokens)
+	if (data->fd_pipe)
 	{
 		i = 0;
-		while (data->tokens[i].type != END)
+		while (i < 2 * (data->cmd_size - 1))
 		{
-			ft_free((void **)&(data->tokens[i].str));
+			if (data->fd_pipe[i] != -1)
+				close(data->fd_pipe[i]);
 			i++;
 		}
-		ft_free((void **)&(data->tokens));
+		ft_free((void **)&data->fd_pipe);
 	}
 }
 
-static void	ms_reset_heredoc(t_data *data)
+static void	ms_reset_cmd(t_cmd *cmd)
 {
-	if (!data)
+	if (!cmd)
 		return ;
-	data->heredoc_enabled = 0;
-	data->heredoc_delimiter = NULL;
-	if (data->heredoc_fd)
-		close(data->heredoc_fd);
-	data->heredoc_fd = -1;
-	unlink(HEREDOC_TMP);
+	cmd->tokens = NULL;
+	if (cmd->args)
+		ft_free((void **)&(cmd->args));
+	if (cmd->envp)
+		ft_free_split(cmd->envp);
+	ft_free((void **)&(cmd->exe_path));
+	ms_cmd_close_io_files(cmd);
 }
 
-void	ms_reset_prompt(t_data *data)
+void	ms_reset_cmds(t_data *data)
 {
+	int	i;
+
 	if (!data)
 		return ;
-	ft_free((void **)&(data->line));
-	ms_reset_tokens(data);
-	ms_reset_cmds(data);
-	ms_reset_heredoc(data);
+	if (data->cmds)
+	{
+		i = 0;
+		while (i < data->cmd_size)
+		{
+			ms_reset_cmd(data->cmds + i);
+			i++;
+		}
+		ft_free((void **)&(data->cmds));
+	}
+	ms_reset_pipes(data);
+	data->cmd_size = 0;
 }
