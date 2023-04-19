@@ -7,7 +7,7 @@
 - [x] Have a working history.
 - [x] Search and launch the right executable (based on the PATH variable or using a
 relative or an absolute path).
-- [ ] Not use more than one global variable. Think about it. You will have to explain
+- [x] Not use more than one global variable. Think about it. You will have to explain
 its purpose.
 - [ ] Not interpret unclosed quotes or special characters which are not required by the
 subject such as \ (backslash) or ; (semicolon).

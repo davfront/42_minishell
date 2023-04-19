@@ -6,13 +6,12 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/19 14:09:35 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:18:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_code;
 int	g_signal;
 
 static int	ms_prompt(t_data *data)
@@ -27,7 +26,7 @@ static int	ms_prompt(t_data *data)
 		return (130);
 	signal(SIGINT, SIG_IGN);
 	if (!data->line)
-		ms_exit(data, g_exit_code);
+		ms_exit(data, data->exit_code);
 	ret = ms_parse_line_to_tokens(data);
 	if (ret != SUCCESS)
 		return (ret);
@@ -46,19 +45,18 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data_value;
 	t_data	*data;
 
-	g_exit_code = SUCCESS;
 	data = &data_value;
 	if (ms_init(data, argc, argv, envp) != SUCCESS)
 		ms_error_exit(data, "initialization failed", FAILURE);
 	while (1)
 	{
-		g_exit_code = ms_prompt(data);
-		if (g_exit_code == 130 && !g_signal)
+		data->exit_code = ms_prompt(data);
+		if (data->exit_code == 130 && !g_signal)
 			ft_putstr_fd("\n", STDIN_FILENO);
-		if (g_exit_code == 131)
+		if (data->exit_code == 131)
 			ft_putstr_fd("Quit\n", STDERR_FILENO);
 		ms_reset_prompt(data);
-		ms_debug_exit_code(g_exit_code);
+		ms_debug_exit_code(data->exit_code);
 	}
 	ms_reset(data);
 	return (EXIT_SUCCESS);
