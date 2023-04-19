@@ -25,11 +25,11 @@ connected to the input of the next command via a pipe.
 should expand to their values.
 - [ ] Handle $? which should expand to the exit status of the most recently executed
 foreground pipeline.
-- [ ] Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
-- [ ] In interactive mode:
-	- [ ] ctrl-C displays a new prompt on a new line.
-	- [ ] ctrl-D exits the shell.
-	- [ ] ctrl-\ does nothing.
+- [x] Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
+- [x] In interactive mode:
+	- [x] ctrl-C displays a new prompt on a new line.
+	- [x] ctrl-D exits the shell.
+	- [x] ctrl-\ does nothing.
 - [x] Your shell must implement the following builtins:
 	- [x] echo with option -n
 	- [x] cd with only a relative or absolute path

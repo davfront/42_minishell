@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 05:34:22 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:11:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ void		ms_exec_dup2(t_data *data, int fd1, int fd2);
 int			ms_exec_pipe(t_data *data);
 int			ms_exec_cmds(t_data *data);
 void		ms_exec_fork_cmd(t_data *data, t_cmd *cmd);
+
+// signal
+void		ms_handle_sigint(int sig);
 
 // debug
 void		ms_debug_tokens(t_data *data);

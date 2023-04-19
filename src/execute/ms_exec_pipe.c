@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 09:26:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:41:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	ms_exec_child_process(t_data *data, int cmd_id)
 {
 	t_cmd	*cmd;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	cmd = data->cmds + cmd_id;
 	if (ms_cmd_open_io_files(cmd) != SUCCESS)
 		ms_exit(data, FAILURE);
@@ -70,6 +72,8 @@ static int	ms_exec_wait_children(t_data *data, pid_t cpid[CMD_MAX], \
 		waitpid(cpid[i], status + i, 0);
 		i++;
 	}
+	if (status[data->cmd_size - 1] == 2 || status[data->cmd_size - 1] == 3)
+		return (status[data->cmd_size - 1] + 128);
 	if (WIFEXITED(status[data->cmd_size - 1]))
 		return (WEXITSTATUS(status[data->cmd_size - 1]));
 	return (SUCCESS);
