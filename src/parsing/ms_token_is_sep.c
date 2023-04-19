@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_token_is_sep.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/05 15:42:01 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/07 12:16:19 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+int	ms_token_is_sep(char *token)
 {
-	t_list	*node;
-	t_env	*env;
-
-	node = data->env_list;
-	while (node)
-	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			ft_printf("%s=%s\n", env->label, env->value);
-		node = node->next;
-	}
+	if (ft_streq(token, "|"))
+		return (1);
+	if (ft_streq(token, "<"))
+		return (1);
+	if (ft_streq(token, "<<"))
+		return (1);
+	if (ft_streq(token, ">"))
+		return (1);
+	if (ft_streq(token, ">>"))
+		return (1);
+	return (0);
 }

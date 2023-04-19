@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_exec_dup2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
+/*   Created: 2023/03/02 15:43:00 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 17:10:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+void	ms_exec_dup2(t_data *data, int fd1, int fd2)
 {
-	t_list	*node;
-	t_env	*env;
-
-	node = data->env_list;
-	while (node)
-	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			ft_printf("%s=%s\n", env->label, env->value);
-		node = node->next;
-	}
+	if (dup2(fd1, fd2) == -1)
+		ms_error_exit(data, "dup2 failed", FAILURE);
+	close(fd1);
 }

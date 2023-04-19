@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_exec_error_exit.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 17:04:27 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+void	ms_exec_error_exit(t_data *data, char *msg)
 {
-	t_list	*node;
-	t_env	*env;
-
-	node = data->env_list;
-	while (node)
-	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			ft_printf("%s=%s\n", env->label, env->value);
-		node = node->next;
-	}
+	if (msg && *msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	ms_reset(data);
+	exit(EXIT_FAILURE);
 }

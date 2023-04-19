@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_is_script_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 16:27:55 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
+/*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/09 15:41:05 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_builtin_env(t_data *data)
+int	ms_is_script_cmd(char *cmd)
 {
-	t_list	*node;
-	t_env	*env;
+	char	*slash;
+	char	*equal;
 
-	node = data->env_list;
-	while (node)
-	{
-		env = (t_env *)(node->content);
-		if (env->value)
-			ft_printf("%s=%s\n", env->label, env->value);
-		node = node->next;
-	}
+	if (!cmd || !*cmd)
+		return (0);
+	slash = ft_strchr(cmd, '/');
+	equal = ft_strchr(cmd, '=');
+	return (slash && (!equal || equal > slash));
 }

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 12:37:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 18:24:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:14:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	ms_builtin_pwd(void)
 		perror("getcwd failed");
 		return (FAILURE);
 	}
-	printf("%s\n", cwd);
+	ft_printf("%s\n", cwd);
 	return (SUCCESS);
 }
