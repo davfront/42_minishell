@@ -93,6 +93,7 @@ SRCS_FILES			=	\
 						parsing/ms_parse_line_to_tokens.c\
 						parsing/ms_tokens_merge_io_args.c\
 						parsing/ms_tokens_type_varset.c\
+						parsing/ms_tokens_remove_quotes.c\
 						parsing/ms_parse_tokens_to_cmds.c\
 						\
 						cmd/ms_is_builtin_cmd_no_fork.c\

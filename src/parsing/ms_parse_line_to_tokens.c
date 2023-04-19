@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 11:53:09 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 21:05:08 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 06:45:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	ms_parse_line_to_tokens(t_data *data)
 		return (MISUSE);
 	ms_tokens_merge_io_args(data->tokens);
 	ms_tokens_type_varset(data->tokens);
+	ms_tokens_remove_quotes(data->tokens);
 	ms_debug_tokens(data);
 	return (SUCCESS);
 }
