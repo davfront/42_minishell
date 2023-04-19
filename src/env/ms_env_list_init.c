@@ -20,7 +20,7 @@ static int	ms_env_list_init_from_envp(t_list **env_list, char **envp)
 		return (FAILURE);
 	while (*envp)
 	{
-		env = ms_env_from_char(*envp);
+		env = ms_env_from_char(*envp, 1);
 		if (!env || ms_env_list_add(env_list, env) != SUCCESS)
 		{
 			ms_env_list_clear(env_list);
@@ -37,14 +37,15 @@ static int	ms_env_list_init_pwd(t_list **env_list)
 
 	if (!getcwd(pwd, sizeof(pwd)))
 		return (FAILURE);
-	return (ms_env_list_set(env_list, "PWD", pwd));
+	return (ms_env_list_set(env_list, "PWD", pwd, 1));
 }
 
 static int	ms_env_list_init_path(t_list **env_list)
 {
 	if (ms_env_list_get(env_list, "PATH"))
 		return (SUCCESS);
-	return (ms_env_list_set(env_list, "PATH", "/usr/local/bin:/usr/bin:/bin"));
+	return (ms_env_list_set(env_list, "PATH", \
+		"/usr/local/bin:/usr/bin:/bin", 1));
 }
 
 static int	ms_env_list_init_shlvl(t_list **env_list)
@@ -55,7 +56,7 @@ static int	ms_env_list_init_shlvl(t_list **env_list)
 
 	shlvl_str = ms_env_list_get(env_list, "SHLVL");
 	if (!shlvl_str)
-		return (ms_env_list_set(env_list, "SHLVL", "1"));
+		return (ms_env_list_set(env_list, "SHLVL", "1", 1));
 	shlvl = ft_atoi(shlvl_str);
 	if (shlvl < 0)
 		shlvl = -1;
@@ -64,7 +65,7 @@ static int	ms_env_list_init_shlvl(t_list **env_list)
 	shlvl_str = ft_itoa(shlvl + 1);
 	if (!shlvl_str)
 		return (FAILURE);
-	ret = ms_env_list_set(env_list, "SHLVL", shlvl_str);
+	ret = ms_env_list_set(env_list, "SHLVL", shlvl_str, 1);
 	ft_free((void **)&shlvl_str);
 	return (ret);
 }

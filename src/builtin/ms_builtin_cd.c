@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 12:04:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/29 21:24:01 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 22:20:28 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	ms_chdir(t_data *data, char *dir)
 		return (FAILURE);
 	}
 	oldpwd = ms_env_list_get(&(data->env_list), "PWD");
-	ms_env_list_set(&(data->env_list), "OLDPWD", oldpwd);
+	ms_env_list_set(&(data->env_list), "OLDPWD", oldpwd, 1);
 	getcwd(pwd, sizeof(pwd));
-	ms_env_list_set(&(data->env_list), "PWD", pwd);
+	ms_env_list_set(&(data->env_list), "PWD", pwd, 1);
 	return (SUCCESS);
 }
 

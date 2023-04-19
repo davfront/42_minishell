@@ -56,6 +56,7 @@ SRCS_FILES			=	\
 						utils/ms_error.c\
 						utils/ms_perror.c\
 						utils/ms_init.c\
+						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
 						\
 						env/ms_env_new.c\
@@ -88,13 +89,16 @@ SRCS_FILES			=	\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
 						parsing/ms_token_is_sep.c\
-						parsing/ms_token_is_io_sep.c\
 						parsing/ms_check_tokens.c\
-						parsing/ms_parse_tokens.c\
+						parsing/ms_parse_line_to_tokens.c\
+						parsing/ms_tokens_merge_io_args.c\
+						parsing/ms_tokens_type_varset.c\
+						parsing/ms_parse_tokens_to_cmds.c\
 						\
 						cmd/ms_is_builtin_cmd_no_fork.c\
 						cmd/ms_is_script_cmd.c\
 						cmd/ms_cmd_get_bin_path.c\
+						cmd/ms_cmd_declare_vars.c\
 						\
 						execute/ms_exec_dup2.c\
 						execute/ms_exec_pipe.c\

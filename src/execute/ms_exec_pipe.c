@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/11 11:05:52 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 23:40:00 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,16 @@ int	ms_exec_pipe(t_data *data)
 	i = 0;
 	while (i < data->cmd_size)
 	{
-		if (data->cmds[i].args && data->cmds[i].args[0])
+		ms_cmd_declare_vars(data, data->cmds + i);
+		if (ms_is_builtin_cmd_no_fork(data->cmds[i].args[0]))
+			status[i] = ms_builtin_cmd(data, data->cmds[i].args);
+		else
 		{
-			if (ms_is_builtin_cmd_no_fork(data->cmds[i].args[0]))
-				status[i] = ms_builtin_cmd(data, data->cmds[i].args);
-			else
-			{
-				cpid[i] = fork();
-				if (cpid[i] == -1)
-					ms_error_exit(data, "fork failed", FAILURE);
-				if (cpid[i] == 0)
-					ms_exec_child_process(data, i);
-			}
+			cpid[i] = fork();
+			if (cpid[i] == -1)
+				ms_error_exit(data, "fork failed", FAILURE);
+			if (cpid[i] == 0)
+				ms_exec_child_process(data, i);
 		}
 		i++;
 	}

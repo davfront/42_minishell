@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:59:29 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 10:45:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/13 23:51:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,34 @@ static char	*ms_env_to_char(t_env *env)
 	return (s);
 }
 
+static size_t	ms_env_list_export_size(t_list *env_list)
+{
+	t_list	*node;
+	t_env	*env;
+	size_t	i;
+
+	if (!env_list)
+		return (0);
+	node = env_list;
+	i = 0;
+	while (node)
+	{
+		env = (t_env *)(node->content);
+		if (env->export)
+			i++;
+		node = node->next;
+	}
+	return (i);
+}
+
 char	**ms_env_list_export(t_list *env_list)
 {
 	t_list	*node;
 	t_env	*env;
 	char	**envp;
-	size_t	len;
 	size_t	i;
 
-	if (!env_list)
-		return (NULL);
-	len = ft_lstsize(env_list);
-	envp = ft_calloc(len + 1, sizeof(char *));
+	envp = ft_calloc(ms_env_list_export_size(env_list) + 1, sizeof(char *));
 	if (!envp)
 		return (NULL);
 	node = env_list;
@@ -53,11 +69,14 @@ char	**ms_env_list_export(t_list *env_list)
 	while (node)
 	{
 		env = (t_env *)(node->content);
-		envp[i] = ms_env_to_char(env);
-		if (!envp[i])
-			return (ft_free_split(envp), NULL);
+		if (env->export)
+		{
+			envp[i] = ms_env_to_char(env);
+			if (!envp[i])
+				return (ft_free_split(envp), NULL);
+			i++;
+		}
 		node = node->next;
-		i++;
 	}
 	envp[i] = NULL;
 	return (envp);

@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 18:09:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/14 06:14:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,28 @@ typedef struct s_split
 typedef struct s_env {
 	char	*label;
 	char	*value;
+	int		export;
 }	t_env;
 
+typedef enum e_type {
+	UNDEFINED = 0,
+	PIPE,
+	HEREDOC,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_OUT_APP,
+	WORD,
+	VARSET,
+	END,
+}	t_type;
+
+typedef struct s_tok {
+	t_type	type;
+	char	*str;
+}	t_tok;
+
 typedef struct s_cmd {
+	t_tok	*tokens;
 	char	**args;
 	char	**envp;
 	char	*exe_path;
@@ -74,7 +93,7 @@ typedef struct s_cmd {
 typedef struct s_data {
 	t_list	*env_list;
 	char	*line;
-	char	**tokens;
+	t_tok	*tokens;
 	int		cmd_size;
 	t_cmd	*cmds;
 	int		*fd_pipe;
@@ -91,15 +110,15 @@ void		ms_error3(char *msg1, char *msg2, char *msg3);
 void		ms_error_exit(t_data *data, char *msg, int exit_code);
 void		ms_perror(char *msg);
 void		ms_perror_exit(t_data *data, char *msg, int exit_code);
-void		ms_init(t_data *data, char **envp);
+int			ms_init(t_data *data, int argc, char **argv, char **envp);
 void		ms_reset(t_data *data);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
 void		ms_print_quoted(char *s);
 
 // env
-t_env		*ms_env_new(char *label, char *value);
-t_env		*ms_env_from_char(char *s);
+t_env		*ms_env_new(char *label, char *value, int export);
+t_env		*ms_env_from_char(char *s, int export);
 void		ms_env_delete(void *content);
 int			ms_env_list_add(t_list **env_list, t_env *env);
 int			ms_env_list_init(t_list **env_list, char **envp);
@@ -107,9 +126,10 @@ void		ms_env_list_clear(t_list **env_list);
 t_list		*ms_env_list_find(t_list *env_list, char *label);
 void		ms_env_list_delete(t_list **env_list, t_list *node);
 int			ms_env_is_valid_identifier(char *name);
-int			ms_env_list_update(t_list *node, char *value);
+int			ms_env_list_update(t_list *node, char *value, int export);
 char		*ms_env_list_get(t_list **env_list, char *label);
-int			ms_env_list_set(t_list **env_list, char *label, char *value);
+int			ms_env_list_set(t_list **env_list, char *label, char *value, \
+				int export);
 void		ms_env_list_unset(t_list **env_list, char *label);
 char		**ms_env_list_export(t_list *env_list);
 
@@ -130,15 +150,20 @@ char		*ms_read_prompt(void);
 // parsing
 char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
-int			ms_token_is_sep(char *token);
-int			ms_token_is_io_sep(char *token);
-int			ms_check_tokens(char **tokens);
-int			ms_parse_tokens(t_data *data);
+int			ms_token_is_cmd_sep(t_tok token);
+int			ms_token_is_io_sep(t_tok token);
+int			ms_token_is_sep(t_tok token);
+int			ms_check_tokens(t_tok *tokens);
+int			ms_parse_line_to_tokens(t_data *data);
+void		ms_tokens_merge_io_args(t_tok *tokens);
+void		ms_tokens_type_varset(t_tok *tokens);
+int			ms_parse_tokens_to_cmds(t_data *data);
 
 // cmd
 int			ms_is_builtin_cmd_no_fork(char *cmd);
 int			ms_is_script_cmd(char *cmd);
 char		*ms_cmd_get_bin_path(t_data *data, char *cmd);
+int			ms_cmd_declare_vars(t_data *data, t_cmd *cmd);
 
 // execute
 void		ms_exec_dup2(t_data *data, int fd1, int fd2);
