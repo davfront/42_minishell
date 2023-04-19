@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 06:13:18 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:07:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	ms_prompt(t_data *data)
 	ret = ms_parse_tokens_to_cmds(data);
 	if (ret != SUCCESS)
 		return (ret);
+	if (ms_heredoc_create_tmp(data) != SUCCESS)
+		return (ms_error("heredoc failed"), FAILURE);
 	return (ms_exec_cmds(data));
 }
 

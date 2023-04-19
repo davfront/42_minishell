@@ -13,12 +13,12 @@ its purpose.
 subject such as \ (backslash) or ; (semicolon).
 - [ ] Handle ’ (single quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence.
 - [ ] Handle " (double quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence except for $ (dollar sign)
-- [ ] Implement redirections:
-	- [ ] < should redirect input.
-	- [ ] > should redirect output.
-	- [ ] << should be given a delimiter, then read the input until a line containing the
+- [x] Implement redirections:
+	- [x] < should redirect input.
+	- [x] > should redirect output.
+	- [x] << should be given a delimiter, then read the input until a line containing the
 	delimiter is seen. However, it doesn’t have to update the history!
-	- [ ] >> should redirect output in append mode.
+	- [x] >> should redirect output in append mode.
 - [x] Implement pipes (| character). The output of each command in the pipeline is
 connected to the input of the next command via a pipe.
 - [ ] Handle environment variables ($ followed by a sequence of characters) which

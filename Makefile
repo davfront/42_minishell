@@ -52,12 +52,15 @@ SRCS_FILES			=	\
 						utils/ms_strs_len.c\
 						utils/ms_str_is_llong.c\
 						utils/ms_str_to_llong.c\
+						utils/ms_str_add.c\
 						utils/ms_exit.c\
 						utils/ms_error.c\
 						utils/ms_perror.c\
 						utils/ms_init.c\
+						utils/ms_reset_cmds.c\
 						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
+						utils/ms_fd_is_file.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -96,10 +99,15 @@ SRCS_FILES			=	\
 						parsing/ms_tokens_remove_quotes.c\
 						parsing/ms_parse_tokens_to_cmds.c\
 						\
+						heredoc/ms_heredoc_create_tmp.c\
+						\
 						cmd/ms_is_builtin_cmd_no_fork.c\
 						cmd/ms_is_script_cmd.c\
+						cmd/ms_cmd_init.c\
 						cmd/ms_cmd_get_bin_path.c\
 						cmd/ms_cmd_declare_vars.c\
+						cmd/ms_cmd_open_io_files.c\
+						cmd/ms_cmd_close_io_files.c\
 						\
 						execute/ms_exec_dup2.c\
 						execute/ms_exec_pipe.c\

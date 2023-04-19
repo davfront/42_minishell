@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 06:43:26 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/17 05:34:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 
 # define CMD_MAX			64
 
+# define HEREDOC_TMP		"heredoc.tmp"
+
 typedef struct s_split
 {
 	int		i;
@@ -88,6 +90,8 @@ typedef struct s_cmd {
 	char	**args;
 	char	**envp;
 	char	*exe_path;
+	int		fd_in;
+	int		fd_out;
 }	t_cmd;
 
 typedef struct s_data {
@@ -97,12 +101,16 @@ typedef struct s_data {
 	int		cmd_size;
 	t_cmd	*cmds;
 	int		*fd_pipe;
+	int		heredoc_enabled;
+	char	*heredoc_delimiter;
+	int		heredoc_fd;
 }	t_data;
 
 // utils
 size_t		ms_strs_len(char **strs);
 int			ms_str_is_llong(char *s);
 long long	ms_str_to_llong(char *str);
+void		ms_str_add(char **s, char *s2);
 void		ms_exit(t_data *data, int exit_code);
 void		ms_error(char *msg);
 void		ms_error2(char *msg1, char *msg2);
@@ -115,6 +123,7 @@ void		ms_reset(t_data *data);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
 void		ms_print_quoted(char *s);
+int			ms_fd_is_file(int fd);
 
 // env
 t_env		*ms_env_new(char *label, char *value, int export);
@@ -160,11 +169,17 @@ void		ms_tokens_type_varset(t_tok *tokens);
 void		ms_tokens_remove_quotes(t_tok *tokens);
 int			ms_parse_tokens_to_cmds(t_data *data);
 
+// heredoc
+int			ms_heredoc_create_tmp(t_data *data);
+
 // cmd
 int			ms_is_builtin_cmd_no_fork(char *cmd);
 int			ms_is_script_cmd(char *cmd);
+int			ms_cmd_init(t_cmd *cmd, t_tok *tokens);
 char		*ms_cmd_get_bin_path(t_data *data, char *cmd);
 int			ms_cmd_declare_vars(t_data *data, t_cmd *cmd);
+int			ms_cmd_open_io_files(t_cmd *cmd);
+void		ms_cmd_close_io_files(t_cmd *cmd);
 
 // execute
 void		ms_exec_dup2(t_data *data, int fd1, int fd2);
