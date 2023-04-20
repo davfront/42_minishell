@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 04:02:42 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:16:29 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static int	ms_expand_var_here(char **str, t_list **env_list, \
 	if (!*str || ft_strlen(*str) < (*dollar_i + 1) + 1)
 		return (FAILURE);
 	dollar = *str + *dollar_i;
-	label = ms_parse_env_label(dollar + 1);
+	if (ft_strchr("0123456789!@#&*()-_{}[];,.|/|$\\\"\'", dollar[1]))
+		label = ft_strndup(dollar + 1, 1);
+	else
+		label = ms_parse_env_label(dollar + 1);
 	if (!label)
 		return (FAILURE);
 	value = ms_env_list_get(env_list, label);
@@ -50,6 +53,18 @@ static int	ms_expand_var_here(char **str, t_list **env_list, \
 	return (ft_free((void **)&label), SUCCESS);
 }
 
+static char	ms_update_quote(char quote, char c)
+{
+	if (c == '\'' || c == '"')
+	{
+		if (!quote)
+			quote = c;
+		else if (c == quote)
+			quote = '\0';
+	}
+	return (quote);
+}
+
 int	ms_expand_vars(char **s, t_list **env_list)
 {
 	size_t	i;
@@ -59,15 +74,11 @@ int	ms_expand_vars(char **s, t_list **env_list)
 	i = 0;
 	while (*s && (*s)[i])
 	{
-		if ((*s)[i] == '\'' || (*s)[i] == '"')
-		{
-			if (!quote)
-				quote = (*s)[i];
-			else if ((*s)[i] == quote)
-				quote = '\0';
-		}
-		if (quote != '\'' && (*s)[i] == '$' &&
-			(ft_isalpha((*s)[i + 1]) || (*s)[i + 1] == '_'))
+		quote = ms_update_quote(quote, (*s)[i]);
+		if (quote != '\'' && (*s)[i] == '$' && (*s)[i + 1]
+			&& !ft_strchr(" \t\n^+=~:%", (*s)[i + 1])
+			&& (quote != '"' || ((*s)[i + 1] != '\'' && (*s)[i + 1] != '"'))
+		)
 		{
 			if (ms_expand_var_here(s, env_list, &i) != SUCCESS)
 				return (FAILURE);
