@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 07:38:24 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:06:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
 void		ms_print_quoted(char *s);
 int			ms_fd_is_file(int fd);
+int			ms_is_directory(char *path);
 
 // env
 t_env		*ms_env_new(char *label, char *value, int export);

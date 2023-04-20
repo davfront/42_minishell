@@ -61,6 +61,7 @@ SRCS_FILES			=	\
 						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
 						utils/ms_fd_is_file.c\
+						utils/ms_is_directory.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\

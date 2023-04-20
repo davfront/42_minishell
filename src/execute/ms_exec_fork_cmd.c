@@ -36,6 +36,11 @@ void	ms_exec_fork_cmd(t_data *data, t_cmd *cmd)
 		ms_exit(data, FAILURE);
 	if (ms_is_builtin_cmd(cmd->args[0]))
 		ms_exit(data, ms_builtin_cmd(data, cmd->args));
+	if (ms_is_directory(cmd->args[0]))
+	{
+		ms_error2(cmd->args[0], "Is a directory");
+		ms_exit(data, CANT_EXEC);
+	}
 	cmd->envp = ms_env_list_export(data->env_list);
 	if (!cmd->envp)
 		ms_exit(data, FAILURE);
