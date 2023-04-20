@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_trim.c                                          :+:      :+:    :+:   */
+/*   ms_cmdsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:24:13 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/03/29 11:06:05 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/20 06:39:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	ms_get_token_length(char *str, char *set);
 static int	ms_count_rows(char *str, char *set);
 static char	**ms_str(char **arr, char *str, char *set, t_split *split);
 static void	ms_init_struct_split(char *str, t_split *split);
@@ -30,9 +31,33 @@ char	**ms_cmdsplit(char *str, char *set)
 		return (NULL);
 	array = ms_str(array, str, set, &split);
 	if (!array)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	array[count] = '\0';
 	return (array);
+}
+
+static int	ms_get_token_length(char *str, char *set)
+{
+	char	quote;
+	int		i;
+
+	if (!str)
+		return (0);
+	if (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0)
+		return (2);
+	if (ft_strchr("><|", *str) != NULL)
+		return (1);
+	i = 0;
+	quote = '\0';
+	while (str[i] && (quote || !ft_strchr(set, str[i])))
+	{
+		if (quote == str[i])
+			quote = 0;
+		else if (!quote && (str[i] == '\"' || str[i] == '\''))
+			quote = str[i];
+		i++;
+	}
+	return (i);
 }
 
 static char	**ms_str(char **arr, char *str, char *set, t_split *split)
@@ -43,22 +68,16 @@ static char	**ms_str(char **arr, char *str, char *set, t_split *split)
 		while (ft_strchr(set, str[split->i]) && str[split->i] != '\0')
 			split->i++;
 		split->q_index = split->i;
-		while (str[split->i] != '\0')
-		{
-			if ((str[split->i] == '\"' || \
-			str[split->i] == '\'') && !split->quotes)
-				split->quotes = str[split->i];
-			else if (str[split->i] == split->quotes)
-				split->quotes = 0;
-			else if (ft_strchr(set, str[split->i]) && !split->quotes)
-				break ;
-			split->i++;
-		}
-		if (split->q_index >= split->len)
-			arr[split->arr_index++] = "\0";
-		else
-			arr[split->arr_index++] = \
+		split->i += ms_get_token_length(str + split->i, set);
+		arr[split->arr_index] = \
 			ft_substr(str, split->q_index, split->i - split->q_index);
+		if (!arr[split->arr_index])
+		{
+			ft_free_split(arr);
+			arr = NULL;
+			return (NULL);
+		}
+		split->arr_index++;
 	}
 	return (arr);
 }
@@ -66,23 +85,14 @@ static char	**ms_str(char **arr, char *str, char *set, t_split *split)
 static int	ms_count_rows(char *str, char *set)
 {
 	int	count;
-	int	quotes;
 
 	count = 0;
-	quotes = 0;
 	while (*str)
 	{
 		if (!ft_strchr(set, *str))
 		{
 			count++;
-			while ((!ft_strchr(set, *str) || quotes) && *str)
-			{
-				if (!quotes && (*str == '\"' || *str == '\''))
-					quotes = *str;
-				else if (quotes == *str)
-					quotes = 0;
-				str++;
-			}
+			str += ms_get_token_length(str, set);
 		}
 		else
 			str++;
