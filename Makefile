@@ -61,6 +61,7 @@ SRCS_FILES			=	\
 						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
 						utils/ms_fd_is_file.c\
+						utils/ms_is_directory.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -91,6 +92,11 @@ SRCS_FILES			=	\
 						\
 						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
+						parsing/ms_replace_keyword.c\
+						parsing/ms_expand_exit_code.c\
+						parsing/ms_expand_vars.c\
+						parsing/ms_expand_tilde.c\
+						parsing/ms_expand.c\
 						parsing/ms_token_is_sep.c\
 						parsing/ms_check_tokens.c\
 						parsing/ms_parse_line_to_tokens.c\

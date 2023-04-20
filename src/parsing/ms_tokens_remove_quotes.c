@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 18:27:03 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 07:11:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 07:59:06 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	ms_str_remove_quotes(char *s)
 			if (!end)
 				return ;
 			ms_str_remove_first_char(end);
-			next_i = end - (s + i);
+			next_i = end - s;
 		}
 		i = next_i;
 	}

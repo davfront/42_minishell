@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/19 14:18:30 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:06:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-# define DEBUG				1
+# define DEBUG				0
 
 # define LLONG_MAX_STR		"9223372036854775807"
 
@@ -125,6 +125,7 @@ void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
 void		ms_print_quoted(char *s);
 int			ms_fd_is_file(int fd);
+int			ms_is_directory(char *path);
 
 // env
 t_env		*ms_env_new(char *label, char *value, int export);
@@ -160,6 +161,12 @@ char		*ms_read_prompt(void);
 // parsing
 char		**ms_parser(char *line);
 char		**ms_cmdsplit(char *str, char *set);
+int			ms_replace_keyword(char **str, size_t kw_id, size_t kw_len, \
+				char *value);
+int			ms_expand_exit_code(t_data *data, char **s);
+int			ms_expand_vars(char **s, t_list **env_list);
+int			ms_expand_tilde(char **s, t_list **env_list);
+int			ms_expand(t_data *data);
 int			ms_token_is_cmd_sep(t_tok token);
 int			ms_token_is_io_sep(t_tok token);
 int			ms_token_is_sep(t_tok token);
@@ -168,6 +175,7 @@ int			ms_parse_line_to_tokens(t_data *data);
 void		ms_tokens_merge_io_args(t_tok *tokens);
 void		ms_tokens_type_varset(t_tok *tokens);
 void		ms_tokens_remove_quotes(t_tok *tokens);
+int			ms_parse_tokens_to_cmds(t_data *data);
 int			ms_parse_tokens_to_cmds(t_data *data);
 
 // heredoc
