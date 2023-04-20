@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 04:11:00 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 07:38:24 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-# define DEBUG				1
+# define DEBUG				0
 
 # define LLONG_MAX_STR		"9223372036854775807"
 
