@@ -101,3 +101,13 @@ echo hola""bonjour
 echo "$DONTEXIST"Makefile
 echo "$DONTEXIST""Makefile"
 echo "$DONTEXIST" "Makefile"
+$?
+$?$?
+?$HOME
+$
+$HOME
+$HOMEdskjhfkdshfsd
+"$HOMEdskjhfkdshfsd"
+'$HOMEdskjhfkdshfsd'
+$DONTEXIST
+$LESS$VAR

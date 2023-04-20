@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 17:22:38 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 18:11:45 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:24:46 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ms_cmd_get_bin_path(t_data *data, char *cmd)
 	size_t	i;
 	char	*bin_path;
 
-	if (!cmd)
+	if (!cmd || !*cmd)
 		return (NULL);
 	dir_pathes = ms_cmd_get_env_pathes(data);
 	if (!dir_pathes)
