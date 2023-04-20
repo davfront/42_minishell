@@ -128,5 +128,12 @@ function test_commands() {
 }
 
 # Test the commands using the test_commands function
-test_commands syntax
-test_commands echo
+if [ $# -eq 0 ]; then
+    test_files=$(ls $DIR/tests/*.txt | xargs -I {} basename {} .txt)
+else
+    test_files=$@
+fi
+
+for test_file in $test_files; do
+    test_commands $test_file
+done
