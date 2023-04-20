@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 05:15:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:31:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ms_reset_heredoc(t_data *data)
 		return ;
 	data->heredoc_enabled = 0;
 	data->heredoc_delimiter = NULL;
-	if (data->heredoc_fd)
+	if (data->heredoc_fd != -1)
 		close(data->heredoc_fd);
 	data->heredoc_fd = -1;
 	unlink(HEREDOC_TMP);

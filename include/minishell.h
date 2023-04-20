@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 09:04:58 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:38:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 
-# define DEBUG				1
+# define DEBUG				0
 
 # define LLONG_MAX_STR		"9223372036854775807"
 
@@ -52,8 +52,6 @@
 # define CMD_MAX			64
 
 # define HEREDOC_TMP		"heredoc.tmp"
-
-extern int	g_exit_code;
 
 typedef struct s_split
 {
@@ -97,6 +95,7 @@ typedef struct s_cmd {
 }	t_cmd;
 
 typedef struct s_data {
+	int		exit_code;
 	t_list	*env_list;
 	char	*line;
 	t_tok	*tokens;
@@ -129,6 +128,7 @@ void		ms_print_quoted(char *s);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
 int			ms_fd_is_file(int fd);
+int			ms_is_directory(char *path);
 
 // env
 t_env		*ms_env_new(char *label, char *value, int export);
@@ -164,6 +164,12 @@ char		*ms_read_prompt(void);
 // parsing
 char		**ms_parser(char *line, t_data *data);
 char		**ms_cmdsplit(char *str, char *set);
+char		*ms_expand_var(char *str, t_data *data);
+char		*ms_tilde(char *str, t_data *data);
+int			ms_is_char_print(char c);
+int			ms_is_char_nprint(char c);
+char		*ms_get_var_name(char *str, int index);
+char		*ms_expand_exit_code(t_data *data, char *copy_str, int *index);
 int			ms_token_is_cmd_sep(t_tok token);
 int			ms_token_is_io_sep(t_tok token);
 int			ms_token_is_sep(t_tok token);
@@ -172,6 +178,7 @@ int			ms_parse_line_to_tokens(t_data *data);
 void		ms_tokens_merge_io_args(t_tok *tokens);
 void		ms_tokens_type_varset(t_tok *tokens);
 void		ms_tokens_remove_quotes(t_tok *tokens);
+int			ms_parse_tokens_to_cmds(t_data *data);
 int			ms_parse_tokens_to_cmds(t_data *data);
 
 // heredoc
@@ -192,17 +199,12 @@ int			ms_exec_pipe(t_data *data);
 int			ms_exec_cmds(t_data *data);
 void		ms_exec_fork_cmd(t_data *data, t_cmd *cmd);
 
+// signal
+void		ms_handle_sigint(int sig);
+
 // debug
 void		ms_debug_tokens(t_data *data);
 void		ms_debug_exit_code(int exit_code);
 void		ms_debug_cmds(t_data *data);
-
-// expand
-char		*ms_expand_var(char *str, t_data *data);
-char		*ms_tilde(char *str, t_data *data);
-int			ms_is_char_print(char c);
-int			ms_is_char_nprint(char c);
-char		*ms_get_var_name(char *str, int index);
-char		*ms_expand_exit_code(char *copy_str, int *index);
 
 #endif

@@ -1,0 +1,226 @@
+==============================================================
+  5. [KO] !
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+!: command not found
+
+bash stderr:
+
+==============================================================
+ 10. [KO] <>
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+syntax error near unexpected token `>'
+
+bash stderr:
+syntax error near unexpected token `newline'
+
+==============================================================
+ 14. [KO] <<<<<<<<<<<<<<<<
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+syntax error near unexpected token `<<'
+
+bash stderr:
+syntax error near unexpected token `<<<'
+
+==============================================================
+ 27. [KO] ||
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+syntax error near unexpected token `|'
+
+bash stderr:
+syntax error near unexpected token `||'
+
+==============================================================
+ 28. [KO] |||||
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+syntax error near unexpected token `|'
+
+bash stderr:
+syntax error near unexpected token `||'
+
+==============================================================
+ 29. [KO] |||||||||||||
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+syntax error near unexpected token `|'
+
+bash stderr:
+syntax error near unexpected token `||'
+
+==============================================================
+ 31. [KO] echo $? | echo $? | echo $?
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+
+bash stderr:
+echo: write error: Broken pipe
+
+==============================================================
+ 53. [KO] echo $""
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$$$
+
+bash output:
+$$
+
+==============================================================
+ 56. [KO] echo $"HOME"
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 57. [KO] echo $''HOME
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 58. [KO] echo $""HOME
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 60. [KO] echo '$HO'ME
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+ME$$
+
+bash output:
+$HOME$$
+
+==============================================================
+ 62. [KO] echo '$HO''ME'
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+ME$$
+
+bash output:
+$HOME$$
+
+==============================================================
+ 68. [KO] echo $"HO""ME"
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 69. [KO] echo $'HO''ME'
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 70. [KO] echo $'HOME'
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOME$$
+
+bash output:
+HOME$$
+
+==============================================================
+ 73. [KO] echo $"HOLA"
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOLA$$
+
+bash output:
+HOLA$$
+
+==============================================================
+ 74. [KO] echo $'HOLA'
+==============================================================
+
+OUTPUT MISMATCH !!!
+
+minishell output:
+$HOLA$$
+
+bash output:
+HOLA$$
+
+==============================================================
+111. [KO] '$HOMEdskjhfkdshfsd'
+==============================================================
+
+STDERR MISMATCH !!!
+
+minishell stderr:
+: command not found
+
+bash stderr:
+$HOMEdskjhfkdshfsd: command not found
+

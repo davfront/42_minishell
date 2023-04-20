@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:42:44 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 04:28:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:14:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ms_init_default(t_data *data)
 {
 	if (!data)
 		return ;
+	data->exit_code = SUCCESS;
 	data->env_list = NULL;
 	data->line = NULL;
 	data->tokens = NULL;

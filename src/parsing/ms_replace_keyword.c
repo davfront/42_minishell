@@ -1,42 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand_exit_code.c                              :+:      :+:    :+:   */
+/*   ms_replace_keyword.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 22:40:54 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:34:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ms_expand_exit_code(t_data *data, char *copy_str, int *index)
+int	ms_replace_keyword(char **str, size_t kw_id, size_t kw_len, char *value)
 {
 	char	*before;
-	char	*after;
-	char	*exit_code_as_str;
-	char	*expand_str;
+	char	*tmp1;
+	char	*tmp2;
 
-	if (!data)
-		return (NULL);
-	before = ft_substr(copy_str, 0, *index);
-	if (!before)
-		return (NULL);
-	after = &copy_str[*index + 2];
-	exit_code_as_str = ft_itoa(data->exit_code);
-	if (!exit_code_as_str)
-		return (ft_free((void **)&before), NULL);
-	expand_str = ms_join3(before, exit_code_as_str, after);
-	if (!expand_str)
+	before = ft_strndup(*str, kw_id);
+	if (value)
 	{
+		tmp1 = ft_strjoin(before, value);
 		ft_free((void **)&before);
-		ft_free((void **)&exit_code_as_str);
-		return (NULL);
 	}
-	(*index) += ft_strlen(exit_code_as_str);
-	ft_free((void **)&before);
-	ft_free((void **)&exit_code_as_str);
-	return (expand_str);
+	else
+		tmp1 = before;
+	if (!tmp1)
+		return (FAILURE);
+	tmp2 = ft_strjoin(tmp1, *str + kw_id + kw_len);
+	if (!tmp2)
+	{
+		ft_free((void **)&tmp1);
+		return (FAILURE);
+	}
+	ft_free((void **)&tmp1);
+	ft_free((void **)str);
+	*str = tmp2;
+	return (SUCCESS);
 }

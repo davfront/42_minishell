@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_exit.c                                          :+:      :+:    :+:   */
+/*   ms_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/19 14:18:10 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/12 16:15:54 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/20 04:08:53 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_exit(t_data *data, int exit_code)
+int	ms_expand(t_data *data)
 {
-	ms_reset(data);
-	ms_debug_exit_code(exit_code);
-	exit(exit_code);
+	if (!data || !data->line)
+		return (FAILURE);
+	if (ms_expand_exit_code(data, &(data->line)) != SUCCESS)
+		return (FAILURE);
+	if (ms_expand_vars(&(data->line), &(data->env_list)) != SUCCESS)
+		return (FAILURE);
+	if (ms_expand_tilde(&(data->line), &(data->env_list)) != SUCCESS)
+		return (FAILURE);
+	return (SUCCESS);
 }

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_exit.c                                          :+:      :+:    :+:   */
+/*   ms_is_directory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/19 14:18:10 by dapereir         ###   ########.fr       */
+/*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/20 11:06:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ms_exit(t_data *data, int exit_code)
+int	ms_is_directory(char *path)
 {
-	ms_reset(data);
-	ms_debug_exit_code(exit_code);
-	exit(exit_code);
+	DIR	*dir;
+
+	if (!path)
+		return (0);
+	dir = opendir(path);
+	if (!dir)
+		return (0);
+	closedir(dir);
+	return (1);
 }

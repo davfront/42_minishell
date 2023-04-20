@@ -63,6 +63,7 @@ SRCS_FILES			=	\
 						utils/ms_join3.c\
 						utils/ms_is_quote.c\
 						utils/ms_fd_is_file.c\
+						utils/ms_is_directory.c\
 						\
 						env/ms_env_new.c\
 						env/ms_env_from_char.c\
@@ -120,6 +121,8 @@ SRCS_FILES			=	\
 						execute/ms_exec_pipe.c\
 						execute/ms_exec_fork_cmd.c\
 						execute/ms_exec_cmds.c\
+						\
+						signal/ms_handle_sigint.c\
 						\
 						debug/ms_debug_tokens.c\
 						debug/ms_debug_exit_code.c\

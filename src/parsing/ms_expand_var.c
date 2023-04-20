@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 09:58:58 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/21 09:10:03 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:22:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ms_expand_var(char *str, t_data *data)
 		if (copy_str[i] == '$' && !ms_is_char_print(copy_str[i + 1]))
 		{
 			if (copy_str[i + 1] == '?')
-				new_str = ms_expand_exit_code(copy_str, &i);
+				new_str = ms_expand_exit_code(data, copy_str, &i);
 			else
 				new_str = ms_change_line(copy_str, &i, data);
 			if (!new_str)
