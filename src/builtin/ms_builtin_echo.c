@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:53:53 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/30 00:14:34 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:29:48 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static int	ms_builtin_echo_is_n_option(char *arg)
 {
-	if (!arg || ft_strncmp(arg, "-n", 2) != 0)
+	size_t	i;
+
+	if (!arg)
 		return (0);
-	if (ft_strchr(arg + 2, '-'))
-		return (0);
-	return (1);
+	i = 0;
+	if (arg[i] == '-')
+		i++;
+	while (arg[i] == 'n')
+		i++;
+	return (!arg[i] && i >= 2);
 }
 
 void	ms_builtin_echo(char **args)
