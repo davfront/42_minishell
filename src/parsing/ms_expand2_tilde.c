@@ -6,13 +6,14 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 07:18:36 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 10:13:40 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ms_expand2_tilde_here(char **str, t_list **env_list, size_t *tilde_i)
+static int	ms_expand2_tilde_here(char **str, t_list **env_list, \
+	size_t *tilde_i)
 {
 	char	*value;
 
