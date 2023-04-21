@@ -8,10 +8,10 @@ cd ../
 cd ../..
 cd ../.
 cd .././././.
-cd srcs
-cd srcs objs
-cd 'srcs'
-cd "srcs"
+cd src
+cd src obj
+cd 'src'
+cd "src"
 cd '/etc'
 cd /e'tc'
 cd /e"tc"
