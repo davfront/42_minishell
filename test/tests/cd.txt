@@ -33,8 +33,8 @@ cd ---
 cd $HOME
 cd $HOME $HOME
 cd $HOME/42_works
-cd "$PWD/srcs"
-cd '$PWD/srcs'
+cd "$PWD/src"
+cd '$PWD/src'
 unset HOME && cd $HOME
 unset HOME && export HOME= && cd
 unset HOME && export HOME && cd

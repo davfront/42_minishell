@@ -52,19 +52,20 @@ function test_commands() {
 
 		# Capture output and exit code of minishell in file out1
 		cd $MS_DIR
-        "$MS_DIR/minishell" <<< "$cmd"$'\n'"exit" 2> "$DIR/err1" > "$DIR/out1"
+        "$MS_DIR/minishell" <<< $cmd$'\n'exit 2> "$DIR/err1" > "$DIR/out1"
 		exit1=$?
         cd $DIR
 
         # Capture output and exit code of /bin/bash in file out2
 		cd $MS_DIR
-        bash <<< "$cmd"$'\n'"exit" 2> "$DIR/err2" > "$DIR/out2"
+        bash <<< $cmd$'\n'exit 2> "$DIR/err2" > "$DIR/out2"
         exit2=$?
         cd $DIR
 
         # Clean out1
         sed -i 's/\x1b\[[0-9;]*[mG]//g' out1 # remove colors
-        sed -zi 's/minishell> exit\nexit\n//' out1 # remove exit
+        sed -i '/^exit$/d' out1 # remove exit output
+        sed -zi '/^minishell> exit$\n/d' out1 # remove exit prompt
         sed -i '/^minishell> /d' out1 # remove prompts
 
         # Clean err1
@@ -72,7 +73,7 @@ function test_commands() {
         sed -i '/^$/d' err1 # remove empty lines
 
         # Clean err2
-        sed -i 's/^bash: line 1: //' err2 # remove prompt string
+        sed -ri 's/^bash: line [0-9]: //' err2 # remove prompt string
         sed -i "s/^\`.*//" err2 # remove command
         sed -i '/^$/d' err2 # remove empty lines
 
