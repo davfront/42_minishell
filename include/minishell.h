@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 22:38:39 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 09:18:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int			ms_parse_tokens_to_cmds(t_data *data);
 int			ms_heredoc_create_tmp(t_data *data);
 
 // cmd
-int			ms_is_builtin_cmd_no_fork(char *cmd);
+int			ms_is_cmd_to_fork(t_data *data, int cmd_id);
 int			ms_is_script_cmd(char *cmd);
 int			ms_cmd_init(t_cmd *cmd, t_tok *tokens);
 char		*ms_cmd_get_bin_path(t_data *data, char *cmd);

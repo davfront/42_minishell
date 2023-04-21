@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/19 13:41:21 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 09:20:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	ms_exec_wait_children(t_data *data, pid_t cpid[CMD_MAX], \
 		waitpid(cpid[i], status + i, 0);
 		i++;
 	}
+	if (!ms_is_cmd_to_fork(data, data->cmd_size - 1))
+		return (status[data->cmd_size - 1]);
 	if (status[data->cmd_size - 1] == 2 || status[data->cmd_size - 1] == 3)
 		return (status[data->cmd_size - 1] + 128);
 	if (WIFEXITED(status[data->cmd_size - 1]))
@@ -90,7 +92,7 @@ int	ms_exec_pipe(t_data *data)
 	while (i < data->cmd_size)
 	{
 		ms_cmd_declare_vars(data, data->cmds + i);
-		if (ms_is_builtin_cmd_no_fork(data->cmds[i].args[0]))
+		if (!ms_is_cmd_to_fork(data, i))
 			status[i] = ms_builtin_cmd(data, data->cmds[i].args);
 		else
 		{

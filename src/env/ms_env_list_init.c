@@ -80,6 +80,8 @@ int	ms_env_list_init(t_list **env_list, char **envp)
 		return (FAILURE);
 	if (ms_env_list_init_shlvl(env_list) != SUCCESS)
 		return (FAILURE);
+	if (ms_env_list_set(env_list, "SHELL", "minishell", 1) != SUCCESS)
+		return (FAILURE);
 	ms_env_list_unset(env_list, "_");
 	return (SUCCESS);
 }

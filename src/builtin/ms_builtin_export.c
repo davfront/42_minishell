@@ -6,19 +6,17 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 22:57:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 09:08:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ms_builtin_export_print_identifier_error(char *label, char *value)
+static void	ms_builtin_export_print_identifier_error(char *arg)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("export: `", STDERR_FILENO);
-	ft_putstr_fd(label, STDERR_FILENO);
-	ft_putstr_fd("=", STDERR_FILENO);
-	ft_putstr_fd(value, STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
 
@@ -85,7 +83,7 @@ static int	ms_builtin_export_one(t_data *data, char *arg)
 		return (FAILURE);
 	if (!ms_env_is_valid_identifier(env->label))
 	{
-		ms_builtin_export_print_identifier_error(env->label, env->value);
+		ms_builtin_export_print_identifier_error(arg);
 		ret = FAILURE;
 	}
 	else
