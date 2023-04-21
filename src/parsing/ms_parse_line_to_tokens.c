@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 11:53:09 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 10:15:30 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:25:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ms_parse_line_to_tokens(t_data *data)
 
 	if (!data || !data->line)
 		return (FAILURE);
-	strs = ms_cmdsplit(data->line, " \t");
+	strs = ms_cmdsplit(data->line, " \t\n");
 	if (!strs)
 		return (FAILURE);
 	tokens = ms_convert_strs_to_tokens(strs);

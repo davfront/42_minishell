@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parser.c                                        :+:      :+:    :+:   */
+/*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/21 02:54:06 by lboulatr         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:34:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ms_parser(char *str, t_data *data)
+int	ms_expand(t_data *data)
 {
-	char	*expanded_str;
-	char	*expanded_str2;
-	char	**tokens;
-
-	expanded_str = ms_expand_var(str, data);
-	if (!expanded_str)
-		return (NULL);
-	expanded_str2 = ms_tilde(expanded_str, data);
-	tokens = ms_cmdsplit(expanded_str2, " \t");
-	ft_free((void **)&expanded_str);
-	ft_free((void **)&expanded_str2);
-	return (tokens);
+	if (!data || !data->line)
+		return (FAILURE);
+	data->line = ms_expand_var(data->line, data);
+	if (!data->line)
+		return (FAILURE);
+	data->line = ms_tilde(data->line, data);
+	if (!data->line)
+		return (FAILURE);
+	return (SUCCESS);
 }

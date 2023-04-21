@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 09:18:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:33:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ int			ms_builtin_cmd(t_data *data, char **cmd_args);
 char		*ms_read_prompt(void);
 
 // parsing
-char		**ms_parser(char *line, t_data *data);
 char		**ms_cmdsplit(char *str, char *set);
 char		*ms_expand_var(char *str, t_data *data);
 char		*ms_tilde(char *str, t_data *data);
@@ -170,6 +169,7 @@ int			ms_is_char_print(char c);
 int			ms_is_char_nprint(char c);
 char		*ms_get_var_name(char *str, int index);
 char		*ms_expand_exit_code(t_data *data, char *copy_str, int *index);
+int			ms_expand(t_data *data);
 int			ms_replace_keyword(char **str, size_t kw_id, size_t kw_len, \
 				char *value);
 int			ms_expand2_exit_code(t_data *data, char **s);

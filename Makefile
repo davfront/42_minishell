@@ -92,12 +92,12 @@ SRCS_FILES			=	\
 						\
 						prompt/ms_read_prompt.c\
 						\
-						parsing/ms_parser.c\
 						parsing/ms_cmdsplit.c\
 						parsing/ms_get_var_name.c\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
 						parsing/ms_tilde.c\
+						parsing/ms_expand.c\
 						parsing/ms_replace_keyword.c\
 						parsing/ms_expand2_exit_code.c\
 						parsing/ms_expand2_vars.c\
