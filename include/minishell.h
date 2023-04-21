@@ -170,6 +170,12 @@ int			ms_is_char_print(char c);
 int			ms_is_char_nprint(char c);
 char		*ms_get_var_name(char *str, int index);
 char		*ms_expand_exit_code(t_data *data, char *copy_str, int *index);
+int			ms_replace_keyword(char **str, size_t kw_id, size_t kw_len, \
+				char *value);
+int			ms_expand2_exit_code(t_data *data, char **s);
+int			ms_expand2_vars(char **s, t_list **env_list);
+int			ms_expand2_tilde(char **s, t_list **env_list);
+int			ms_expand2(t_data *data);
 int			ms_token_is_cmd_sep(t_tok token);
 int			ms_token_is_io_sep(t_tok token);
 int			ms_token_is_sep(t_tok token);

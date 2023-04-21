@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand_vars.c                                   :+:      :+:    :+:   */
+/*   ms_expand2_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 10:16:29 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 07:19:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ms_parse_env_label(char *s)
 	return (label);
 }
 
-static int	ms_expand_var_here(char **str, t_list **env_list, \
+static int	ms_expand2_var_here(char **str, t_list **env_list, \
 	size_t *dollar_i)
 {
 	char	*dollar;
@@ -65,7 +65,7 @@ static char	ms_update_quote(char quote, char c)
 	return (quote);
 }
 
-int	ms_expand_vars(char **s, t_list **env_list)
+int	ms_expand2_vars(char **s, t_list **env_list)
 {
 	size_t	i;
 	char	quote;
@@ -80,7 +80,7 @@ int	ms_expand_vars(char **s, t_list **env_list)
 			&& (quote != '"' || ((*s)[i + 1] != '\'' && (*s)[i + 1] != '"'))
 		)
 		{
-			if (ms_expand_var_here(s, env_list, &i) != SUCCESS)
+			if (ms_expand2_var_here(s, env_list, &i) != SUCCESS)
 				return (FAILURE);
 		}
 		else

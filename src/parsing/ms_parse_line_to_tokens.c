@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 11:53:09 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 22:42:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 10:09:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,18 @@ int	ms_parse_line_to_tokens(t_data *data)
 
 	if (!data || !data->line)
 		return (FAILURE);
-	strs = ms_parser(data->line, data);
+
+	// strs = ms_parser(data->line, data);
+	// if (!strs)
+	// 	return (FAILURE);
+
+	// alternative expand
+	if (ms_expand2(data) != SUCCESS)
+		return (ms_error("parsing failed"), FAILURE);
+	strs = ms_cmdsplit(data->line, " \t");
 	if (!strs)
 		return (FAILURE);
+
 	tokens = ms_convert_strs_to_tokens(strs);
 	ft_free((void **)&strs);
 	if (!tokens)

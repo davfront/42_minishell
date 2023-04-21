@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand_tilde.c                                  :+:      :+:    :+:   */
+/*   ms_expand2_exit_code.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/12 16:11:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/21 07:21:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ms_expand_tilde_here(char **str, t_list **env_list, size_t *tilde_i)
+static int	ms_expand2_exit_code_here(t_data *data, char **str, size_t *dollar_i)
 {
 	char	*value;
 
-	if (!*str || ft_strlen(*str) < *tilde_i + 1)
+	if (!*str || ft_strlen(*str) < (*dollar_i + 1) + 1)
 		return (FAILURE);
-	value = ms_env_list_get(env_list, "HOME");
-	if (ms_replace_keyword(str, *tilde_i, 1, value) != SUCCESS)
+	value = ft_itoa(data->exit_code);
+	if (!value)
 		return (FAILURE);
-	if (value)
-		*tilde_i += ft_strlen(value);
+	if (ms_replace_keyword(str, *dollar_i, 2, value) != SUCCESS)
+		return (ft_free((void **)&value), FAILURE);
+	*dollar_i += ft_strlen(value);
+	ft_free((void **)&value);
 	return (SUCCESS);
 }
 
-int	ms_expand_tilde(char **s, t_list **env_list)
+int	ms_expand2_exit_code(t_data *data, char **s)
 {
 	size_t	i;
 	char	quote;
@@ -42,9 +44,9 @@ int	ms_expand_tilde(char **s, t_list **env_list)
 			else if ((*s)[i] == quote)
 				quote = '\0';
 		}
-		if (!quote && (*s)[i] == '~')
+		if (quote != '\'' && ft_strncmp((*s) + i, "$?", 2) == 0)
 		{
-			if (ms_expand_tilde_here(s, env_list, &i) != SUCCESS)
+			if (ms_expand2_exit_code_here(data, s, &i) != SUCCESS)
 				return (FAILURE);
 		}
 		else

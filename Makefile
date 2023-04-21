@@ -98,6 +98,11 @@ SRCS_FILES			=	\
 						parsing/ms_expand_var.c\
 						parsing/ms_expand_var_utils.c\
 						parsing/ms_tilde.c\
+						parsing/ms_replace_keyword.c\
+						parsing/ms_expand2_exit_code.c\
+						parsing/ms_expand2_vars.c\
+						parsing/ms_expand2_tilde.c\
+						parsing/ms_expand2.c\
 						parsing/ms_token_is_sep.c\
 						parsing/ms_check_tokens.c\
 						parsing/ms_parse_line_to_tokens.c\
@@ -109,7 +114,7 @@ SRCS_FILES			=	\
 						\
 						heredoc/ms_heredoc_create_tmp.c\
 						\
-						cmd/ms_is_builtin_cmd_no_fork.c\
+						cmd/ms_is_cmd_to_fork.c\
 						cmd/ms_is_script_cmd.c\
 						cmd/ms_cmd_init.c\
 						cmd/ms_cmd_get_bin_path.c\
