@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: osterger <osterger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lboulatr <lboulatr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/06 02:43:07 by osterger         ###   ########.fr       */
+/*   Updated: 2023/04/21 09:04:58 by lboulatr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,15 +122,12 @@ void		ms_perror(char *msg);
 void		ms_perror_exit(t_data *data, char *msg, int exit_code);
 int			ms_init(t_data *data, int argc, char **argv, char **envp);
 void		ms_reset(t_data *data);
-char    	*ms_join(char *str1, char *str2, char *str3);
+char		*ms_join3(char *str1, char *str2, char *str3);
 char		*ms_exit_code_as_str(int exit_code);
 int			ms_is_quote(char c);
-
-// utils
 void		ms_print_quoted(char *s);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
-void		ms_print_quoted(char *s);
 int			ms_fd_is_file(int fd);
 
 // env
@@ -166,7 +163,6 @@ char		*ms_read_prompt(void);
 
 // parsing
 char		**ms_parser(char *line, t_data *data);
-char		**ms_var_array(char *str, char **var_array, t_list *env);
 char		**ms_cmdsplit(char *str, char *set);
 int			ms_token_is_cmd_sep(t_tok token);
 int			ms_token_is_io_sep(t_tok token);
@@ -203,11 +199,10 @@ void		ms_debug_cmds(t_data *data);
 
 // expand
 char		*ms_expand_var(char *str, t_data *data);
-int			ms_count_var(char *str);
 char		*ms_tilde(char *str, t_data *data);
 int			ms_is_char_print(char c);
 int			ms_is_char_nprint(char c);
-int			ms_dollar_is_valid(char c);
 char		*ms_get_var_name(char *str, int index);
+char		*ms_expand_exit_code(char *copy_str, int *index);
 
 #endif

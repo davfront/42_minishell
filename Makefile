@@ -60,9 +60,8 @@ SRCS_FILES			=	\
 						utils/ms_reset_cmds.c\
 						utils/ms_reset_prompt.c\
 						utils/ms_reset.c\
-						utils/ms_join.c\
+						utils/ms_join3.c\
 						utils/ms_is_quote.c\
-						utils/ms_exit_code_as_str.c\
 						utils/ms_fd_is_file.c\
 						\
 						env/ms_env_new.c\
@@ -105,6 +104,7 @@ SRCS_FILES			=	\
 						parsing/ms_tokens_type_varset.c\
 						parsing/ms_tokens_remove_quotes.c\
 						parsing/ms_parse_tokens_to_cmds.c\
+						parsing/ms_expand_exit_code.c\
 						\
 						heredoc/ms_heredoc_create_tmp.c\
 						\
