@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Minishell prompt string
-MS_PS="^[[1;36mminishell>^[[0m "
-
 # Get the directory containing this script
 DIR="/mnt/FT/c3/minishell/test"
 
@@ -10,7 +7,7 @@ DIR="/mnt/FT/c3/minishell/test"
 MS_DIR="/mnt/FT/c3/minishell"
 
 # Move to minishell directory
-cd $MS_DIR
+cd $DIR
 
 # Initialize log file
 log="$DIR/log.txt"
@@ -51,23 +48,36 @@ function test_commands() {
     # Loop over the list of commands
     for cmd in "${commands[@]}"; do
 
+        cmd="${cmd//' && '/$'\n'}"
+
 		# Capture output and exit code of minishell in file out1
-		out1=$( "$MS_DIR/minishell" <<< "$cmd"$'\n'"exit" 2> "$DIR/err1" | cat -e )
-		out1="${out1/${MS_PS}${cmd//\$/\\\$}\$$'\n'/}"  # remove command
-		out1="${out1/${MS_PS}exit\$$'\n'exit\$/}" # remove exit
-		echo -ne "$out1" > "$DIR/out1"
-        sed -i 's/^minishell: //' "$DIR/err1"
+		cd $MS_DIR
+        "$MS_DIR/minishell" <<< "$cmd"$'\n'"exit" 2> "$DIR/err1" > "$DIR/out1"
 		exit1=$?
+        cd $DIR
 
         # Capture output and exit code of /bin/bash in file out2
-        "/bin/bash" <<< "$cmd"$'\n'"exit" 2> "$DIR/err2" | cat -e > "$DIR/out2"
-        sed -i 's/^\/bin\/bash: line 1: //' "$DIR/err2"
-        sed -i "s/^\`.*//" "$DIR/err2" # remove command
-        sed -i '/^$/d' "$DIR/err2" # remove empty lines
+		cd $MS_DIR
+        bash <<< "$cmd"$'\n'"exit" 2> "$DIR/err2" > "$DIR/out2"
         exit2=$?
+        cd $DIR
+
+        # Clean out1
+        sed -i 's/\x1b\[[0-9;]*[mG]//g' out1 # remove colors
+        sed -zi 's/minishell> exit\nexit\n//' out1 # remove exit
+        sed -i '/^minishell> /d' out1 # remove prompts
+
+        # Clean err1
+        sed -i 's/^minishell: //' err1 # remove prompt string
+        sed -i '/^$/d' err1 # remove empty lines
+
+        # Clean err2
+        sed -i 's/^bash: line 1: //' err2 # remove prompt string
+        sed -i "s/^\`.*//" err2 # remove command
+        sed -i '/^$/d' err2 # remove empty lines
 
         # Compare the contents of files out1 and out2
-        if cmp -s "$DIR/out1" "$DIR/out2" && [[ "$exit1" -eq "$exit2" ]] && cmp -s "$DIR/err1" "$DIR/err2"; then
+        if cmp -s out1 out2 && [[ "$exit1" -eq "$exit2" ]] && cmp -s err1 err2; then
             result="OK"
             passed=$((passed+1))
             printf "\033[32m%s.%s\033[0m " "$id" "$result"
@@ -81,13 +91,13 @@ function test_commands() {
             printf "%3s. [KO] %s\n" "$id" "$cmd" >> "$log"
             printf "==============================================================\n\n" >> "$log"
 
-            if ! cmp -s "$DIR/out1" "$DIR/out2"; then
+            if ! cmp -s out1 out2; then
                 printf "OUTPUT MISMATCH !!!\n\n" >> "$log"
                 printf "minishell output:\n" >> "$log"
-                cat "$DIR/out1" | cat -e >> "$log"
+                cat out1 | cat -e >> "$log"
                 printf "\n" >> "$log"
                 printf "bash output:\n" >> "$log"
-                cat "$DIR/out2" | cat -e >> "$log"
+                cat out2 | cat -e >> "$log"
                 printf "\n" >> "$log"
             fi
 
@@ -98,13 +108,13 @@ function test_commands() {
                 printf "\n" >> "$log"
             fi
             
-            if ! cmp -s "$DIR/err1" "$DIR/err2"; then
+            if ! cmp -s err1 err2; then
                 printf "STDERR MISMATCH !!!\n\n" >> "$log"
                 printf "minishell stderr:\n" >> "$log"
-                cat "$DIR/err1" >> "$log"
+                cat err1 >> "$log"
                 printf "\n" >> "$log"
                 printf "bash stderr:\n" >> "$log"
-                cat "$DIR/err2" >> "$log"
+                cat err2 >> "$log"
                 printf "\n" >> "$log"
             fi
         fi
@@ -117,7 +127,7 @@ function test_commands() {
 	echo ""
 
 	# Clean up temporary files
-	rm $DIR/out1 $DIR/out2 $DIR/err1 $DIR/err2
+	rm -f $DIR/out1 $DIR/out1.tmp $DIR/out2 $DIR/err1 $DIR/err2
 
 	# Compute and print summary
 	percentage=$(awk "BEGIN {printf \"%.0f\", $passed / $total * 100}")
@@ -129,7 +139,7 @@ function test_commands() {
 
 # Test the commands using the test_commands function
 if [ $# -eq 0 ]; then
-    test_files=$(ls $DIR/tests/*.txt | xargs -I {} basename {} .txt)
+    test_files=$(ls tests/*.txt | xargs -I {} basename {} .txt)
 else
     test_files=$@
 fi
