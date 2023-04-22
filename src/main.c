@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 04:08:53 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:17:18 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static int	ms_prompt(t_data *data)
 	signal(SIGINT, SIG_IGN);
 	if (!data->line)
 		ms_exit(data, data->exit_code);
-	if (ms_expand(data) != SUCCESS)
-		return (ms_error("parsing failed"), FAILURE);
 	ret = ms_parse_line_to_tokens(data);
 	if (ret != SUCCESS)
 		return (ret);

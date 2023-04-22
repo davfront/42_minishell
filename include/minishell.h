@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 11:06:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:38:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@
 
 typedef struct s_split
 {
-	int		i;
-	int		q_index;
-	int		arr_index;
-	int		quotes;
-	int		len;
+	int	i;
+	int	q_index;
+	int	arr_index;
+	int	quotes;
+	int	len;
 }	t_split;
 
 typedef struct s_env {
@@ -121,9 +121,12 @@ void		ms_perror(char *msg);
 void		ms_perror_exit(t_data *data, char *msg, int exit_code);
 int			ms_init(t_data *data, int argc, char **argv, char **envp);
 void		ms_reset(t_data *data);
+char		*ms_join3(char *str1, char *str2, char *str3);
+char		*ms_exit_code_as_str(int exit_code);
+int			ms_is_quote(char c);
+void		ms_print_quoted(char *s);
 void		ms_reset_prompt(t_data *data);
 void		ms_reset_cmds(t_data *data);
-void		ms_print_quoted(char *s);
 int			ms_fd_is_file(int fd);
 int			ms_is_directory(char *path);
 
@@ -159,14 +162,14 @@ int			ms_builtin_cmd(t_data *data, char **cmd_args);
 char		*ms_read_prompt(void);
 
 // parsing
-char		**ms_parser(char *line);
+char		**ms_parser(char *line, t_data *data);
 char		**ms_cmdsplit(char *str, char *set);
-int			ms_replace_keyword(char **str, size_t kw_id, size_t kw_len, \
-				char *value);
-int			ms_expand_exit_code(t_data *data, char **s);
-int			ms_expand_vars(char **s, t_list **env_list);
-int			ms_expand_tilde(char **s, t_list **env_list);
-int			ms_expand(t_data *data);
+char		*ms_expand_var(char *str, t_data *data);
+char		*ms_tilde(char *str, t_data *data);
+int			ms_is_char_print(char c);
+int			ms_is_char_nprint(char c);
+char		*ms_get_var_name(char *str, int index);
+char		*ms_expand_exit_code(t_data *data, char *copy_str, int *index);
 int			ms_token_is_cmd_sep(t_tok token);
 int			ms_token_is_io_sep(t_tok token);
 int			ms_token_is_sep(t_tok token);
