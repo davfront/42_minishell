@@ -114,6 +114,8 @@ SRCS_FILES			=	\
 						execute/ms_exec_fork_cmd.c\
 						execute/ms_exec_cmds.c\
 						\
+						signal/ms_handle_sigint.c\
+						\
 						debug/ms_debug_tokens.c\
 						debug/ms_debug_exit_code.c\
 						debug/ms_debug_cmds.c\

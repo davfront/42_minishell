@@ -6,13 +6,11 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:54:14 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/09 16:49:35 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:15:54 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern int	g_exit_code;
 
 int	ms_builtin_exit(t_data *data, char **args)
 {
@@ -25,7 +23,7 @@ int	ms_builtin_exit(t_data *data, char **args)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	args_len = ms_strs_len(args);
 	if (args_len == 0)
-		ms_exit(data, g_exit_code);
+		ms_exit(data, data->exit_code);
 	else if (!ms_str_is_llong(args[0]))
 	{
 		ms_error3("exit", args[0], "numeric argument required");
