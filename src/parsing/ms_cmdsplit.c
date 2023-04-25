@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:24:13 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/20 22:07:06 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:17:46 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ms_cmdsplit(char *str, char *set)
 	array = ms_str(array, str, set, &split);
 	if (!array)
 		return (NULL);
-	array[count] = '\0';
+	array[count] = NULL;
 	return (array);
 }
 
