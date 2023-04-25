@@ -65,7 +65,7 @@ function test_commands() {
         # Clean out1
         sed -i 's/\x1b\[[0-9;]*[mG]//g' out1 # remove colors
         sed -i '/^exit$/d' out1 # remove exit output
-        sed -zi '/^minishell> exit$\n/d' out1 # remove exit prompt
+        sed -zi 's/minishell> exit\n//g' out1 # remove exit prompt
         sed -i '/^minishell> /d' out1 # remove prompts
 
         # Clean err1
