@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:23:15 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/14 09:10:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/25 23:29:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ static int	ms_get_cmd_args_size(t_tok *tokens)
 	len = 0;
 	while (!ms_token_is_cmd_sep(tokens[i]))
 	{
-		if (ms_token_is_io_sep(tokens[i]) \
-			&& !ms_token_is_cmd_sep(tokens[i + 1]))
-			i++;
-		else
+		if (tokens[i].type == WORD)
 			len++;
 		i++;
 	}
