@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 09:20:16 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:01:41 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static int	ms_exec_wait_children(t_data *data, pid_t cpid[CMD_MAX], \
 	i = 0;
 	while (i < data->cmd_size)
 	{
-		waitpid(cpid[i], status + i, 0);
+		if (ms_is_cmd_to_fork(data, i))
+			waitpid(cpid[i], status + i, 0);
 		i++;
 	}
 	if (!ms_is_cmd_to_fork(data, data->cmd_size - 1))
