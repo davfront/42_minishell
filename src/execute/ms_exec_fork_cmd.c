@@ -34,7 +34,7 @@ void	ms_exec_fork_cmd(t_data *data, t_cmd *cmd)
 {
 	if (!cmd)
 		ms_exit(data, FAILURE);
-	if (ft_streq(cmd->args[0], ":"))
+	if (!cmd->args[0] || ft_streq(cmd->args[0], ":"))
 		ms_exit(data, SUCCESS);
 	if (ms_is_builtin_cmd(cmd->args[0]))
 		ms_exit(data, ms_builtin_cmd(data, cmd->args));
