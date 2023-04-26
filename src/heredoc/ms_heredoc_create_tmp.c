@@ -6,19 +6,33 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 04:21:12 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/17 05:25:34 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/26 01:21:41 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	ms_heredoc_print_eof_warning(t_data *data)
+{
+	if (!data)
+		return ;
+	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+	ft_putstr_fd("here-document delimited at line ", STDERR_FILENO);
+	ft_putnbr_fd(data->line_no, STDERR_FILENO);
+	ft_putstr_fd(" by end-of-file (wanted `", STDERR_FILENO);
+	ft_putstr_fd(data->heredoc_delimiter, STDERR_FILENO);
+	ft_putstr_fd("')\n", STDERR_FILENO);
+}
+
 static int	ms_heredoc_edit_tmp(t_data *data)
 {
 	char	*line;
+	int		line_len;
 
 	if (!data || data->heredoc_fd == -1)
 		return (FAILURE);
 	line = NULL;
+	line_len = 0;
 	while (!line || !ft_streq(line, data->heredoc_delimiter))
 	{
 		if (line && data->heredoc_enabled == 1)
@@ -29,8 +43,13 @@ static int	ms_heredoc_edit_tmp(t_data *data)
 		}
 		line = readline(PS2);
 		if (!line)
-			return (FAILURE);
+		{
+			ms_heredoc_print_eof_warning(data);
+			break ;
+		}
+		line_len++;
 	}
+	data->line_no += line_len;
 	return (ft_free((void **)&line), SUCCESS);
 }
 

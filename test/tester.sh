@@ -73,7 +73,7 @@ function test_commands() {
         sed -i '/^$/d' err1 # remove empty lines
 
         # Clean err2
-        sed -ri 's/^bash: line [0-9]: //' err2 # remove prompt string
+        sed -ri 's/^bash: line [0-9]+: //' err2 # remove prompt string
         sed -i "s/^\`.*//" err2 # remove command
         sed -i '/^$/d' err2 # remove empty lines
 

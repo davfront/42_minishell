@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 11:33:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/26 00:50:31 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_cmd {
 }	t_cmd;
 
 typedef struct s_data {
+	int		line_no;
 	int		exit_code;
 	t_list	*env_list;
 	char	*line;

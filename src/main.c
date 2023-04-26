@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 11:36:42 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/26 02:26:10 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	ms_prompt(t_data *data)
 	g_signal = 0;
 	signal(SIGINT, ms_handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	data->line_no++;
 	data->line = ms_read_prompt();
 	if (g_signal == 2)
 		return (130);
