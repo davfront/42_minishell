@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/26 02:26:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:37:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal;
+
+static void	ms_print_exit(t_data *data)
+{
+	ft_putstr("exit\n");
+	ms_exit(data, data->exit_code);
+}
 
 static int	ms_prompt(t_data *data)
 {
@@ -27,7 +33,7 @@ static int	ms_prompt(t_data *data)
 		return (130);
 	signal(SIGINT, SIG_IGN);
 	if (!data->line)
-		ms_exit(data, data->exit_code);
+		ms_print_exit(data);
 	if (ms_expand(data) != SUCCESS)
 		return (ms_error("parsing failed"), FAILURE);
 	ret = ms_parse_line_to_tokens(data);
