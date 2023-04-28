@@ -76,7 +76,7 @@ int	ms_expand2_vars(char **s, t_list **env_list)
 	{
 		quote = ms_update_quote(quote, (*s)[i]);
 		if (quote != '\'' && (*s)[i] == '$' && (*s)[i + 1]
-			&& !ft_strchr(" \t\n^+=~:%", (*s)[i + 1])
+			&& !ft_strchr(" \t\n^+=~:%}", (*s)[i + 1])
 			&& (quote != '"' || ((*s)[i + 1] != '\'' && (*s)[i + 1] != '"'))
 		)
 		{
