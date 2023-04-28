@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 22:59:29 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/13 23:51:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:12:11 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ static char	*ms_env_to_char(t_env *env)
 	size_t	len;
 	char	*s;
 
-	if (!env || !env->label || !env->value)
+	if (!env || !env->label)
 		return (NULL);
 	len_label = ft_strlen(env->label);
-	len_value = ft_strlen(env->value);
+	len_value = 0;
+	if (env->value)
+		len_value = ft_strlen(env->value);
 	len = len_label + len_value + 1;
 	s = malloc((len + 1) * sizeof(char));
 	if (!s)
 		return (NULL);
 	ft_memcpy(s, env->label, len_label);
 	*(s + len_label) = '=';
-	ft_memcpy(s + len_label + 1, env->value, len_value);
+	if (env->value)
+		ft_memcpy(s + len_label + 1, env->value, len_value);
 	*(s + len) = '\0';
 	return (s);
 }
