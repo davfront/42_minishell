@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:24:13 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/25 21:17:46 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:16:00 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ char	**ms_cmdsplit(char *str, char *set)
 	t_split	split;
 	char	**array;
 	int		count;
+	char	*trimmed;
 
-	if (!str)
+	if (!str && !set)
 		return (NULL);
-	count = ms_count_rows(str, set);
+	trimmed = ft_strtrim(str, set);
+	if (!trimmed)
+		return (NULL);
+	count = ms_count_rows(trimmed, set);
 	array = malloc((count + 1) * sizeof(char *));
 	if (!array)
-		return (NULL);
-	array = ms_str(array, str, set, &split);
+		return (ft_free((void **)&trimmed), NULL);
+	array = ms_str(array, trimmed, set, &split);
 	if (!array)
-		return (NULL);
+		return (ft_free((void **)&trimmed), NULL);
 	array[count] = NULL;
-	return (array);
+	return (ft_free((void **)&trimmed), array);
 }
 
 static int	ms_get_sep_length(char *str)
