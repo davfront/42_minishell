@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_handle_sigint.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 11:21:38 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/28 03:40:38 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:08:16 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	ms_handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		g_signal = sig;
-		rl_on_new_line();
-		ft_printf("\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
-		rl_redisplay();
+		rl_on_new_line();
 	}
 }
