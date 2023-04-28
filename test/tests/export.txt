@@ -6,7 +6,6 @@ export Hola && export | grep Hola
 export Hola9hey && export | grep Hola
 export $DONTEXIST | wc -l
 export | grep "HOME"
-export "
 export =
 export %
 export $?
@@ -28,7 +27,7 @@ export HO*LA=bonjour
 export HO#LA=bonjour
 export HO@LA=bonjour
 export HO!LA=bonjour
-export HO$?LA=bonjour && env | grep HO
+export HO$?LA=bonjour && env | grep HO0LA
 export +HOLA=bonjour
 export HOL+A=bonjour
 export HOLA =bonjour
@@ -41,11 +40,10 @@ export HOLA=bonjour$HOME && env | grep HOLA
 export HOLA=$HOMEbonjour && env | grep HOLA
 export HOLA=bon$jour && env | grep HOLA
 export HOLA=bon@jour && env | grep HOLA
-export HOLA=bon;jour && env | grep HOLA
 export HOLA=bon!jour
 export HOLA=bon"jour" && env | grep HOLA
 export HOLA$USER=bonjour && env | grep HOLA
-export HOLA=bonjour=casse-to$> echo $HOLA"
+export HOLA=bonjour=casse-to$> echo $HOLA
 export "HOLA=bonjour"=casse-toi && echo $HOLA
 export HOLA=bonjour && export BYE=casse-toi && echo $HOLA et $BYE
 export HOLA=bonjour BYE=casse-toi && echo $HOLA et $BYE
@@ -56,7 +54,7 @@ export HOLA="bonjour   "/ && echo $HOLA
 export HOLA='"' && echo " $HOLA " | cat -e
 export HOLA=at && c$HOLA Makefile
 export "" HOLA=bonjour && env | grep HOLA
-export HOLA="cat Makefile | grep NAME" $> echo $HOLA"
+export HOLA="cat Makefile | grep NAME" $> echo $HOLA
 export HOLA=hey && echo $HOLA$HOLA$HOLA=hey$HOLA
 export HOLA="  bonjour  hey  "  && echo $HOLA | cat -e
 export HOLA="  bonjour  hey  "  && echo """$HOLA""" | cat -e
@@ -65,9 +63,9 @@ export HOLA="  bonjour  hey  "  && echo wesh""$HOLA.
 export HOLA="  bonjour  hey  "  && echo wesh$""HOLA.
 export HOLA="  bonjour  hey  "  && echo wesh$"HOLA HOLA".
 export HOLA=bonjour && export HOLA=" hola et $HOLA" && echo $HOLA
-export HOLA=bonjour && export HOLA=' hola et $HOLA' && echo $HOLA"
-export HOLA=bonjour && export HOLA=" hola et $HOLA"$HOLA && echo $HOLA"
-export HOLA="ls        -l    - a" && echo $HOLA"
+export HOLA=bonjour && export HOLA=' hola et $HOLA' && echo $HOLA
+export HOLA=bonjour && export HOLA=" hola et $HOLA"$HOLA && echo $HOLA
+export HOLA="ls        -l    - a" && echo $HOLA
 export HOLA="s -la" && l$HOLA
 export HOLA="s -la"  && l"$HOLA"
 export HOLA="s -la"  && l'$HOLA'

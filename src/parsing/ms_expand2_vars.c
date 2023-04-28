@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:02:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 07:19:22 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:41:08 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ static int	ms_expand2_var_here(char **str, t_list **env_list, \
 	if (!*str || ft_strlen(*str) < (*dollar_i + 1) + 1)
 		return (FAILURE);
 	dollar = *str + *dollar_i;
-	if (ft_strchr("0123456789!@#&*()-_{}[];,.|/|$\\\"\'", dollar[1]))
+	if (ft_strchr("0123456789!@#&*()-_{}[];,.|/|$\\", dollar[1]))
 		label = ft_strndup(dollar + 1, 1);
+	if (ft_strchr("\"\'", dollar[1]))
+		label = ft_strdup("");
 	else
 		label = ms_parse_env_label(dollar + 1);
 	if (!label)
