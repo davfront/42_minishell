@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/28 03:18:02 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:30:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	ms_exec_pipe(t_data *data)
 	i = 0;
 	while (i < data->cmd_size)
 	{
-		ms_cmd_declare_vars(data, data->cmds + i);
+		if (i == data->cmd_size - 1)
+			ms_cmd_declare_vars(data, data->cmds + i);
 		if (!ms_is_cmd_to_fork(data, i))
 			status[i] = ms_builtin_cmd(data, data->cmds[i].args);
 		else
