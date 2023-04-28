@@ -40,7 +40,7 @@ static int	ms_expand_var_here(char **str, t_list **env_list, \
 	dollar = *str + *dollar_i;
 	if (ft_strchr("0123456789!@#&*()-_{}[];,.|/|$\\", dollar[1]))
 		label = ft_strndup(dollar + 1, 1);
-	if (ft_strchr("\"\'", dollar[1]))
+	else if (ft_strchr("\"\'", dollar[1]))
 		label = ft_strdup("");
 	else
 		label = ms_parse_env_label(dollar + 1);
