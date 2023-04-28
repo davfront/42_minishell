@@ -34,7 +34,7 @@ static int	ms_prompt(t_data *data)
 	signal(SIGINT, SIG_IGN);
 	if (!data->line)
 		ms_print_exit(data);
-	if (ms_expand(data) != SUCCESS)
+	if (ms_expand2(data) != SUCCESS)
 		return (ms_error("parsing failed"), FAILURE);
 	ret = ms_parse_line_to_tokens(data);
 	if (ret != SUCCESS)
