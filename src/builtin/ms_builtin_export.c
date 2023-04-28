@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:09:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/21 09:08:10 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:20:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	ms_builtin_export_one(t_data *data, char *arg)
 	t_env	*env;
 	int		ret;
 
-	if (!data || !*arg)
+	if (!data || !arg)
 		return (FAILURE);
 	env = ms_env_from_char(arg, 1);
 	if (!env)
