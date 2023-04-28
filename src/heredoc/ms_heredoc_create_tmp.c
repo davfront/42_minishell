@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_heredoc_create_tmp.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 04:21:12 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/26 01:21:41 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:16:35 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ms_heredoc_create_tmp(t_data *data)
 		return (FAILURE);
 	if (!data->heredoc_enabled)
 		return (SUCCESS);
-	data->heredoc_fd = open(HEREDOC_TMP, O_CREAT | O_RDWR | O_TRUNC);
+	data->heredoc_fd = open(HEREDOC_TMP, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->heredoc_fd == -1)
 		return (FAILURE);
 	if (ms_heredoc_edit_tmp(data) != SUCCESS)
