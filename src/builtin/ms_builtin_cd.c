@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 12:04:02 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/20 03:55:53 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:39:17 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	ms_chdir(t_data *data, char *dir)
 
 	if (!dir)
 		return (FAILURE);
+	if (!*dir)
+		return (SUCCESS);
 	ret = chdir(dir);
 	if (ret == -1)
 	{
