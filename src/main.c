@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:16:30 by dapereir          #+#    #+#             */
-/*   Updated: 2023/04/27 13:37:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/04/28 04:14:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ms_prompt(t_data *data)
 	data->line_no++;
 	data->line = ms_read_prompt();
 	if (g_signal == 2)
-		return (130);
+		return (g_signal = 0, 130);
 	signal(SIGINT, SIG_IGN);
 	if (!data->line)
 		ms_print_exit(data);
@@ -60,9 +60,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->exit_code = ms_prompt(data);
-		if (data->exit_code == 130 && !g_signal)
+		if (g_signal == 2)
 			ft_putstr_fd("\n", STDIN_FILENO);
-		if (data->exit_code == 131)
+		if (g_signal == 3)
 			ft_putstr_fd("Quit\n", STDERR_FILENO);
 		ms_reset_prompt(data);
 		ms_debug_exit_code(data->exit_code);
