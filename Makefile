@@ -93,16 +93,11 @@ SRCS_FILES			=	\
 						prompt/ms_read_prompt.c\
 						\
 						parsing/ms_cmdsplit.c\
-						parsing/ms_get_var_name.c\
-						parsing/ms_expand_var.c\
-						parsing/ms_expand_var_utils.c\
-						parsing/ms_tilde.c\
-						parsing/ms_expand.c\
 						parsing/ms_replace_keyword.c\
-						parsing/ms_expand2_exit_code.c\
-						parsing/ms_expand2_vars.c\
-						parsing/ms_expand2_tilde.c\
-						parsing/ms_expand2.c\
+						parsing/ms_expand_exit_code.c\
+						parsing/ms_expand_vars.c\
+						parsing/ms_expand_tilde.c\
+						parsing/ms_expand.c\
 						parsing/ms_token_is_sep.c\
 						parsing/ms_check_tokens.c\
 						parsing/ms_parse_line_to_tokens.c\
@@ -110,7 +105,6 @@ SRCS_FILES			=	\
 						parsing/ms_tokens_type_varset.c\
 						parsing/ms_tokens_remove_quotes.c\
 						parsing/ms_parse_tokens_to_cmds.c\
-						parsing/ms_expand_exit_code.c\
 						\
 						heredoc/ms_heredoc_create_tmp.c\
 						\

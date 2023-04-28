@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand2_tilde.c                                 :+:      :+:    :+:   */
+/*   ms_expand_tilde.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	ms_expand2_tilde_here(char **str, t_list **env_list, \
+static int	ms_expand_tilde_here(char **str, t_list **env_list, \
 	size_t *tilde_i)
 {
 	char	*value;
@@ -27,7 +27,7 @@ static int	ms_expand2_tilde_here(char **str, t_list **env_list, \
 	return (SUCCESS);
 }
 
-int	ms_expand2_tilde(char **s, t_list **env_list)
+int	ms_expand_tilde(char **s, t_list **env_list)
 {
 	size_t	i;
 	char	quote;
@@ -45,7 +45,7 @@ int	ms_expand2_tilde(char **s, t_list **env_list)
 		}
 		if (!quote && (*s)[i] == '~')
 		{
-			if (ms_expand2_tilde_here(s, env_list, &i) != SUCCESS)
+			if (ms_expand_tilde_here(s, env_list, &i) != SUCCESS)
 				return (FAILURE);
 		}
 		else

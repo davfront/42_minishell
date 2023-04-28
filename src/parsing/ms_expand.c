@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_expand.c                                        :+:      :+:    :+:   */
+/*   ms_expand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 11:43:18 by lboulatr          #+#    #+#             */
-/*   Updated: 2023/04/21 11:34:39 by dapereir         ###   ########.fr       */
+/*   Created: 2023/04/12 16:15:54 by dapereir          #+#    #+#             */
+/*   Updated: 2023/04/21 07:18:21 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	ms_expand(t_data *data)
 {
 	if (!data || !data->line)
 		return (FAILURE);
-	data->line = ms_expand_var(data->line, data);
-	if (!data->line)
+	if (ms_expand_exit_code(data, &(data->line)) != SUCCESS)
 		return (FAILURE);
-	data->line = ms_tilde(data->line, data);
-	if (!data->line)
+	if (ms_expand_vars(&(data->line), &(data->env_list)) != SUCCESS)
+		return (FAILURE);
+	if (ms_expand_tilde(&(data->line), &(data->env_list)) != SUCCESS)
 		return (FAILURE);
 	return (SUCCESS);
 }
